@@ -51,18 +51,7 @@
 	                        </div>
 
 	                        <div class="space-6"></div>
-
 	                        <div class="position-relative">
-	                        	<?php $form=$this->beginWidget('CActiveForm', array(
-									'id'=>'login-form',
-									'enableClientValidation'=>false,
-									'clientOptions'=>array(
-										'validateOnSubmit'=>true,
-									),
-									'htmlOptions'=>array(
-										'class'=>'form-horizontal',
-									),
-								)); ?>
 	                            <div id="login-box" class="login-box visible widget-box no-border">
 	                                <div class="widget-body">
 	                                    <div class="widget-main">
@@ -72,8 +61,16 @@
 	                                        </h4>
 
 	                                        <div class="space-6"></div>
-
-	                                        <form>
+	                                        <?php $form=$this->beginWidget('CActiveForm', array(
+																						'id'=>'login-form',
+																						'enableClientValidation'=>false,
+																						'clientOptions'=>array(
+																							'validateOnSubmit'=>true,
+																						),
+																						'htmlOptions'=>array(
+																							'class'=>'form-horizontal',
+																						),
+																					)); ?>
 	                                            <fieldset>
 	                                                <label class="block clearfix">
 	                                                    <span class="block input-icon input-icon-right">
@@ -81,14 +78,14 @@
 	                                                        <i class="ace-icon fa fa-user"></i>
 	                                                    </span>
 	                                                </label>
-													<?php echo $form->error($model,'username'); ?>
+																									<?php echo $form->error($model,'username'); ?>
 	                                                <label class="block clearfix">
 	                                                    <span class="block input-icon input-icon-right">
 	                                                        <?php echo $form->passwordField($model,'password',array('class'=>'form-control','placeholder'=>'Password')); ?>
 	                                                        <i class="ace-icon fa fa-lock"></i>
 	                                                    </span>
 	                                                </label>
-													<?php echo $form->error($model,'password'); ?>
+																									<?php echo $form->error($model,'password'); ?>
 	                                                <div class="space"></div>
 
 	                                                <div class="clearfix">
@@ -97,17 +94,14 @@
 	                                                        <span class="lbl"> Remember Me</span>
 	                                                    </label>
 
-	                                                    <button type="button" class="width-35 pull-right btn btn-sm btn-primary">
+	                                                    <button type="submit" class="width-35 pull-right btn btn-sm btn-primary">
 	                                                        <i class="ace-icon fa fa-key"></i>
-	                                                        <span class="bigger-110">Login</span>
-	                                                        <?php echo CHtml::submitButton('登 录',array('class'=>'button button-primary')); ?>
+	                                                        <span class="bigger-110">登 录</span>
 	                                                    </button>
 	                                                </div>
-
 	                                                <div class="space-4"></div>
 	                                            </fieldset>
-	                                        </form>
-
+	                                        <?php $this->endWidget(); ?>
 	                                        <!-- <div class="social-or-login center">
 	                                            <span class="bigger-110">Or Login Using</span>
 	                                        </div>
@@ -146,7 +140,7 @@
 	                                    </div> -->
 	                                </div><!-- /.widget-body -->
 	                            </div><!-- /.login-box -->
-								<?php $this->endWidget(); ?>
+
 	                            <div id="forgot-box" class="forgot-box widget-box no-border">
 	                                <div class="widget-body">
 	                                    <div class="widget-main">
@@ -289,7 +283,7 @@
 
 	    <!--[if !IE]> -->
 	    <script type="text/javascript">
-	        window.jQuery || document.write("<script src='<?php echo Yii::app()->theme->baseUrl;?>/assets/js/jquery.min.js'>"+"<"+"/script>");
+	        window.jQuery || document.write("<script src='<?php echo Yii::app()->theme->baseUrl;?>/assets/js/jQjquery.min.js'>"+"<"+"/script>");
 	    </script>
 
 	    <!-- <![endif]-->
