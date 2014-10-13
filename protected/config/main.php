@@ -7,7 +7,12 @@
 // CWebApplication properties can be configured here.
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'My Web Application',
+	'name'=>'苏一鸣OA系统',
+	'defaultController'=>'site',
+	'timezone'=>'Asia/Shanghai',
+    'language'=>'zh_cn',
+    'sourceLanguage'=>'en_us',
+	'theme'=>'classic',
 
 	// preloading 'log' component
 	'preload'=>array('log'),
