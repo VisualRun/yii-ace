@@ -2,7 +2,6 @@
 
 class SiteController extends Controller
 {
-	//public $layout='//layouts/column2';
 	public $defaultAction = 'login';
 	/**
 	 * Declares class-based actions.

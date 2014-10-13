@@ -7,7 +7,7 @@
 // CWebApplication properties can be configured here.
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'苏一鸣OA系统',
+	'name'=>'test系统',
 	'defaultController'=>'site',
 	'timezone'=>'Asia/Shanghai',
     'language'=>'zh_cn',
@@ -37,10 +37,10 @@ return array(
 
 	// application components
 	'components'=>array(
-
 		'user'=>array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
+			'returnUrl' => array('/home/index'),
 		),
 
 		// uncomment the following to enable URLs in path-format

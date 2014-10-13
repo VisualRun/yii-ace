@@ -2,45 +2,38 @@
 <html lang="en">
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-        <meta charset="utf-8" />
-        <title>Dashboard - Ace Admin</title>
+		<meta charset="utf-8" />
+		<title>登陆页面 - <?php echo Yii::app()->name;?></title>
 
-        <meta name="description" content="overview &amp; stats" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+		<meta name="description" content="User login page" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
-        <!-- bootstrap & fontawesome -->
-        <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/font-awesome.min.css" />
+		<!-- bootstrap & fontawesome -->
+		<link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/font-awesome.min.css" />
 
-        <!-- page specific plugin styles -->
+		<!-- text fonts -->
+		<link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/ace-fonts.css" />
 
-        <!-- text fonts -->
-        <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/ace-fonts.css" />
+		<!-- ace styles -->
+		<link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/ace.min.css" />
 
-        <!-- ace styles -->
-        <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/ace.min.css" />
+		<!--[if lte IE 9]>
+			<link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/ace-part2.min.css" />
+		<![endif]-->
+		<link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/ace-rtl.min.css" />
 
-        <!--[if lte IE 9]>
-            <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/ace-part2.min.css" />
-        <![endif]-->
-        <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/ace-skins.min.css" />
-        <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/ace-rtl.min.css" />
+		<!--[if lte IE 9]>
+		  <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/ace-ie.min.css" />
+		<![endif]-->
+		<link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/ace.onpage-help.css" />
 
-        <!--[if lte IE 9]>
-          <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/ace-ie.min.css" />
-        <![endif]-->
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 
-        <!-- inline styles related to this page -->
-
-        <!-- ace settings handler -->
-        <script src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/ace-extra.min.js"></script>
-
-        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-
-        <!--[if lte IE 8]>
-        <script src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/html5shiv.js"></script>
-        <script src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/respond.min.js"></script>
-        <![endif]-->
+		<!--[if lt IE 9]>
+		<script src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/html5shiv.js"></script>
+		<script src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/respond.min.js"></script>
+		<![endif]-->
     </head>
 	<body class="login-layout">
 	    <div class="main-container">
@@ -60,6 +53,16 @@
 	                        <div class="space-6"></div>
 
 	                        <div class="position-relative">
+	                        	<?php $form=$this->beginWidget('CActiveForm', array(
+									'id'=>'login-form',
+									'enableClientValidation'=>false,
+									'clientOptions'=>array(
+										'validateOnSubmit'=>true,
+									),
+									'htmlOptions'=>array(
+										'class'=>'form-horizontal',
+									),
+								)); ?>
 	                            <div id="login-box" class="login-box visible widget-box no-border">
 	                                <div class="widget-body">
 	                                    <div class="widget-main">
@@ -74,18 +77,18 @@
 	                                            <fieldset>
 	                                                <label class="block clearfix">
 	                                                    <span class="block input-icon input-icon-right">
-	                                                        <input type="text" class="form-control" placeholder="Username" />
+	                                                        <?php echo $form->textField($model,'username',array('class'=>'form-control','placeholder'=>'Username')); ?>
 	                                                        <i class="ace-icon fa fa-user"></i>
 	                                                    </span>
 	                                                </label>
-
+													<?php echo $form->error($model,'username'); ?>
 	                                                <label class="block clearfix">
 	                                                    <span class="block input-icon input-icon-right">
-	                                                        <input type="password" class="form-control" placeholder="Password" />
+	                                                        <?php echo $form->passwordField($model,'password',array('class'=>'form-control','placeholder'=>'Password')); ?>
 	                                                        <i class="ace-icon fa fa-lock"></i>
 	                                                    </span>
 	                                                </label>
-
+													<?php echo $form->error($model,'password'); ?>
 	                                                <div class="space"></div>
 
 	                                                <div class="clearfix">
@@ -97,6 +100,7 @@
 	                                                    <button type="button" class="width-35 pull-right btn btn-sm btn-primary">
 	                                                        <i class="ace-icon fa fa-key"></i>
 	                                                        <span class="bigger-110">Login</span>
+	                                                        <?php echo CHtml::submitButton('登 录',array('class'=>'button button-primary')); ?>
 	                                                    </button>
 	                                                </div>
 
@@ -104,7 +108,7 @@
 	                                            </fieldset>
 	                                        </form>
 
-	                                        <div class="social-or-login center">
+	                                        <!-- <div class="social-or-login center">
 	                                            <span class="bigger-110">Or Login Using</span>
 	                                        </div>
 
@@ -122,10 +126,10 @@
 	                                            <a class="btn btn-danger">
 	                                                <i class="ace-icon fa fa-google-plus"></i>
 	                                            </a>
-	                                        </div>
+	                                        </div> -->
 	                                    </div><!-- /.widget-main -->
 
-	                                    <div class="toolbar clearfix">
+	                                    <!-- <div class="toolbar clearfix">
 	                                        <div>
 	                                            <a href="#" data-target="#forgot-box" class="forgot-password-link">
 	                                                <i class="ace-icon fa fa-arrow-left"></i>
@@ -139,10 +143,10 @@
 	                                                <i class="ace-icon fa fa-arrow-right"></i>
 	                                            </a>
 	                                        </div>
-	                                    </div>
+	                                    </div> -->
 	                                </div><!-- /.widget-body -->
 	                            </div><!-- /.login-box -->
-
+								<?php $this->endWidget(); ?>
 	                            <div id="forgot-box" class="forgot-box widget-box no-border">
 	                                <div class="widget-body">
 	                                    <div class="widget-main">
