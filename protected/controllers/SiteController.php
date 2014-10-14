@@ -2,6 +2,7 @@
 
 class SiteController extends Controller
 {
+	public $layout = '//layouts/column2';
 	public $defaultAction = 'login';
 	/**
 	 * Declares class-based actions.
@@ -52,8 +53,8 @@ class SiteController extends Controller
 	 */
 	public function actionLogin()
 	{
+		$this->pageTitle = '登陆页面';
 		$model=new LoginForm;
-
 		// if it is ajax validation request
 		if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
 		{
@@ -67,8 +68,8 @@ class SiteController extends Controller
 			$model->attributes=$_POST['LoginForm'];
 			// validate user input and redirect to the previous page if valid
 			if($model->validate() && $model->login()){
-				echo Yii::app()->user->returnUrl;exit;
-				$this->redirect(Yii::app()->user->returnUrl);
+				//echo Yii::app()->user->returnUrl;exit;
+				$this->redirect(array('/home/index'));
 			}
 		}
 		// display the login form

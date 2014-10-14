@@ -3,14 +3,15 @@
 class HomeController extends Controller
 {
 
-	// public function init(){
-	// 	parent::init();
-	// 	$this->modelClass = 'Pcbbuyer';
-	// }
+	public $layout = '//layouts/column1';
+
+    public function   init()
+    {
+        parent::init();
+    }
 
 	public function actionIndex()
 	{
-		echo 1;exit;
 		$this->render('index');
 	}
 

@@ -10,8 +10,8 @@ return array(
 	'name'=>'test系统',
 	'defaultController'=>'site',
 	'timezone'=>'Asia/Shanghai',
-  'language'=>'zh_cn',
-  'sourceLanguage'=>'en_us',
+	'language'=>'zh_cn',
+	'sourceLanguage'=>'en_us',
 	'theme'=>'classic',
 
 	// preloading 'log' component
@@ -25,14 +25,14 @@ return array(
 
 	'modules'=>array(
 		// uncomment the following to enable the Gii tool
-		/*
+
 		'gii'=>array(
 			'class'=>'system.gii.GiiModule',
-			'password'=>'Enter Your Password Here',
+			'password'=>'111111',
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			'ipFilters'=>array('127.0.0.1','::1'),
 		),
-		*/
+
 	),
 
 	// application components
