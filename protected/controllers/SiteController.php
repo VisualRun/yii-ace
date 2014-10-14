@@ -1,6 +1,6 @@
 <?php
 
-class SiteController extends Controller
+class SiteController extends AController
 {
 	public $layout = '//layouts/column2';
 	public $defaultAction = 'login';

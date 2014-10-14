@@ -40,6 +40,7 @@ return array(
 		'user'=>array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
+			'loginUrl' => array('site/login'),
 			'returnUrl' => array('/home/index'),
 		),
 

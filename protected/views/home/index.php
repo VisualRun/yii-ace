@@ -313,7 +313,7 @@
                         <li class="divider"></li>
 
                         <li>
-                            <a href="#">
+                            <a href="<?php echo $this->createUrl('/site/logout');?>">
                                 <i class="ace-icon fa fa-power-off"></i>
                                 Logout
                             </a>
@@ -2405,12 +2405,12 @@ window.jQuery || document.write("<script src='<?php echo Yii::app()->theme->base
 </script>
 
 <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl;?>/assets//css/ace.onpage-help.css" />
-<link rel="stylesheet" href="../docs/assets/js/themes/sunburst.css" />
+<!-- <link rel="stylesheet" href="../docs/assets/js/themes/sunburst.css" /> -->
 
 <script type="text/javascript"> ace.vars['base'] = '..'; </script>
 <script src="<?php echo Yii::app()->theme->baseUrl;?>/assets//js/ace/ace.onpage-help.js"></script>
-<script src="../docs/assets/js/rainbow.js"></script>
+<!-- <script src="../docs/assets/js/rainbow.js"></script>
 <script src="../docs/assets/js/language/generic.js"></script>
 <script src="../docs/assets/js/language/html.js"></script>
 <script src="../docs/assets/js/language/css.js"></script>
-<script src="../docs/assets/js/language/javascript.js"></script>
+<script src="../docs/assets/js/language/javascript.js"></script> -->
