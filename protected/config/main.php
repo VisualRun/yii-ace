@@ -40,8 +40,8 @@ return array(
 		'user'=>array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
-			'loginUrl' => array('site/login'),
-			'returnUrl' => array('/home/index'),
+			// 'loginUrl' => array('site/login'),
+			// 'returnUrl' => array('/home/index'),
 		),
 
 		// uncomment the following to enable URLs in path-format
@@ -86,8 +86,5 @@ return array(
 
 	// application-level parameters that can be accessed
 	// using Yii::app()->params['paramName']
-	'params'=>array(
-		// this is used in contact page
-		'adminEmail'=>'webmaster@example.com',
-	),
+	'params' => require(dirname(__FILE__).'/params.php'),
 );

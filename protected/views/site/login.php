@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/ace.onpage-help.css" />
-<body class="login-layout">
+<body class="login-layout light-login">
     <div class="main-container">
         <div class="main-content">
             <div class="row">
@@ -54,7 +54,7 @@
 
                                                 <div class="clearfix">
                                                     <label class="inline">
-                                                        <input type="checkbox" class="ace" />
+                                                        <?php echo $form->checkBox($model,'rememberMe',array('class'=>'ace')); ?>
                                                         <span class="lbl"> Remember Me</span>
                                                     </label>
 
@@ -223,7 +223,7 @@
                             </div><!-- /.signup-box -->
                         </div><!-- /.position-relative -->
 
-                        <div class="navbar-fixed-top align-right">
+                        <!-- <div class="navbar-fixed-top align-right">
                             <br />
                             &nbsp;
                             <a id="btn-login-dark" href="#">Dark</a>
@@ -236,7 +236,7 @@
                             &nbsp;
                             <a id="btn-login-light" href="#">Light</a>
                             &nbsp; &nbsp; &nbsp;
-                        </div>
+                        </div> -->
                     </div>
                 </div><!-- /.col -->
             </div><!-- /.row -->

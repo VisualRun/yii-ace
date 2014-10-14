@@ -3,7 +3,7 @@
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <meta charset="utf-8" />
-        <title><?php echo CHtml::encode($this->pageTitle);?> - Ace Admin</title>
+        <title><?php echo CHtml::encode($this->pageTitle);?> - <?php echo Yii::app()->name;?></title>
 
         <meta name="description" content="overview &amp; stats" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
@@ -40,6 +40,19 @@
         <!--[if lte IE 8]>
         <script src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/html5shiv.js"></script>
         <script src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/respond.min.js"></script>
+        <![endif]-->
+
+        <!--[if !IE]> -->
+        <script type="text/javascript">
+            window.jQuery || document.write("<script src='<?php echo Yii::app()->theme->baseUrl;?>/assets/js/jquery.min.js'>"+"<"+"/script>");
+        </script>
+
+        <!-- <![endif]-->
+
+        <!--[if IE]>
+        <script type="text/javascript">
+        window.jQuery || document.write("<script src='<?php echo Yii::app()->theme->baseUrl;?>/assets/js/jquery1x.min.js'>"+"<"+"/script>");
+        </script>
         <![endif]-->
     </head>
     <?php echo $content; ?>
