@@ -6,9 +6,9 @@
     <ul class="breadcrumb">
         <li>
             <i class="ace-icon fa fa-home home-icon"></i>
-            <a href="#">Home</a>
+            <a href="<?php  echo $this->createUrl('/home/index'); ?>">首页</a>
         </li>
-        <li class="active">Dashboard</li>
+        <li class="active">控制台</li>
     </ul><!-- /.breadcrumb -->
 
     <!-- #section:basics/content.searchbox -->

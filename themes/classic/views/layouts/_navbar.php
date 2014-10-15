@@ -63,32 +63,6 @@
                         <li>
                             <a href="#">
                                 <div class="clearfix">
-                                    <span class="pull-left">Hardware Upgrade</span>
-                                    <span class="pull-right">35%</span>
-                                </div>
-
-                                <div class="progress progress-mini">
-                                    <div style="width:35%" class="progress-bar progress-bar-danger"></div>
-                                </div>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#">
-                                <div class="clearfix">
-                                    <span class="pull-left">Unit Testing</span>
-                                    <span class="pull-right">15%</span>
-                                </div>
-
-                                <div class="progress progress-mini">
-                                    <div style="width:15%" class="progress-bar progress-bar-warning"></div>
-                                </div>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#">
-                                <div class="clearfix">
                                     <span class="pull-left">Bug Fixes</span>
                                     <span class="pull-right">90%</span>
                                 </div>
@@ -287,8 +261,8 @@
                     <a data-toggle="dropdown" href="#" class="dropdown-toggle">
                         <img class="nav-user-photo" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/avatars/user.jpg" alt="Jason's Photo" />
                         <span class="user-info">
-                            <small>Welcome,</small>
-                            Jason
+                            <small>欢迎回来,</small>
+                            <?php echo Yii::app()->user->name; ?>
                         </span>
 
                         <i class="ace-icon fa fa-caret-down"></i>

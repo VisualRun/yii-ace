@@ -1,10 +1,10 @@
 <div class="page-header">
     <h1>
-        Dashboard
-        <small>
+        控制台
+        <!-- <small>
             <i class="ace-icon fa fa-angle-double-right"></i>
             overview &amp; stats
-        </small>
+        </small> -->
     </h1>
 </div><!-- /.page-header -->
 <div class="row">

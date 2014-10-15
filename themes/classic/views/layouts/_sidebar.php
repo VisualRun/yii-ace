@@ -37,13 +37,83 @@
     </div><!-- /.sidebar-shortcuts -->
 
     <ul class="nav nav-list">
-        <li class="active">
-            <a href="index.html">
+        <li <?php if(Yii::app()->controller->id == 'home'): ?>class="active"<?php endif; ?>>
+            <a href="<?php  echo $this->createUrl('/home/index'); ?>">
                 <i class="menu-icon fa fa-tachometer"></i>
-                <span class="menu-text"> Dashboard </span>
+                <span class="menu-text"> 控制台 </span>
             </a>
 
             <b class="arrow"></b>
+        </li>
+        <li <?php if(Yii::app()->controller->id == 'user'): ?>class="active"<?php else:?>class="hsub"<?php endif; ?>>
+            <a href="#" class="dropdown-toggle">
+                <i class="menu-icon fa fa-list-alt"></i>
+                <span class="menu-text"> 个人中心 </span>
+
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+
+            <b class="arrow"></b>
+
+            <ul class="submenu">
+                <li class="">
+                    <a href="jqgrid.html">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        其他
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+                <li class="">
+                    <a href="jqgrid.html">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        其他
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+                <li class="">
+                    <a href="jqgrid.html">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        其他
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+                <li class="">
+                    <a href="jqgrid.html">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        其他
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+                <li class="">
+                    <a href="jqgrid.html">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        其他
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+                <li <?php if($this->getAction()->getId() == 'index'): ?>class="active"<?php endif; ?>>
+                    <a href="<?php  echo $this->createUrl('/user/index'); ?>">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        首页
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
+                <li class="">
+                    <a href="jqgrid.html">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        其他
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+            </ul>
         </li>
 
         <li class="">

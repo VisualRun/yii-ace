@@ -1,6 +1,5 @@
 <?php
-
-class HomeController extends Controller
+class UserController extends Controller
 {
 
 	public $layout = '//layouts/column1';
@@ -12,12 +11,12 @@ class HomeController extends Controller
 
 	public function actionIndex()
 	{
-		$this->pageTitle = '控制台';
+		$this->pageTitle = '个人中心';
 		$this->render('index');
 	}
 
 	public function actionWelcome()
 	{
-		$this->render('welcome');
 	}
-}
+}	
+?>
