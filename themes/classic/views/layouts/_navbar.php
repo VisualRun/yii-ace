@@ -262,7 +262,7 @@
                         <img class="nav-user-photo" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/avatars/user.jpg" alt="Jason's Photo" />
                         <span class="user-info">
                             <small>欢迎回来,</small>
-                            <?php echo Yii::app()->user->name; ?>
+                            <?php echo Yii::app()->user->getState('realname'); ?>
                         </span>
 
                         <i class="ace-icon fa fa-caret-down"></i>
@@ -270,14 +270,14 @@
 
                     <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
                         <li>
-                            <a href="#">
+                            <a href="<?php echo $this->createUrl('/user/edit',array('id'=>Yii::app()->user->id));?>">
                                 <i class="ace-icon fa fa-cog"></i>
                                 Settings
                             </a>
                         </li>
 
                         <li>
-                            <a href="profile.html">
+                            <a href="<?php echo $this->createUrl('/user/profile',array('id'=>Yii::app()->user->id));?>">
                                 <i class="ace-icon fa fa-user"></i>
                                 Profile
                             </a>

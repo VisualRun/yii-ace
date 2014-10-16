@@ -7,7 +7,7 @@
  */
 class UserIdentity extends CUserIdentity
 {
-	// private $_id;
+	private $_id;
 	
 	/**
 	 * Authenticates a user.
@@ -19,25 +19,29 @@ class UserIdentity extends CUserIdentity
 	 */
 	public function authenticate()
 	{
-		$users=array(
-			// username => password
-			'demo'=>'demo',
-			'admin'=>'admin',
-		);
-		if(!isset($users[$this->username]))
+		$user=User::model()->findByAttributes(array('account'=>$this->username,'status'=>1));
+
+		if($user===null)
 			$this->errorCode=self::ERROR_USERNAME_INVALID;
-		elseif($users[$this->username]!==$this->password)
+		else if(!$user->validatePassword($this->password))
 			$this->errorCode=self::ERROR_PASSWORD_INVALID;
 		else
+		{
+			$this->_id=$user->id;
+			$this->setState('type',$user->typeId);
+			$this->setState('realname',$user->realname);
 			$this->errorCode=self::ERROR_NONE;
-		return !$this->errorCode;
+			$user->logNum++;
+			$user->save();
+		}
+		return $this->errorCode==self::ERROR_NONE;
 	}
 
 	/**
 	 * @return integer the ID of the user record
 	 */
-	// public function getId()
-	// {
-	// 	return $this->_id;
-	// }
+	public function getId()
+	{
+		return $this->_id;
+	}
 }
