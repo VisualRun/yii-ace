@@ -1,4 +1,4 @@
-<div id="sidebar" class="sidebar responsive">
+<div id="sidebar" class="sidebar responsive sidebar-fixed">
     <script type="text/javascript">
         try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
     </script>

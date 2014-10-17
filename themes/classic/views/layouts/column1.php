@@ -17,7 +17,6 @@
         <!-- /section:basics/content.breadcrumbs -->
         <div class="page-content">
             <!-- #section:settings.box -->
-            <?php include "_settings_box.php";?>
             <!-- /section:settings.box -->
 
             <?php echo $content; ?>
