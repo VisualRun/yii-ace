@@ -18,9 +18,18 @@
         <div class="page-content">
             <!-- #section:settings.box -->
             <!-- /section:settings.box -->
-
-            <?php echo $content; ?>
-
+            <div class="page-header">
+                <h1>
+                    控制台
+                    <!-- <small>
+                        <i class="ace-icon fa fa-angle-double-right"></i>
+                        overview &amp; stats
+                    </small> -->
+                </h1>
+            </div><!-- /.page-header -->
+            <div class="row">
+                <?php echo $content; ?>
+            </div>
         </div><!-- /.page-content -->
     </div><!-- /.main-content -->
     <?php include "_footer.php";?>

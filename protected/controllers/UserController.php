@@ -2,8 +2,6 @@
 class UserController extends Controller
 {
 
-	public $layout = '//layouts/column1';
-
     public function   init()
     {
         parent::init();
@@ -15,8 +13,20 @@ class UserController extends Controller
 		$this->render('index');
 	}
 
-	public function actionWelcome()
+	public function actionProfile()
 	{
+    $user_id = Yii::app()->user->id;
+    $model = User::model()->findByPk($user_id);
+    if(empty($model))
+      Yii::app()->end();
+
+    $this->render('profile',$model);
 	}
-}	
+
+  public function actionSetting()
+  {
+
+    $this->render('setting');
+  }
+}
 ?>

@@ -22,7 +22,7 @@ class Helpers
                 		'item'=>array(
                 		),
                 	),
-                	
+
                 	'task'=>array(
                 		'text'=>'任务中心',
                 		'href'=>'#',
@@ -39,7 +39,8 @@ class Helpers
                 		'href'=>'#',
                 		'class'=>'fa-tag',
                 		'item'=>array(
-                			array('text'=>'个人信息','href'=>Yii::app()->createUrl('/user/index'),'action'=>array('index')),
+					array('text'=>'个人提醒','href'=>Yii::app()->createUrl('/user/message'),'action'=>array('message')),
+                			array('text'=>'个人资料','href'=>Yii::app()->createUrl('/user/profile'),'action'=>array('profile')),
                 			array('text'=>'修改密码','href'=>Yii::app()->createUrl('/user/passwdedit'),'action'=>array('passwdedit')),
                 		),
                 	),
@@ -48,10 +49,8 @@ class Helpers
                 		'href'=>'#',
                 		'class'=>'fa-pencil-square-o',
                 		'item'=>array(
-                			array('text'=>'1212','href'=>'#','action'=>array('index')),
-                			array('text'=>'1212','href'=>'#','action'=>array('index')),
-                			array('text'=>'1212','href'=>'#','action'=>array('index')),
-                			array('text'=>'1212','href'=>'#','action'=>array('index')),
+                			array('text'=>'部门管理','href'=>Yii::app()->createUrl('/admin/deptment'),'action'=>array('deptment')),
+                			array('text'=>'岗位管理','href'=>Yii::app()->createUrl('/admin/workplace'),'action'=>array('workplace')),
                 		),
                 	),
                 );
@@ -65,7 +64,7 @@ class Helpers
                 		'item'=>array(
                 		),
                 	),
-                	
+
                 	'task'=>array(
                 		'text'=>'任务中心',
                 		'href'=>'#',
@@ -82,7 +81,8 @@ class Helpers
                 		'href'=>'#',
                 		'class'=>'fa-tag',
                 		'item'=>array(
-                			array('text'=>'个人信息','href'=>Yii::app()->createUrl('/user/index'),'action'=>array('index')),
+					array('text'=>'个人提醒','href'=>Yii::app()->createUrl('/user/message'),'action'=>array('message')),
+                			array('text'=>'个人资料','href'=>Yii::app()->createUrl('/user/profile'),'action'=>array('profile')),
                 			array('text'=>'修改密码','href'=>Yii::app()->createUrl('/user/passwdedit'),'action'=>array('passwdedit')),
                 		),
                 	),
@@ -97,7 +97,7 @@ class Helpers
                 		'item'=>array(
                 		),
                 	),
-                	
+
                 	'task'=>array(
                 		'text'=>'任务中心',
                 		'href'=>'#',
@@ -114,7 +114,8 @@ class Helpers
                 		'href'=>'#',
                 		'class'=>'fa-tag',
                 		'item'=>array(
-                			array('text'=>'个人信息','href'=>Yii::app()->createUrl('/user/index'),'action'=>array('index')),
+					array('text'=>'个人提醒','href'=>Yii::app()->createUrl('/user/message'),'action'=>array('message')),
+                			array('text'=>'个人资料','href'=>Yii::app()->createUrl('/user/profile'),'action'=>array('profile')),
                 			array('text'=>'修改密码','href'=>Yii::app()->createUrl('/user/passwdedit'),'action'=>array('passwdedit')),
                 		),
                 	),

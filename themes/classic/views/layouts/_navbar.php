@@ -60,19 +60,6 @@
                             </a>
                         </li>
 
-                        <li>
-                            <a href="#">
-                                <div class="clearfix">
-                                    <span class="pull-left">Bug Fixes</span>
-                                    <span class="pull-right">90%</span>
-                                </div>
-
-                                <div class="progress progress-mini progress-striped active">
-                                    <div style="width:90%" class="progress-bar progress-bar-success"></div>
-                                </div>
-                            </a>
-                        </li>
-
                         <li class="dropdown-footer">
                             <a href="#">
                                 See tasks with details
@@ -102,37 +89,6 @@
                                         New Comments
                                     </span>
                                     <span class="pull-right badge badge-info">+12</span>
-                                </div>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#">
-                                <i class="btn btn-xs btn-primary fa fa-user"></i>
-                                Bob just signed up as an editor ...
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#">
-                                <div class="clearfix">
-                                    <span class="pull-left">
-                                        <i class="btn btn-xs no-hover btn-success fa fa-shopping-cart"></i>
-                                        New Orders
-                                    </span>
-                                    <span class="pull-right badge badge-success">+8</span>
-                                </div>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#">
-                                <div class="clearfix">
-                                    <span class="pull-left">
-                                        <i class="btn btn-xs no-hover btn-info fa fa-twitter"></i>
-                                        Followers
-                                    </span>
-                                    <span class="pull-right badge badge-info">+11</span>
                                 </div>
                             </a>
                         </li>
@@ -176,74 +132,6 @@
                                         </span>
                                     </a>
                                 </li>
-
-                                <li>
-                                    <a href="#">
-                                        <img src="<?php echo Yii::app()->theme->baseUrl;?>/assets/avatars/avatar3.png" class="msg-photo" alt="Susan's Avatar" />
-                                        <span class="msg-body">
-                                            <span class="msg-title">
-                                                <span class="blue">Susan:</span>
-                                                Vestibulum id ligula porta felis euismod ...
-                                            </span>
-
-                                            <span class="msg-time">
-                                                <i class="ace-icon fa fa-clock-o"></i>
-                                                <span>20 minutes ago</span>
-                                            </span>
-                                        </span>
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="#">
-                                        <img src="<?php echo Yii::app()->theme->baseUrl;?>/assets/avatars/avatar4.png" class="msg-photo" alt="Bob's Avatar" />
-                                        <span class="msg-body">
-                                            <span class="msg-title">
-                                                <span class="blue">Bob:</span>
-                                                Nullam quis risus eget urna mollis ornare ...
-                                            </span>
-
-                                            <span class="msg-time">
-                                                <i class="ace-icon fa fa-clock-o"></i>
-                                                <span>3:15 pm</span>
-                                            </span>
-                                        </span>
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="#">
-                                        <img src="<?php echo Yii::app()->theme->baseUrl;?>/assets/avatars/avatar2.png" class="msg-photo" alt="Kate's Avatar" />
-                                        <span class="msg-body">
-                                            <span class="msg-title">
-                                                <span class="blue">Kate:</span>
-                                                Ciao sociis natoque eget urna mollis ornare ...
-                                            </span>
-
-                                            <span class="msg-time">
-                                                <i class="ace-icon fa fa-clock-o"></i>
-                                                <span>1:33 pm</span>
-                                            </span>
-                                        </span>
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="#">
-                                        <img src="<?php echo Yii::app()->theme->baseUrl;?>/assets/avatars/avatar5.png" class="msg-photo" alt="Fred's Avatar" />
-                                        <span class="msg-body">
-                                            <span class="msg-title">
-                                                <span class="blue">Fred:</span>
-                                                Vestibulum id penatibus et auctor  ...
-                                            </span>
-
-                                            <span class="msg-time">
-                                                <i class="ace-icon fa fa-clock-o"></i>
-                                                <span>10:09 am</span>
-                                            </span>
-                                        </span>
-                                    </a>
-                                </li>
                             </ul>
                         </li>
 
@@ -259,7 +147,7 @@
                 <!-- #section:basics/navbar.user_menu -->
                 <li class="light-blue">
                     <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-                        <img class="nav-user-photo" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/avatars/user.jpg" alt="Jason's Photo" />
+                        <img class="nav-user-photo" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/avatars/avatar2.png" alt="avatar2's Photo" />
                         <span class="user-info">
                             <small>欢迎回来,</small>
                             <?php echo Yii::app()->user->getState('realname'); ?>
@@ -270,16 +158,16 @@
 
                     <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
                         <li>
-                            <a href="<?php echo $this->createUrl('/user/edit',array('id'=>Yii::app()->user->id));?>">
+                            <a href="<?php echo $this->createUrl('/user/setting');?>">
                                 <i class="ace-icon fa fa-cog"></i>
-                                Settings
+                               	设置
                             </a>
                         </li>
 
                         <li>
-                            <a href="<?php echo $this->createUrl('/user/profile',array('id'=>Yii::app()->user->id));?>">
+                            <a href="<?php echo $this->createUrl('/user/profile');?>">
                                 <i class="ace-icon fa fa-user"></i>
-                                Profile
+                                个人资料
                             </a>
                         </li>
 
@@ -288,7 +176,7 @@
                         <li>
                             <a href="<?php echo $this->createUrl('/site/logout');?>">
                                 <i class="ace-icon fa fa-power-off"></i>
-                                Logout
+                                退出
                             </a>
                         </li>
                     </ul>
