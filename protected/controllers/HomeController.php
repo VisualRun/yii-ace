@@ -3,8 +3,6 @@
 class HomeController extends Controller
 {
 
-	public $layout = '//layouts/column1';
-
     public function   init()
     {
         parent::init();
@@ -12,6 +10,7 @@ class HomeController extends Controller
 
 	public function actionIndex()
 	{
+		$this->pageTitle = '控制台';
 		$this->render('index');
 	}
 

@@ -1,5 +1,6 @@
 assets/*
 !assets/.gitignore
+*.php~
 protected/runtime/*
 !protected/runtime/.gitignore
 protected/data/*.db

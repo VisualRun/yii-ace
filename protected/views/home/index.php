@@ -1,2196 +1,1175 @@
-<!-- #section:basics/navbar.layout -->
-<div id="navbar" class="navbar navbar-default">
-    <script type="text/javascript">
-        try{ace.settings.check('navbar' , 'fixed')}catch(e){}
-    </script>
 
-    <div class="navbar-container" id="navbar-container">
-        <!-- #section:basics/sidebar.mobile.toggle -->
-        <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler">
-            <span class="sr-only">Toggle sidebar</span>
 
-            <span class="icon-bar"></span>
-
-            <span class="icon-bar"></span>
-
-            <span class="icon-bar"></span>
+<div class="col-xs-12">
+    <!-- PAGE CONTENT BEGINS -->
+    <div class="alert alert-block alert-success">
+        <button type="button" class="close" data-dismiss="alert">
+            <i class="ace-icon fa fa-times"></i>
         </button>
 
-        <!-- /section:basics/sidebar.mobile.toggle -->
-        <div class="navbar-header pull-left">
-            <!-- #section:basics/navbar.layout.brand -->
-            <a href="#" class="navbar-brand">
-                <small>
-                    <i class="fa fa-leaf"></i>
-                    Ace Admin
-                </small>
-            </a>
+        <i class="ace-icon fa fa-check green"></i>
 
-            <!-- /section:basics/navbar.layout.brand -->
+        Welcome to
+        <strong class="green">
+            Ace
+            <small>(v1.3)</small>
+        </strong>,
+the lightweight, feature-rich and easy to use admin template.
+    </div>
 
-            <!-- #section:basics/navbar.toggle -->
+    <div class="row">
+        <div class="space-6"></div>
 
-            <!-- /section:basics/navbar.toggle -->
+        <div class="col-sm-7 infobox-container">
+            <!-- #section:pages/dashboard.infobox -->
+            <div class="infobox infobox-green">
+                <div class="infobox-icon">
+                    <i class="ace-icon fa fa-comments"></i>
+                </div>
+
+                <div class="infobox-data">
+                    <span class="infobox-data-number">32</span>
+                    <div class="infobox-content">comments + 2 reviews</div>
+                </div>
+
+                <!-- #section:pages/dashboard.infobox.stat -->
+                <div class="stat stat-success">8%</div>
+
+                <!-- /section:pages/dashboard.infobox.stat -->
+            </div>
+
+            <div class="infobox infobox-blue">
+                <div class="infobox-icon">
+                    <i class="ace-icon fa fa-twitter"></i>
+                </div>
+
+                <div class="infobox-data">
+                    <span class="infobox-data-number">11</span>
+                    <div class="infobox-content">new followers</div>
+                </div>
+
+                <div class="badge badge-success">
+                    +32%
+                    <i class="ace-icon fa fa-arrow-up"></i>
+                </div>
+            </div>
+
+            <div class="infobox infobox-pink">
+                <div class="infobox-icon">
+                    <i class="ace-icon fa fa-shopping-cart"></i>
+                </div>
+
+                <div class="infobox-data">
+                    <span class="infobox-data-number">8</span>
+                    <div class="infobox-content">new orders</div>
+                </div>
+                <div class="stat stat-important">4%</div>
+            </div>
+
+            <div class="infobox infobox-red">
+                <div class="infobox-icon">
+                    <i class="ace-icon fa fa-flask"></i>
+                </div>
+
+                <div class="infobox-data">
+                    <span class="infobox-data-number">7</span>
+                    <div class="infobox-content">experiments</div>
+                </div>
+            </div>
+
+            <div class="infobox infobox-orange2">
+                <!-- #section:pages/dashboard.infobox.sparkline -->
+                <div class="infobox-chart">
+                    <span class="sparkline" data-values="196,128,202,177,154,94,100,170,224"></span>
+                </div>
+
+                <!-- /section:pages/dashboard.infobox.sparkline -->
+                <div class="infobox-data">
+                    <span class="infobox-data-number">6,251</span>
+                    <div class="infobox-content">pageviews</div>
+                </div>
+
+                <div class="badge badge-success">
+                    7.2%
+                    <i class="ace-icon fa fa-arrow-up"></i>
+                </div>
+            </div>
+
+            <div class="infobox infobox-blue2">
+                <div class="infobox-progress">
+                    <!-- #section:pages/dashboard.infobox.easypiechart -->
+                    <div class="easy-pie-chart percentage" data-percent="42" data-size="46">
+                        <span class="percent">42</span>%
+                    </div>
+
+                    <!-- /section:pages/dashboard.infobox.easypiechart -->
+                </div>
+
+                <div class="infobox-data">
+                    <span class="infobox-text">traffic used</span>
+
+                    <div class="infobox-content">
+                        <span class="bigger-110">~</span>
+                        58GB remaining
+                    </div>
+                </div>
+            </div>
+
+            <!-- /section:pages/dashboard.infobox -->
+            <div class="space-6"></div>
+
+            <!-- #section:pages/dashboard.infobox.dark -->
+            <div class="infobox infobox-green infobox-small infobox-dark">
+                <div class="infobox-progress">
+                    <!-- #section:pages/dashboard.infobox.easypiechart -->
+                    <div class="easy-pie-chart percentage" data-percent="61" data-size="39">
+                        <span class="percent">61</span>%
+                    </div>
+
+                    <!-- /section:pages/dashboard.infobox.easypiechart -->
+                </div>
+
+                <div class="infobox-data">
+                    <div class="infobox-content">Task</div>
+                    <div class="infobox-content">Completion</div>
+                </div>
+            </div>
+
+            <div class="infobox infobox-blue infobox-small infobox-dark">
+                <!-- #section:pages/dashboard.infobox.sparkline -->
+                <div class="infobox-chart">
+                    <span class="sparkline" data-values="3,4,2,3,4,4,2,2"></span>
+                </div>
+
+                <!-- /section:pages/dashboard.infobox.sparkline -->
+                <div class="infobox-data">
+                    <div class="infobox-content">Earnings</div>
+                    <div class="infobox-content">$32,000</div>
+                </div>
+            </div>
+
+            <div class="infobox infobox-grey infobox-small infobox-dark">
+                <div class="infobox-icon">
+                    <i class="ace-icon fa fa-download"></i>
+                </div>
+
+                <div class="infobox-data">
+                    <div class="infobox-content">Downloads</div>
+                    <div class="infobox-content">1,205</div>
+                </div>
+            </div>
+
+            <!-- /section:pages/dashboard.infobox.dark -->
         </div>
 
-        <!-- #section:basics/navbar.dropdown -->
-        <div class="navbar-buttons navbar-header pull-right" role="navigation">
-            <ul class="nav ace-nav">
-                <li class="grey">
-                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                        <i class="ace-icon fa fa-tasks"></i>
-                        <span class="badge badge-grey">4</span>
-                    </a>
+        <div class="vspace-12-sm"></div>
 
-                    <ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
-                        <li class="dropdown-header">
-                            <i class="ace-icon fa fa-check"></i>
-                            4 Tasks to complete
-                        </li>
+        <div class="col-sm-5">
+            <div class="widget-box">
+                <div class="widget-header widget-header-flat widget-header-small">
+                    <h5 class="widget-title">
+                        <i class="ace-icon fa fa-signal"></i>
+                        Traffic Sources
+                    </h5>
 
-                        <li>
-                            <a href="#">
-                                <div class="clearfix">
-                                    <span class="pull-left">Software Update</span>
-                                    <span class="pull-right">65%</span>
-                                </div>
+                    <div class="widget-toolbar no-border">
+                        <div class="inline dropdown-hover">
+                            <button class="btn btn-minier btn-primary">
+                                This Week
+                                <i class="ace-icon fa fa-angle-down icon-on-right bigger-110"></i>
+                            </button>
 
-                                <div class="progress progress-mini">
-                                    <div style="width:65%" class="progress-bar"></div>
-                                </div>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#">
-                                <div class="clearfix">
-                                    <span class="pull-left">Hardware Upgrade</span>
-                                    <span class="pull-right">35%</span>
-                                </div>
-
-                                <div class="progress progress-mini">
-                                    <div style="width:35%" class="progress-bar progress-bar-danger"></div>
-                                </div>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#">
-                                <div class="clearfix">
-                                    <span class="pull-left">Unit Testing</span>
-                                    <span class="pull-right">15%</span>
-                                </div>
-
-                                <div class="progress progress-mini">
-                                    <div style="width:15%" class="progress-bar progress-bar-warning"></div>
-                                </div>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#">
-                                <div class="clearfix">
-                                    <span class="pull-left">Bug Fixes</span>
-                                    <span class="pull-right">90%</span>
-                                </div>
-
-                                <div class="progress progress-mini progress-striped active">
-                                    <div style="width:90%" class="progress-bar progress-bar-success"></div>
-                                </div>
-                            </a>
-                        </li>
-
-                        <li class="dropdown-footer">
-                            <a href="#">
-                                See tasks with details
-                                <i class="ace-icon fa fa-arrow-right"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="purple">
-                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                        <i class="ace-icon fa fa-bell icon-animated-bell"></i>
-                        <span class="badge badge-important">8</span>
-                    </a>
-
-                    <ul class="dropdown-menu-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close">
-                        <li class="dropdown-header">
-                            <i class="ace-icon fa fa-exclamation-triangle"></i>
-                            8 Notifications
-                        </li>
-
-                        <li>
-                            <a href="#">
-                                <div class="clearfix">
-                                    <span class="pull-left">
-                                        <i class="btn btn-xs no-hover btn-pink fa fa-comment"></i>
-                                        New Comments
-                                    </span>
-                                    <span class="pull-right badge badge-info">+12</span>
-                                </div>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#">
-                                <i class="btn btn-xs btn-primary fa fa-user"></i>
-                                Bob just signed up as an editor ...
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#">
-                                <div class="clearfix">
-                                    <span class="pull-left">
-                                        <i class="btn btn-xs no-hover btn-success fa fa-shopping-cart"></i>
-                                        New Orders
-                                    </span>
-                                    <span class="pull-right badge badge-success">+8</span>
-                                </div>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#">
-                                <div class="clearfix">
-                                    <span class="pull-left">
-                                        <i class="btn btn-xs no-hover btn-info fa fa-twitter"></i>
-                                        Followers
-                                    </span>
-                                    <span class="pull-right badge badge-info">+11</span>
-                                </div>
-                            </a>
-                        </li>
-
-                        <li class="dropdown-footer">
-                            <a href="#">
-                                See all notifications
-                                <i class="ace-icon fa fa-arrow-right"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="green">
-                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                        <i class="ace-icon fa fa-envelope icon-animated-vertical"></i>
-                        <span class="badge badge-success">5</span>
-                    </a>
-
-                    <ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
-                        <li class="dropdown-header">
-                            <i class="ace-icon fa fa-envelope-o"></i>
-                            5 Messages
-                        </li>
-
-                        <li class="dropdown-content">
-                            <ul class="dropdown-menu dropdown-navbar">
-                                <li>
-                                    <a href="#">
-                                        <img src="<?php echo Yii::app()->theme->baseUrl;?>/assets//avatars/avatar.png" class="msg-photo" alt="Alex's Avatar" />
-                                        <span class="msg-body">
-                                            <span class="msg-title">
-                                                <span class="blue">Alex:</span>
-                                                Ciao sociis natoque penatibus et auctor ...
-                                            </span>
-
-                                            <span class="msg-time">
-                                                <i class="ace-icon fa fa-clock-o"></i>
-                                                <span>a moment ago</span>
-                                            </span>
-                                        </span>
+                            <ul class="dropdown-menu dropdown-menu-right dropdown-125 dropdown-lighter dropdown-close dropdown-caret">
+                                <li class="active">
+                                    <a href="#" class="blue">
+                                        <i class="ace-icon fa fa-caret-right bigger-110">&nbsp;</i>
+                                        This Week
                                     </a>
                                 </li>
 
                                 <li>
                                     <a href="#">
-                                        <img src="<?php echo Yii::app()->theme->baseUrl;?>/assets//avatars/avatar3.png" class="msg-photo" alt="Susan's Avatar" />
-                                        <span class="msg-body">
-                                            <span class="msg-title">
-                                                <span class="blue">Susan:</span>
-                                                Vestibulum id ligula porta felis euismod ...
-                                            </span>
-
-                                            <span class="msg-time">
-                                                <i class="ace-icon fa fa-clock-o"></i>
-                                                <span>20 minutes ago</span>
-                                            </span>
-                                        </span>
+                                        <i class="ace-icon fa fa-caret-right bigger-110 invisible">&nbsp;</i>
+                                        Last Week
                                     </a>
                                 </li>
 
                                 <li>
                                     <a href="#">
-                                        <img src="<?php echo Yii::app()->theme->baseUrl;?>/assets//avatars/avatar4.png" class="msg-photo" alt="Bob's Avatar" />
-                                        <span class="msg-body">
-                                            <span class="msg-title">
-                                                <span class="blue">Bob:</span>
-                                                Nullam quis risus eget urna mollis ornare ...
-                                            </span>
-
-                                            <span class="msg-time">
-                                                <i class="ace-icon fa fa-clock-o"></i>
-                                                <span>3:15 pm</span>
-                                            </span>
-                                        </span>
+                                        <i class="ace-icon fa fa-caret-right bigger-110 invisible">&nbsp;</i>
+                                        This Month
                                     </a>
                                 </li>
 
                                 <li>
                                     <a href="#">
-                                        <img src="<?php echo Yii::app()->theme->baseUrl;?>/assets//avatars/avatar2.png" class="msg-photo" alt="Kate's Avatar" />
-                                        <span class="msg-body">
-                                            <span class="msg-title">
-                                                <span class="blue">Kate:</span>
-                                                Ciao sociis natoque eget urna mollis ornare ...
-                                            </span>
-
-                                            <span class="msg-time">
-                                                <i class="ace-icon fa fa-clock-o"></i>
-                                                <span>1:33 pm</span>
-                                            </span>
-                                        </span>
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="#">
-                                        <img src="<?php echo Yii::app()->theme->baseUrl;?>/assets//avatars/avatar5.png" class="msg-photo" alt="Fred's Avatar" />
-                                        <span class="msg-body">
-                                            <span class="msg-title">
-                                                <span class="blue">Fred:</span>
-                                                Vestibulum id penatibus et auctor  ...
-                                            </span>
-
-                                            <span class="msg-time">
-                                                <i class="ace-icon fa fa-clock-o"></i>
-                                                <span>10:09 am</span>
-                                            </span>
-                                        </span>
+                                        <i class="ace-icon fa fa-caret-right bigger-110 invisible">&nbsp;</i>
+                                        Last Month
                                     </a>
                                 </li>
                             </ul>
-                        </li>
-
-                        <li class="dropdown-footer">
-                            <a href="inbox.html">
-                                See all messages
-                                <i class="ace-icon fa fa-arrow-right"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <!-- #section:basics/navbar.user_menu -->
-                <li class="light-blue">
-                    <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-                        <img class="nav-user-photo" src="<?php echo Yii::app()->theme->baseUrl;?>/assets//avatars/user.jpg" alt="Jason's Photo" />
-                        <span class="user-info">
-                            <small>Welcome,</small>
-                            Jason
-                        </span>
-
-                        <i class="ace-icon fa fa-caret-down"></i>
-                    </a>
-
-                    <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
-                        <li>
-                            <a href="#">
-                                <i class="ace-icon fa fa-cog"></i>
-                                Settings
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="profile.html">
-                                <i class="ace-icon fa fa-user"></i>
-                                Profile
-                            </a>
-                        </li>
-
-                        <li class="divider"></li>
-
-                        <li>
-                            <a href="#">
-                                <i class="ace-icon fa fa-power-off"></i>
-                                Logout
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <!-- /section:basics/navbar.user_menu -->
-            </ul>
-        </div>
-
-        <!-- /section:basics/navbar.dropdown -->
-    </div><!-- /.navbar-container -->
-</div>
-
-<!-- /section:basics/navbar.layout -->
-<div class="main-container" id="main-container">
-    <script type="text/javascript">
-        try{ace.settings.check('main-container' , 'fixed')}catch(e){}
-    </script>
-
-    <!-- #section:basics/sidebar -->
-    <div id="sidebar" class="sidebar                  responsive">
-        <script type="text/javascript">
-            try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
-        </script>
-
-        <div class="sidebar-shortcuts" id="sidebar-shortcuts">
-            <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
-                <button class="btn btn-success">
-                    <i class="ace-icon fa fa-signal"></i>
-                </button>
-
-                <button class="btn btn-info">
-                    <i class="ace-icon fa fa-pencil"></i>
-                </button>
-
-                <!-- #section:basics/sidebar.layout.shortcuts -->
-                <button class="btn btn-warning">
-                    <i class="ace-icon fa fa-users"></i>
-                </button>
-
-                <button class="btn btn-danger">
-                    <i class="ace-icon fa fa-cogs"></i>
-                </button>
-
-                <!-- /section:basics/sidebar.layout.shortcuts -->
-            </div>
-
-            <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
-                <span class="btn btn-success"></span>
-
-                <span class="btn btn-info"></span>
-
-                <span class="btn btn-warning"></span>
-
-                <span class="btn btn-danger"></span>
-            </div>
-        </div><!-- /.sidebar-shortcuts -->
-
-        <ul class="nav nav-list">
-            <li class="active">
-                <a href="index.html">
-                    <i class="menu-icon fa fa-tachometer"></i>
-                    <span class="menu-text"> Dashboard </span>
-                </a>
-
-                <b class="arrow"></b>
-            </li>
-
-            <li class="">
-                <a href="#" class="dropdown-toggle">
-                    <i class="menu-icon fa fa-desktop"></i>
-                    <span class="menu-text"> UI &amp; Elements </span>
-
-                    <b class="arrow fa fa-angle-down"></b>
-                </a>
-
-                <b class="arrow"></b>
-
-                <ul class="submenu">
-                    <li class="">
-                        <a href="#" class="dropdown-toggle">
-                            <i class="menu-icon fa fa-caret-right"></i>
-
-                            Layouts
-                            <b class="arrow fa fa-angle-down"></b>
-                        </a>
-
-                        <b class="arrow"></b>
-
-                        <ul class="submenu">
-                            <li class="">
-                                <a href="top-menu.html">
-                                    <i class="menu-icon fa fa-caret-right"></i>
-                                    Top Menu
-                                </a>
-
-                                <b class="arrow"></b>
-                            </li>
-
-                            <li class="">
-                                <a href="mobile-menu-1.html">
-                                    <i class="menu-icon fa fa-caret-right"></i>
-                                    Default Mobile Menu
-                                </a>
-
-                                <b class="arrow"></b>
-                            </li>
-
-                            <li class="">
-                                <a href="mobile-menu-2.html">
-                                    <i class="menu-icon fa fa-caret-right"></i>
-                                    Mobile Menu 2
-                                </a>
-
-                                <b class="arrow"></b>
-                            </li>
-
-                            <li class="">
-                                <a href="mobile-menu-3.html">
-                                    <i class="menu-icon fa fa-caret-right"></i>
-                                    Mobile Menu 3
-                                </a>
-
-                                <b class="arrow"></b>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li class="">
-                        <a href="typography.html">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            Typography
-                        </a>
-
-                        <b class="arrow"></b>
-                    </li>
-
-                    <li class="">
-                        <a href="elements.html">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            Elements
-                        </a>
-
-                        <b class="arrow"></b>
-                    </li>
-
-                    <li class="">
-                        <a href="buttons.html">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            Buttons &amp; Icons
-                        </a>
-
-                        <b class="arrow"></b>
-                    </li>
-
-                    <li class="">
-                        <a href="treeview.html">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            Treeview
-                        </a>
-
-                        <b class="arrow"></b>
-                    </li>
-
-                    <li class="">
-                        <a href="jquery-ui.html">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            jQuery UI
-                        </a>
-
-                        <b class="arrow"></b>
-                    </li>
-
-                    <li class="">
-                        <a href="nestable-list.html">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            Nestable Lists
-                        </a>
-
-                        <b class="arrow"></b>
-                    </li>
-
-                    <li class="">
-                        <a href="#" class="dropdown-toggle">
-                            <i class="menu-icon fa fa-caret-right"></i>
-
-                            Three Level Menu
-                            <b class="arrow fa fa-angle-down"></b>
-                        </a>
-
-                        <b class="arrow"></b>
-
-                        <ul class="submenu">
-                            <li class="">
-                                <a href="#">
-                                    <i class="menu-icon fa fa-leaf"></i>
-                                    Item #1
-                                </a>
-
-                                <b class="arrow"></b>
-                            </li>
-
-                            <li class="">
-                                <a href="#" class="dropdown-toggle">
-                                    <i class="menu-icon fa fa-pencil"></i>
-
-                                    4th level
-                                    <b class="arrow fa fa-angle-down"></b>
-                                </a>
-
-                                <b class="arrow"></b>
-
-                                <ul class="submenu">
-                                    <li class="">
-                                        <a href="#">
-                                            <i class="menu-icon fa fa-plus"></i>
-                                            Add Product
-                                        </a>
-
-                                        <b class="arrow"></b>
-                                    </li>
-
-                                    <li class="">
-                                        <a href="#">
-                                            <i class="menu-icon fa fa-eye"></i>
-                                            View Products
-                                        </a>
-
-                                        <b class="arrow"></b>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-
-            <li class="">
-                <a href="#" class="dropdown-toggle">
-                    <i class="menu-icon fa fa-list"></i>
-                    <span class="menu-text"> Tables </span>
-
-                    <b class="arrow fa fa-angle-down"></b>
-                </a>
-
-                <b class="arrow"></b>
-
-                <ul class="submenu">
-                    <li class="">
-                        <a href="tables.html">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            Simple &amp; Dynamic
-                        </a>
-
-                        <b class="arrow"></b>
-                    </li>
-
-                    <li class="">
-                        <a href="jqgrid.html">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            jqGrid plugin
-                        </a>
-
-                        <b class="arrow"></b>
-                    </li>
-                </ul>
-            </li>
-
-            <li class="">
-                <a href="#" class="dropdown-toggle">
-                    <i class="menu-icon fa fa-pencil-square-o"></i>
-                    <span class="menu-text"> Forms </span>
-
-                    <b class="arrow fa fa-angle-down"></b>
-                </a>
-
-                <b class="arrow"></b>
-
-                <ul class="submenu">
-                    <li class="">
-                        <a href="form-elements.html">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            Form Elements
-                        </a>
-
-                        <b class="arrow"></b>
-                    </li>
-
-                    <li class="">
-                        <a href="form-wizard.html">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            Wizard &amp; Validation
-                        </a>
-
-                        <b class="arrow"></b>
-                    </li>
-
-                    <li class="">
-                        <a href="wysiwyg.html">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            Wysiwyg &amp; Markdown
-                        </a>
-
-                        <b class="arrow"></b>
-                    </li>
-
-                    <li class="">
-                        <a href="dropzone.html">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            Dropzone File Upload
-                        </a>
-
-                        <b class="arrow"></b>
-                    </li>
-                </ul>
-            </li>
-
-            <li class="">
-                <a href="widgets.html">
-                    <i class="menu-icon fa fa-list-alt"></i>
-                    <span class="menu-text"> Widgets </span>
-                </a>
-
-                <b class="arrow"></b>
-            </li>
-
-            <li class="">
-                <a href="calendar.html">
-                    <i class="menu-icon fa fa-calendar"></i>
-
-                    <span class="menu-text">
-                        Calendar
-
-                        <!-- #section:basics/sidebar.layout.badge -->
-                        <span class="badge badge-transparent tooltip-error" title="2 Important Events">
-                            <i class="ace-icon fa fa-exclamation-triangle red bigger-130"></i>
-                        </span>
-
-                        <!-- /section:basics/sidebar.layout.badge -->
-                    </span>
-                </a>
-
-                <b class="arrow"></b>
-            </li>
-
-            <li class="">
-                <a href="gallery.html">
-                    <i class="menu-icon fa fa-picture-o"></i>
-                    <span class="menu-text"> Gallery </span>
-                </a>
-
-                <b class="arrow"></b>
-            </li>
-
-            <li class="">
-                <a href="#" class="dropdown-toggle">
-                    <i class="menu-icon fa fa-tag"></i>
-                    <span class="menu-text"> More Pages </span>
-
-                    <b class="arrow fa fa-angle-down"></b>
-                </a>
-
-                <b class="arrow"></b>
-
-                <ul class="submenu">
-                    <li class="">
-                        <a href="profile.html">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            User Profile
-                        </a>
-
-                        <b class="arrow"></b>
-                    </li>
-
-                    <li class="">
-                        <a href="inbox.html">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            Inbox
-                        </a>
-
-                        <b class="arrow"></b>
-                    </li>
-
-                    <li class="">
-                        <a href="pricing.html">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            Pricing Tables
-                        </a>
-
-                        <b class="arrow"></b>
-                    </li>
-
-                    <li class="">
-                        <a href="invoice.html">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            Invoice
-                        </a>
-
-                        <b class="arrow"></b>
-                    </li>
-
-                    <li class="">
-                        <a href="timeline.html">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            Timeline
-                        </a>
-
-                        <b class="arrow"></b>
-                    </li>
-
-                    <li class="">
-                        <a href="login.html">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            Login &amp; Register
-                        </a>
-
-                        <b class="arrow"></b>
-                    </li>
-                </ul>
-            </li>
-
-            <li class="">
-                <a href="#" class="dropdown-toggle">
-                    <i class="menu-icon fa fa-file-o"></i>
-
-                    <span class="menu-text">
-                        Other Pages
-
-                        <!-- #section:basics/sidebar.layout.badge -->
-                        <span class="badge badge-primary">5</span>
-
-                        <!-- /section:basics/sidebar.layout.badge -->
-                    </span>
-
-                    <b class="arrow fa fa-angle-down"></b>
-                </a>
-
-                <b class="arrow"></b>
-
-                <ul class="submenu">
-                    <li class="">
-                        <a href="faq.html">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            FAQ
-                        </a>
-
-                        <b class="arrow"></b>
-                    </li>
-
-                    <li class="">
-                        <a href="error-404.html">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            Error 404
-                        </a>
-
-                        <b class="arrow"></b>
-                    </li>
-
-                    <li class="">
-                        <a href="error-500.html">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            Error 500
-                        </a>
-
-                        <b class="arrow"></b>
-                    </li>
-
-                    <li class="">
-                        <a href="grid.html">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            Grid
-                        </a>
-
-                        <b class="arrow"></b>
-                    </li>
-
-                    <li class="">
-                        <a href="blank.html">
-                            <i class="menu-icon fa fa-caret-right"></i>
-                            Blank Page
-                        </a>
-
-                        <b class="arrow"></b>
-                    </li>
-                </ul>
-            </li>
-        </ul><!-- /.nav-list -->
-
-        <!-- #section:basics/sidebar.layout.minimize -->
-        <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
-            <i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
-        </div>
-
-        <!-- /section:basics/sidebar.layout.minimize -->
-        <script type="text/javascript">
-            try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
-        </script>
-    </div>
-
-    <!-- /section:basics/sidebar -->
-    <div class="main-content">
-        <!-- #section:basics/content.breadcrumbs -->
-        <div class="breadcrumbs" id="breadcrumbs">
-            <script type="text/javascript">
-                try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
-            </script>
-
-            <ul class="breadcrumb">
-                <li>
-                    <i class="ace-icon fa fa-home home-icon"></i>
-                    <a href="#">Home</a>
-                </li>
-                <li class="active">Dashboard</li>
-            </ul><!-- /.breadcrumb -->
-
-            <!-- #section:basics/content.searchbox -->
-            <div class="nav-search" id="nav-search">
-                <form class="form-search">
-                    <span class="input-icon">
-                        <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
-                        <i class="ace-icon fa fa-search nav-search-icon"></i>
-                    </span>
-                </form>
-            </div><!-- /.nav-search -->
-
-            <!-- /section:basics/content.searchbox -->
-        </div>
-
-        <!-- /section:basics/content.breadcrumbs -->
-        <div class="page-content">
-            <!-- #section:settings.box -->
-            <div class="ace-settings-container" id="ace-settings-container">
-                <div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
-                    <i class="ace-icon fa fa-cog bigger-150"></i>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="ace-settings-box clearfix" id="ace-settings-box">
-                    <div class="pull-left width-50">
-                        <!-- #section:settings.skins -->
-                        <div class="ace-settings-item">
-                            <div class="pull-left">
-                                <select id="skin-colorpicker" class="hide">
-                                    <option data-skin="no-skin" value="#438EB9">#438EB9</option>
-                                    <option data-skin="skin-1" value="#222A2D">#222A2D</option>
-                                    <option data-skin="skin-2" value="#C6487E">#C6487E</option>
-                                    <option data-skin="skin-3" value="#D0D0D0">#D0D0D0</option>
-                                </select>
+                <div class="widget-body">
+                    <div class="widget-main">
+                        <!-- #section:plugins/charts.flotchart -->
+                        <div id="piechart-placeholder"></div>
+
+                        <!-- /section:plugins/charts.flotchart -->
+                        <div class="hr hr8 hr-double"></div>
+
+                        <div class="clearfix">
+                            <!-- #section:custom/extra.grid -->
+                            <div class="grid3">
+                                <span class="grey">
+                                    <i class="ace-icon fa fa-facebook-square fa-2x blue"></i>
+                                    &nbsp; likes
+                                </span>
+                                <h4 class="bigger pull-right">1,255</h4>
                             </div>
-                            <span>&nbsp; Choose Skin</span>
+
+                            <div class="grid3">
+                                <span class="grey">
+                                    <i class="ace-icon fa fa-twitter-square fa-2x purple"></i>
+                                    &nbsp; tweets
+                                </span>
+                                <h4 class="bigger pull-right">941</h4>
+                            </div>
+
+                            <div class="grid3">
+                                <span class="grey">
+                                    <i class="ace-icon fa fa-pinterest-square fa-2x red"></i>
+                                    &nbsp; pins
+                                </span>
+                                <h4 class="bigger pull-right">1,050</h4>
+                            </div>
+
+                            <!-- /section:custom/extra.grid -->
                         </div>
+                    </div><!-- /.widget-main -->
+                </div><!-- /.widget-body -->
+            </div><!-- /.widget-box -->
+        </div><!-- /.col -->
+    </div><!-- /.row -->
 
-                        <!-- /section:settings.skins -->
+    <!-- #section:custom/extra.hr -->
+    <div class="hr hr32 hr-dotted"></div>
 
-                        <!-- #section:settings.navbar -->
-                        <div class="ace-settings-item">
-                            <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-navbar" />
-                            <label class="lbl" for="ace-settings-navbar"> Fixed Navbar</label>
-                        </div>
+    <!-- /section:custom/extra.hr -->
+    <div class="row">
+        <div class="col-sm-5">
+            <div class="widget-box transparent">
+                <div class="widget-header widget-header-flat">
+                    <h4 class="widget-title lighter">
+                        <i class="ace-icon fa fa-star orange"></i>
+                        Popular Domains
+                    </h4>
 
-                        <!-- /section:settings.navbar -->
-
-                        <!-- #section:settings.sidebar -->
-                        <div class="ace-settings-item">
-                            <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-sidebar" />
-                            <label class="lbl" for="ace-settings-sidebar"> Fixed Sidebar</label>
-                        </div>
-
-                        <!-- /section:settings.sidebar -->
-
-                        <!-- #section:settings.breadcrumbs -->
-                        <div class="ace-settings-item">
-                            <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-breadcrumbs" />
-                            <label class="lbl" for="ace-settings-breadcrumbs"> Fixed Breadcrumbs</label>
-                        </div>
-
-                        <!-- /section:settings.breadcrumbs -->
-
-                        <!-- #section:settings.rtl -->
-                        <div class="ace-settings-item">
-                            <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-rtl" />
-                            <label class="lbl" for="ace-settings-rtl"> Right To Left (rtl)</label>
-                        </div>
-
-                        <!-- /section:settings.rtl -->
-
-                        <!-- #section:settings.container -->
-                        <div class="ace-settings-item">
-                            <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-add-container" />
-                            <label class="lbl" for="ace-settings-add-container">
-                                Inside
-                                <b>.container</b>
-                            </label>
-                        </div>
-
-                        <!-- /section:settings.container -->
-                    </div><!-- /.pull-left -->
-
-                    <div class="pull-left width-50">
-                        <!-- #section:basics/sidebar.options -->
-                        <div class="ace-settings-item">
-                            <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-hover" />
-                            <label class="lbl" for="ace-settings-hover"> Submenu on Hover</label>
-                        </div>
-
-                        <div class="ace-settings-item">
-                            <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-compact" />
-                            <label class="lbl" for="ace-settings-compact"> Compact Sidebar</label>
-                        </div>
-
-                        <div class="ace-settings-item">
-                            <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-highlight" />
-                            <label class="lbl" for="ace-settings-highlight"> Alt. Active Item</label>
-                        </div>
-
-                        <!-- /section:basics/sidebar.options -->
-                    </div><!-- /.pull-left -->
-                </div><!-- /.ace-settings-box -->
-            </div><!-- /.ace-settings-container -->
-
-            <!-- /section:settings.box -->
-            <div class="page-header">
-                <h1>
-                    Dashboard
-                    <small>
-                        <i class="ace-icon fa fa-angle-double-right"></i>
-                        overview &amp; stats
-                    </small>
-                </h1>
-            </div><!-- /.page-header -->
-
-            <div class="row">
-                <div class="col-xs-12">
-                    <!-- PAGE CONTENT BEGINS -->
-                    <div class="alert alert-block alert-success">
-                        <button type="button" class="close" data-dismiss="alert">
-                            <i class="ace-icon fa fa-times"></i>
-                        </button>
-
-                        <i class="ace-icon fa fa-check green"></i>
-
-                        Welcome to
-                        <strong class="green">
-                            Ace
-                            <small>(v1.3)</small>
-                        </strong>,
-the lightweight, feature-rich and easy to use admin template.
+                    <div class="widget-toolbar">
+                        <a href="#" data-action="collapse">
+                            <i class="ace-icon fa fa-chevron-up"></i>
+                        </a>
                     </div>
+                </div>
 
-                    <div class="row">
-                        <div class="space-6"></div>
+                <div class="widget-body">
+                    <div class="widget-main no-padding">
+                        <table class="table table-bordered table-striped">
+                            <thead class="thin-border-bottom">
+                                <tr>
+                                    <th>
+                                        <i class="ace-icon fa fa-caret-right blue"></i>name
+                                    </th>
 
-                        <div class="col-sm-7 infobox-container">
-                            <!-- #section:pages/dashboard.infobox -->
-                            <div class="infobox infobox-green">
-                                <div class="infobox-icon">
-                                    <i class="ace-icon fa fa-comments"></i>
-                                </div>
+                                    <th>
+                                        <i class="ace-icon fa fa-caret-right blue"></i>price
+                                    </th>
 
-                                <div class="infobox-data">
-                                    <span class="infobox-data-number">32</span>
-                                    <div class="infobox-content">comments + 2 reviews</div>
-                                </div>
+                                    <th class="hidden-480">
+                                        <i class="ace-icon fa fa-caret-right blue"></i>status
+                                    </th>
+                                </tr>
+                            </thead>
 
-                                <!-- #section:pages/dashboard.infobox.stat -->
-                                <div class="stat stat-success">8%</div>
+                            <tbody>
+                                <tr>
+                                    <td>internet.com</td>
 
-                                <!-- /section:pages/dashboard.infobox.stat -->
-                            </div>
+                                    <td>
+                                        <small>
+                                            <s class="red">$29.99</s>
+                                        </small>
+                                        <b class="green">$19.99</b>
+                                    </td>
 
-                            <div class="infobox infobox-blue">
-                                <div class="infobox-icon">
-                                    <i class="ace-icon fa fa-twitter"></i>
-                                </div>
+                                    <td class="hidden-480">
+                                        <span class="label label-info arrowed-right arrowed-in">on sale</span>
+                                    </td>
+                                </tr>
 
-                                <div class="infobox-data">
-                                    <span class="infobox-data-number">11</span>
-                                    <div class="infobox-content">new followers</div>
-                                </div>
+                                <tr>
+                                    <td>online.com</td>
 
-                                <div class="badge badge-success">
-                                    +32%
-                                    <i class="ace-icon fa fa-arrow-up"></i>
-                                </div>
-                            </div>
+                                    <td>
+                                        <small>
+                                            <s class="red"></s>
+                                        </small>
+                                        <b class="green">$16.45</b>
+                                    </td>
 
-                            <div class="infobox infobox-pink">
-                                <div class="infobox-icon">
-                                    <i class="ace-icon fa fa-shopping-cart"></i>
-                                </div>
+                                    <td class="hidden-480">
+                                        <span class="label label-success arrowed-in arrowed-in-right">approved</span>
+                                    </td>
+                                </tr>
 
-                                <div class="infobox-data">
-                                    <span class="infobox-data-number">8</span>
-                                    <div class="infobox-content">new orders</div>
-                                </div>
-                                <div class="stat stat-important">4%</div>
-                            </div>
+                                <tr>
+                                    <td>newnet.com</td>
 
-                            <div class="infobox infobox-red">
-                                <div class="infobox-icon">
-                                    <i class="ace-icon fa fa-flask"></i>
-                                </div>
+                                    <td>
+                                        <small>
+                                            <s class="red"></s>
+                                        </small>
+                                        <b class="green">$15.00</b>
+                                    </td>
 
-                                <div class="infobox-data">
-                                    <span class="infobox-data-number">7</span>
-                                    <div class="infobox-content">experiments</div>
-                                </div>
-                            </div>
+                                    <td class="hidden-480">
+                                        <span class="label label-danger arrowed">pending</span>
+                                    </td>
+                                </tr>
 
-                            <div class="infobox infobox-orange2">
-                                <!-- #section:pages/dashboard.infobox.sparkline -->
-                                <div class="infobox-chart">
-                                    <span class="sparkline" data-values="196,128,202,177,154,94,100,170,224"></span>
-                                </div>
+                                <tr>
+                                    <td>web.com</td>
 
-                                <!-- /section:pages/dashboard.infobox.sparkline -->
-                                <div class="infobox-data">
-                                    <span class="infobox-data-number">6,251</span>
-                                    <div class="infobox-content">pageviews</div>
-                                </div>
+                                    <td>
+                                        <small>
+                                            <s class="red">$24.99</s>
+                                        </small>
+                                        <b class="green">$19.95</b>
+                                    </td>
 
-                                <div class="badge badge-success">
-                                    7.2%
-                                    <i class="ace-icon fa fa-arrow-up"></i>
-                                </div>
-                            </div>
+                                    <td class="hidden-480">
+                                        <span class="label arrowed">
+                                            <s>out of stock</s>
+                                        </span>
+                                    </td>
+                                </tr>
 
-                            <div class="infobox infobox-blue2">
-                                <div class="infobox-progress">
-                                    <!-- #section:pages/dashboard.infobox.easypiechart -->
-                                    <div class="easy-pie-chart percentage" data-percent="42" data-size="46">
-                                        <span class="percent">42</span>%
-                                    </div>
+                                <tr>
+                                    <td>domain.com</td>
 
-                                    <!-- /section:pages/dashboard.infobox.easypiechart -->
-                                </div>
+                                    <td>
+                                        <small>
+                                            <s class="red"></s>
+                                        </small>
+                                        <b class="green">$12.00</b>
+                                    </td>
 
-                                <div class="infobox-data">
-                                    <span class="infobox-text">traffic used</span>
+                                    <td class="hidden-480">
+                                        <span class="label label-warning arrowed arrowed-right">SOLD</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div><!-- /.widget-main -->
+                </div><!-- /.widget-body -->
+            </div><!-- /.widget-box -->
+        </div><!-- /.col -->
 
-                                    <div class="infobox-content">
-                                        <span class="bigger-110">~</span>
-                                        58GB remaining
-                                    </div>
-                                </div>
-                            </div>
+        <div class="col-sm-7">
+            <div class="widget-box transparent">
+                <div class="widget-header widget-header-flat">
+                    <h4 class="widget-title lighter">
+                        <i class="ace-icon fa fa-signal"></i>
+                        Sale Stats
+                    </h4>
 
-                            <!-- /section:pages/dashboard.infobox -->
-                            <div class="space-6"></div>
+                    <div class="widget-toolbar">
+                        <a href="#" data-action="collapse">
+                            <i class="ace-icon fa fa-chevron-up"></i>
+                        </a>
+                    </div>
+                </div>
 
-                            <!-- #section:pages/dashboard.infobox.dark -->
-                            <div class="infobox infobox-green infobox-small infobox-dark">
-                                <div class="infobox-progress">
-                                    <!-- #section:pages/dashboard.infobox.easypiechart -->
-                                    <div class="easy-pie-chart percentage" data-percent="61" data-size="39">
-                                        <span class="percent">61</span>%
-                                    </div>
+                <div class="widget-body">
+                    <div class="widget-main padding-4">
+                        <div id="sales-charts"></div>
+                    </div><!-- /.widget-main -->
+                </div><!-- /.widget-body -->
+            </div><!-- /.widget-box -->
+        </div><!-- /.col -->
+    </div><!-- /.row -->
 
-                                    <!-- /section:pages/dashboard.infobox.easypiechart -->
-                                </div>
+    <div class="hr hr32 hr-dotted"></div>
 
-                                <div class="infobox-data">
-                                    <div class="infobox-content">Task</div>
-                                    <div class="infobox-content">Completion</div>
-                                </div>
-                            </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="widget-box transparent" id="recent-box">
+                <div class="widget-header">
+                    <h4 class="widget-title lighter smaller">
+                        <i class="ace-icon fa fa-rss orange"></i>RECENT
+                    </h4>
 
-                            <div class="infobox infobox-blue infobox-small infobox-dark">
-                                <!-- #section:pages/dashboard.infobox.sparkline -->
-                                <div class="infobox-chart">
-                                    <span class="sparkline" data-values="3,4,2,3,4,4,2,2"></span>
-                                </div>
+                    <div class="widget-toolbar no-border">
+                        <ul class="nav nav-tabs" id="recent-tab">
+                            <li class="active">
+                                <a data-toggle="tab" href="#task-tab">Tasks</a>
+                            </li>
 
-                                <!-- /section:pages/dashboard.infobox.sparkline -->
-                                <div class="infobox-data">
-                                    <div class="infobox-content">Earnings</div>
-                                    <div class="infobox-content">$32,000</div>
-                                </div>
-                            </div>
+                            <li>
+                                <a data-toggle="tab" href="#member-tab">Members</a>
+                            </li>
 
-                            <div class="infobox infobox-grey infobox-small infobox-dark">
-                                <div class="infobox-icon">
-                                    <i class="ace-icon fa fa-download"></i>
-                                </div>
+                            <li>
+                                <a data-toggle="tab" href="#comment-tab">Comments</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
 
-                                <div class="infobox-data">
-                                    <div class="infobox-content">Downloads</div>
-                                    <div class="infobox-content">1,205</div>
-                                </div>
-                            </div>
+                <div class="widget-body">
+                    <div class="widget-main padding-4">
+                        <div class="tab-content padding-8">
+                            <div id="task-tab" class="tab-pane active">
+                                <h4 class="smaller lighter green">
+                                    <i class="ace-icon fa fa-list"></i>
+                                    Sortable Lists
+                                </h4>
 
-                            <!-- /section:pages/dashboard.infobox.dark -->
-                        </div>
+                                <!-- #section:pages/dashboard.tasks -->
+                                <ul id="tasks" class="item-list">
+                                    <li class="item-orange clearfix">
+                                        <label class="inline">
+                                            <input type="checkbox" class="ace" />
+                                            <span class="lbl"> Answering customer questions</span>
+                                        </label>
 
-                        <div class="vspace-12-sm"></div>
+                                        <div class="pull-right easy-pie-chart percentage" data-size="30" data-color="#ECCB71" data-percent="42">
+                                            <span class="percent">42</span>%
+                                        </div>
+                                    </li>
 
-                        <div class="col-sm-5">
-                            <div class="widget-box">
-                                <div class="widget-header widget-header-flat widget-header-small">
-                                    <h5 class="widget-title">
-                                        <i class="ace-icon fa fa-signal"></i>
-                                        Traffic Sources
-                                    </h5>
+                                    <li class="item-red clearfix">
+                                        <label class="inline">
+                                            <input type="checkbox" class="ace" />
+                                            <span class="lbl"> Fixing bugs</span>
+                                        </label>
 
-                                    <div class="widget-toolbar no-border">
-                                        <div class="inline dropdown-hover">
-                                            <button class="btn btn-minier btn-primary">
-                                                This Week
-                                                <i class="ace-icon fa fa-angle-down icon-on-right bigger-110"></i>
+                                        <!-- #section:custom/extra.action-buttons -->
+                                        <div class="pull-right action-buttons">
+                                            <a href="#" class="blue">
+                                                <i class="ace-icon fa fa-pencil bigger-130"></i>
+                                            </a>
+
+                                            <span class="vbar"></span>
+
+                                            <a href="#" class="red">
+                                                <i class="ace-icon fa fa-trash-o bigger-130"></i>
+                                            </a>
+
+                                            <span class="vbar"></span>
+
+                                            <a href="#" class="green">
+                                                <i class="ace-icon fa fa-flag bigger-130"></i>
+                                            </a>
+                                        </div>
+
+                                        <!-- /section:custom/extra.action-buttons -->
+                                    </li>
+
+                                    <li class="item-default clearfix">
+                                        <label class="inline">
+                                            <input type="checkbox" class="ace" />
+                                            <span class="lbl"> Adding new features</span>
+                                        </label>
+
+                                        <!-- #section:elements.dropdown.hover -->
+                                        <div class="inline pull-right position-relative dropdown-hover">
+                                            <button class="btn btn-minier bigger btn-primary">
+                                                <i class="ace-icon fa fa-cog icon-only bigger-120"></i>
                                             </button>
 
-                                            <ul class="dropdown-menu dropdown-menu-right dropdown-125 dropdown-lighter dropdown-close dropdown-caret">
-                                                <li class="active">
-                                                    <a href="#" class="blue">
-                                                        <i class="ace-icon fa fa-caret-right bigger-110">&nbsp;</i>
-                                                        This Week
+                                            <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-caret dropdown-close dropdown-menu-right">
+                                                <li>
+                                                    <a href="#" class="tooltip-success" data-rel="tooltip" title="Mark&nbsp;as&nbsp;done">
+                                                        <span class="green">
+                                                            <i class="ace-icon fa fa-check bigger-110"></i>
+                                                        </span>
                                                     </a>
                                                 </li>
 
                                                 <li>
-                                                    <a href="#">
-                                                        <i class="ace-icon fa fa-caret-right bigger-110 invisible">&nbsp;</i>
-                                                        Last Week
-                                                    </a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="#">
-                                                        <i class="ace-icon fa fa-caret-right bigger-110 invisible">&nbsp;</i>
-                                                        This Month
-                                                    </a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="#">
-                                                        <i class="ace-icon fa fa-caret-right bigger-110 invisible">&nbsp;</i>
-                                                        Last Month
+                                                    <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
+                                                        <span class="red">
+                                                            <i class="ace-icon fa fa-trash-o bigger-110"></i>
+                                                        </span>
                                                     </a>
                                                 </li>
                                             </ul>
                                         </div>
-                                    </div>
-                                </div>
 
-                                <div class="widget-body">
-                                    <div class="widget-main">
-                                        <!-- #section:plugins/charts.flotchart -->
-                                        <div id="piechart-placeholder"></div>
+                                        <!-- /section:elements.dropdown.hover -->
+                                    </li>
 
-                                        <!-- /section:plugins/charts.flotchart -->
-                                        <div class="hr hr8 hr-double"></div>
+                                    <li class="item-blue clearfix">
+                                        <label class="inline">
+                                            <input type="checkbox" class="ace" />
+                                            <span class="lbl"> Upgrading scripts used in template</span>
+                                        </label>
+                                    </li>
 
-                                        <div class="clearfix">
-                                            <!-- #section:custom/extra.grid -->
-                                            <div class="grid3">
-                                                <span class="grey">
-                                                    <i class="ace-icon fa fa-facebook-square fa-2x blue"></i>
-                                                    &nbsp; likes
-                                                </span>
-                                                <h4 class="bigger pull-right">1,255</h4>
-                                            </div>
+                                    <li class="item-grey clearfix">
+                                        <label class="inline">
+                                            <input type="checkbox" class="ace" />
+                                            <span class="lbl"> Adding new skins</span>
+                                        </label>
+                                    </li>
 
-                                            <div class="grid3">
-                                                <span class="grey">
-                                                    <i class="ace-icon fa fa-twitter-square fa-2x purple"></i>
-                                                    &nbsp; tweets
-                                                </span>
-                                                <h4 class="bigger pull-right">941</h4>
-                                            </div>
+                                    <li class="item-green clearfix">
+                                        <label class="inline">
+                                            <input type="checkbox" class="ace" />
+                                            <span class="lbl"> Updating server software up</span>
+                                        </label>
+                                    </li>
 
-                                            <div class="grid3">
-                                                <span class="grey">
-                                                    <i class="ace-icon fa fa-pinterest-square fa-2x red"></i>
-                                                    &nbsp; pins
-                                                </span>
-                                                <h4 class="bigger pull-right">1,050</h4>
-                                            </div>
+                                    <li class="item-pink clearfix">
+                                        <label class="inline">
+                                            <input type="checkbox" class="ace" />
+                                            <span class="lbl"> Cleaning up</span>
+                                        </label>
+                                    </li>
+                                </ul>
 
-                                            <!-- /section:custom/extra.grid -->
+                                <!-- /section:pages/dashboard.tasks -->
+                            </div>
+
+                            <div id="member-tab" class="tab-pane">
+                                <!-- #section:pages/dashboard.members -->
+                                <div class="clearfix">
+                                    <div class="itemdiv memberdiv">
+                                        <div class="user">
+                                            <img alt="Bob Doe's avatar" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/avatars/user.jpg" />
                                         </div>
-                                    </div><!-- /.widget-main -->
-                                </div><!-- /.widget-body -->
-                            </div><!-- /.widget-box -->
-                        </div><!-- /.col -->
-                    </div><!-- /.row -->
 
-                    <!-- #section:custom/extra.hr -->
-                    <div class="hr hr32 hr-dotted"></div>
+                                        <div class="body">
+                                            <div class="name">
+                                                <a href="#">Bob Doe</a>
+                                            </div>
 
-                    <!-- /section:custom/extra.hr -->
-                    <div class="row">
-                        <div class="col-sm-5">
-                            <div class="widget-box transparent">
-                                <div class="widget-header widget-header-flat">
-                                    <h4 class="widget-title lighter">
-                                        <i class="ace-icon fa fa-star orange"></i>
-                                        Popular Domains
-                                    </h4>
+                                            <div class="time">
+                                                <i class="ace-icon fa fa-clock-o"></i>
+                                                <span class="green">20 min</span>
+                                            </div>
 
-                                    <div class="widget-toolbar">
-                                        <a href="#" data-action="collapse">
-                                            <i class="ace-icon fa fa-chevron-up"></i>
-                                        </a>
+                                            <div>
+                                                <span class="label label-warning label-sm">pending</span>
+
+                                                <div class="inline position-relative">
+                                                    <button class="btn btn-minier btn-yellow btn-no-border dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                                        <i class="ace-icon fa fa-angle-down icon-only bigger-120"></i>
+                                                    </button>
+
+                                                    <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                                                        <li>
+                                                            <a href="#" class="tooltip-success" data-rel="tooltip" title="Approve">
+                                                                <span class="green">
+                                                                    <i class="ace-icon fa fa-check bigger-110"></i>
+                                                                </span>
+                                                            </a>
+                                                        </li>
+
+                                                        <li>
+                                                            <a href="#" class="tooltip-warning" data-rel="tooltip" title="Reject">
+                                                                <span class="orange">
+                                                                    <i class="ace-icon fa fa-times bigger-110"></i>
+                                                                </span>
+                                                            </a>
+                                                        </li>
+
+                                                        <li>
+                                                            <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
+                                                                <span class="red">
+                                                                    <i class="ace-icon fa fa-trash-o bigger-110"></i>
+                                                                </span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="itemdiv memberdiv">
+                                        <div class="user">
+                                            <img alt="Joe Doe's avatar" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/avatars/avatar2.png" />
+                                        </div>
+
+                                        <div class="body">
+                                            <div class="name">
+                                                <a href="#">Joe Doe</a>
+                                            </div>
+
+                                            <div class="time">
+                                                <i class="ace-icon fa fa-clock-o"></i>
+                                                <span class="green">1 hour</span>
+                                            </div>
+
+                                            <div>
+                                                <span class="label label-warning label-sm">pending</span>
+
+                                                <div class="inline position-relative">
+                                                    <button class="btn btn-minier btn-yellow btn-no-border dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                                        <i class="ace-icon fa fa-angle-down icon-only bigger-120"></i>
+                                                    </button>
+
+                                                    <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                                                        <li>
+                                                            <a href="#" class="tooltip-success" data-rel="tooltip" title="Approve">
+                                                                <span class="green">
+                                                                    <i class="ace-icon fa fa-check bigger-110"></i>
+                                                                </span>
+                                                            </a>
+                                                        </li>
+
+                                                        <li>
+                                                            <a href="#" class="tooltip-warning" data-rel="tooltip" title="Reject">
+                                                                <span class="orange">
+                                                                    <i class="ace-icon fa fa-times bigger-110"></i>
+                                                                </span>
+                                                            </a>
+                                                        </li>
+
+                                                        <li>
+                                                            <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
+                                                                <span class="red">
+                                                                    <i class="ace-icon fa fa-trash-o bigger-110"></i>
+                                                                </span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="itemdiv memberdiv">
+                                        <div class="user">
+                                            <img alt="Jim Doe's avatar" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/avatars/avatar.png" />
+                                        </div>
+
+                                        <div class="body">
+                                            <div class="name">
+                                                <a href="#">Jim Doe</a>
+                                            </div>
+
+                                            <div class="time">
+                                                <i class="ace-icon fa fa-clock-o"></i>
+                                                <span class="green">2 hour</span>
+                                            </div>
+
+                                            <div>
+                                                <span class="label label-warning label-sm">pending</span>
+
+                                                <div class="inline position-relative">
+                                                    <button class="btn btn-minier btn-yellow btn-no-border dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                                        <i class="ace-icon fa fa-angle-down icon-only bigger-120"></i>
+                                                    </button>
+
+                                                    <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                                                        <li>
+                                                            <a href="#" class="tooltip-success" data-rel="tooltip" title="Approve">
+                                                                <span class="green">
+                                                                    <i class="ace-icon fa fa-check bigger-110"></i>
+                                                                </span>
+                                                            </a>
+                                                        </li>
+
+                                                        <li>
+                                                            <a href="#" class="tooltip-warning" data-rel="tooltip" title="Reject">
+                                                                <span class="orange">
+                                                                    <i class="ace-icon fa fa-times bigger-110"></i>
+                                                                </span>
+                                                            </a>
+                                                        </li>
+
+                                                        <li>
+                                                            <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
+                                                                <span class="red">
+                                                                    <i class="ace-icon fa fa-trash-o bigger-110"></i>
+                                                                </span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="itemdiv memberdiv">
+                                        <div class="user">
+                                            <img alt="Alex Doe's avatar" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/avatars/avatar5.png" />
+                                        </div>
+
+                                        <div class="body">
+                                            <div class="name">
+                                                <a href="#">Alex Doe</a>
+                                            </div>
+
+                                            <div class="time">
+                                                <i class="ace-icon fa fa-clock-o"></i>
+                                                <span class="green">3 hour</span>
+                                            </div>
+
+                                            <div>
+                                                <span class="label label-danger label-sm">blocked</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="itemdiv memberdiv">
+                                        <div class="user">
+                                            <img alt="Bob Doe's avatar" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/avatars/avatar2.png" />
+                                        </div>
+
+                                        <div class="body">
+                                            <div class="name">
+                                                <a href="#">Bob Doe</a>
+                                            </div>
+
+                                            <div class="time">
+                                                <i class="ace-icon fa fa-clock-o"></i>
+                                                <span class="green">6 hour</span>
+                                            </div>
+
+                                            <div>
+                                                <span class="label label-success label-sm arrowed-in">approved</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="itemdiv memberdiv">
+                                        <div class="user">
+                                            <img alt="Susan's avatar" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/avatars/avatar3.png" />
+                                        </div>
+
+                                        <div class="body">
+                                            <div class="name">
+                                                <a href="#">Susan</a>
+                                            </div>
+
+                                            <div class="time">
+                                                <i class="ace-icon fa fa-clock-o"></i>
+                                                <span class="green">yesterday</span>
+                                            </div>
+
+                                            <div>
+                                                <span class="label label-success label-sm arrowed-in">approved</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="itemdiv memberdiv">
+                                        <div class="user">
+                                            <img alt="Phil Doe's avatar" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/avatars/avatar4.png" />
+                                        </div>
+
+                                        <div class="body">
+                                            <div class="name">
+                                                <a href="#">Phil Doe</a>
+                                            </div>
+
+                                            <div class="time">
+                                                <i class="ace-icon fa fa-clock-o"></i>
+                                                <span class="green">2 days ago</span>
+                                            </div>
+
+                                            <div>
+                                                <span class="label label-info label-sm arrowed-in arrowed-in-right">online</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="itemdiv memberdiv">
+                                        <div class="user">
+                                            <img alt="Alexa Doe's avatar" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/avatars/avatar1.png" />
+                                        </div>
+
+                                        <div class="body">
+                                            <div class="name">
+                                                <a href="#">Alexa Doe</a>
+                                            </div>
+
+                                            <div class="time">
+                                                <i class="ace-icon fa fa-clock-o"></i>
+                                                <span class="green">3 days ago</span>
+                                            </div>
+
+                                            <div>
+                                                <span class="label label-success label-sm arrowed-in">approved</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="widget-body">
-                                    <div class="widget-main no-padding">
-                                        <table class="table table-bordered table-striped">
-                                            <thead class="thin-border-bottom">
-                                                <tr>
-                                                    <th>
-                                                        <i class="ace-icon fa fa-caret-right blue"></i>name
-                                                    </th>
+                                <div class="space-4"></div>
 
-                                                    <th>
-                                                        <i class="ace-icon fa fa-caret-right blue"></i>price
-                                                    </th>
+                                <div class="center">
+                                    <i class="ace-icon fa fa-users fa-2x green middle"></i>
 
-                                                    <th class="hidden-480">
-                                                        <i class="ace-icon fa fa-caret-right blue"></i>status
-                                                    </th>
-                                                </tr>
-                                            </thead>
-
-                                            <tbody>
-                                                <tr>
-                                                    <td>internet.com</td>
-
-                                                    <td>
-                                                        <small>
-                                                            <s class="red">$29.99</s>
-                                                        </small>
-                                                        <b class="green">$19.99</b>
-                                                    </td>
-
-                                                    <td class="hidden-480">
-                                                        <span class="label label-info arrowed-right arrowed-in">on sale</span>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>online.com</td>
-
-                                                    <td>
-                                                        <small>
-                                                            <s class="red"></s>
-                                                        </small>
-                                                        <b class="green">$16.45</b>
-                                                    </td>
-
-                                                    <td class="hidden-480">
-                                                        <span class="label label-success arrowed-in arrowed-in-right">approved</span>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>newnet.com</td>
-
-                                                    <td>
-                                                        <small>
-                                                            <s class="red"></s>
-                                                        </small>
-                                                        <b class="green">$15.00</b>
-                                                    </td>
-
-                                                    <td class="hidden-480">
-                                                        <span class="label label-danger arrowed">pending</span>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>web.com</td>
-
-                                                    <td>
-                                                        <small>
-                                                            <s class="red">$24.99</s>
-                                                        </small>
-                                                        <b class="green">$19.95</b>
-                                                    </td>
-
-                                                    <td class="hidden-480">
-                                                        <span class="label arrowed">
-                                                            <s>out of stock</s>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>domain.com</td>
-
-                                                    <td>
-                                                        <small>
-                                                            <s class="red"></s>
-                                                        </small>
-                                                        <b class="green">$12.00</b>
-                                                    </td>
-
-                                                    <td class="hidden-480">
-                                                        <span class="label label-warning arrowed arrowed-right">SOLD</span>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div><!-- /.widget-main -->
-                                </div><!-- /.widget-body -->
-                            </div><!-- /.widget-box -->
-                        </div><!-- /.col -->
-
-                        <div class="col-sm-7">
-                            <div class="widget-box transparent">
-                                <div class="widget-header widget-header-flat">
-                                    <h4 class="widget-title lighter">
-                                        <i class="ace-icon fa fa-signal"></i>
-                                        Sale Stats
-                                    </h4>
-
-                                    <div class="widget-toolbar">
-                                        <a href="#" data-action="collapse">
-                                            <i class="ace-icon fa fa-chevron-up"></i>
-                                        </a>
-                                    </div>
+                                    &nbsp;
+                                    <a href="#" class="btn btn-sm btn-white btn-info">
+                                        See all members &nbsp;
+                                        <i class="ace-icon fa fa-arrow-right"></i>
+                                    </a>
                                 </div>
 
-                                <div class="widget-body">
-                                    <div class="widget-main padding-4">
-                                        <div id="sales-charts"></div>
-                                    </div><!-- /.widget-main -->
-                                </div><!-- /.widget-body -->
-                            </div><!-- /.widget-box -->
-                        </div><!-- /.col -->
-                    </div><!-- /.row -->
+                                <div class="hr hr-double hr8"></div>
 
-                    <div class="hr hr32 hr-dotted"></div>
+                                <!-- /section:pages/dashboard.members -->
+                            </div><!-- /.#member-tab -->
 
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="widget-box transparent" id="recent-box">
-                                <div class="widget-header">
-                                    <h4 class="widget-title lighter smaller">
-                                        <i class="ace-icon fa fa-rss orange"></i>RECENT
-                                    </h4>
+                            <div id="comment-tab" class="tab-pane">
+                                <!-- #section:pages/dashboard.comments -->
+                                <div class="comments">
+                                    <div class="itemdiv commentdiv">
+                                        <div class="user">
+                                            <img alt="Bob Doe's Avatar" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/avatars/avatar.png" />
+                                        </div>
 
-                                    <div class="widget-toolbar no-border">
-                                        <ul class="nav nav-tabs" id="recent-tab">
-                                            <li class="active">
-                                                <a data-toggle="tab" href="#task-tab">Tasks</a>
-                                            </li>
+                                        <div class="body">
+                                            <div class="name">
+                                                <a href="#">Bob Doe</a>
+                                            </div>
 
-                                            <li>
-                                                <a data-toggle="tab" href="#member-tab">Members</a>
-                                            </li>
+                                            <div class="time">
+                                                <i class="ace-icon fa fa-clock-o"></i>
+                                                <span class="green">6 min</span>
+                                            </div>
 
-                                            <li>
-                                                <a data-toggle="tab" href="#comment-tab">Comments</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
+                                            <div class="text">
+                                                <i class="ace-icon fa fa-quote-left"></i>
+                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque commodo massa sed ipsum porttitor facilisis &hellip;
+                                            </div>
+                                        </div>
 
-                                <div class="widget-body">
-                                    <div class="widget-main padding-4">
-                                        <div class="tab-content padding-8">
-                                            <div id="task-tab" class="tab-pane active">
-                                                <h4 class="smaller lighter green">
-                                                    <i class="ace-icon fa fa-list"></i>
-                                                    Sortable Lists
-                                                </h4>
+                                        <div class="tools">
+                                            <div class="inline position-relative">
+                                                <button class="btn btn-minier bigger btn-yellow dropdown-toggle" data-toggle="dropdown">
+                                                    <i class="ace-icon fa fa-angle-down icon-only bigger-120"></i>
+                                                </button>
 
-                                                <!-- #section:pages/dashboard.tasks -->
-                                                <ul id="tasks" class="item-list">
-                                                    <li class="item-orange clearfix">
-                                                        <label class="inline">
-                                                            <input type="checkbox" class="ace" />
-                                                            <span class="lbl"> Answering customer questions</span>
-                                                        </label>
-
-                                                        <div class="pull-right easy-pie-chart percentage" data-size="30" data-color="#ECCB71" data-percent="42">
-                                                            <span class="percent">42</span>%
-                                                        </div>
+                                                <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                                                    <li>
+                                                        <a href="#" class="tooltip-success" data-rel="tooltip" title="Approve">
+                                                            <span class="green">
+                                                                <i class="ace-icon fa fa-check bigger-110"></i>
+                                                            </span>
+                                                        </a>
                                                     </li>
 
-                                                    <li class="item-red clearfix">
-                                                        <label class="inline">
-                                                            <input type="checkbox" class="ace" />
-                                                            <span class="lbl"> Fixing bugs</span>
-                                                        </label>
-
-                                                        <!-- #section:custom/extra.action-buttons -->
-                                                        <div class="pull-right action-buttons">
-                                                            <a href="#" class="blue">
-                                                                <i class="ace-icon fa fa-pencil bigger-130"></i>
-                                                            </a>
-
-                                                            <span class="vbar"></span>
-
-                                                            <a href="#" class="red">
-                                                                <i class="ace-icon fa fa-trash-o bigger-130"></i>
-                                                            </a>
-
-                                                            <span class="vbar"></span>
-
-                                                            <a href="#" class="green">
-                                                                <i class="ace-icon fa fa-flag bigger-130"></i>
-                                                            </a>
-                                                        </div>
-
-                                                        <!-- /section:custom/extra.action-buttons -->
+                                                    <li>
+                                                        <a href="#" class="tooltip-warning" data-rel="tooltip" title="Reject">
+                                                            <span class="orange">
+                                                                <i class="ace-icon fa fa-times bigger-110"></i>
+                                                            </span>
+                                                        </a>
                                                     </li>
 
-                                                    <li class="item-default clearfix">
-                                                        <label class="inline">
-                                                            <input type="checkbox" class="ace" />
-                                                            <span class="lbl"> Adding new features</span>
-                                                        </label>
-
-                                                        <!-- #section:elements.dropdown.hover -->
-                                                        <div class="inline pull-right position-relative dropdown-hover">
-                                                            <button class="btn btn-minier bigger btn-primary">
-                                                                <i class="ace-icon fa fa-cog icon-only bigger-120"></i>
-                                                            </button>
-
-                                                            <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-caret dropdown-close dropdown-menu-right">
-                                                                <li>
-                                                                    <a href="#" class="tooltip-success" data-rel="tooltip" title="Mark&nbsp;as&nbsp;done">
-                                                                        <span class="green">
-                                                                            <i class="ace-icon fa fa-check bigger-110"></i>
-                                                                        </span>
-                                                                    </a>
-                                                                </li>
-
-                                                                <li>
-                                                                    <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
-                                                                        <span class="red">
-                                                                            <i class="ace-icon fa fa-trash-o bigger-110"></i>
-                                                                        </span>
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-
-                                                        <!-- /section:elements.dropdown.hover -->
-                                                    </li>
-
-                                                    <li class="item-blue clearfix">
-                                                        <label class="inline">
-                                                            <input type="checkbox" class="ace" />
-                                                            <span class="lbl"> Upgrading scripts used in template</span>
-                                                        </label>
-                                                    </li>
-
-                                                    <li class="item-grey clearfix">
-                                                        <label class="inline">
-                                                            <input type="checkbox" class="ace" />
-                                                            <span class="lbl"> Adding new skins</span>
-                                                        </label>
-                                                    </li>
-
-                                                    <li class="item-green clearfix">
-                                                        <label class="inline">
-                                                            <input type="checkbox" class="ace" />
-                                                            <span class="lbl"> Updating server software up</span>
-                                                        </label>
-                                                    </li>
-
-                                                    <li class="item-pink clearfix">
-                                                        <label class="inline">
-                                                            <input type="checkbox" class="ace" />
-                                                            <span class="lbl"> Cleaning up</span>
-                                                        </label>
+                                                    <li>
+                                                        <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
+                                                            <span class="red">
+                                                                <i class="ace-icon fa fa-trash-o bigger-110"></i>
+                                                            </span>
+                                                        </a>
                                                     </li>
                                                 </ul>
-
-                                                <!-- /section:pages/dashboard.tasks -->
-                                            </div>
-
-                                            <div id="member-tab" class="tab-pane">
-                                                <!-- #section:pages/dashboard.members -->
-                                                <div class="clearfix">
-                                                    <div class="itemdiv memberdiv">
-                                                        <div class="user">
-                                                            <img alt="Bob Doe's avatar" src="<?php echo Yii::app()->theme->baseUrl;?>/assets//avatars/user.jpg" />
-                                                        </div>
-
-                                                        <div class="body">
-                                                            <div class="name">
-                                                                <a href="#">Bob Doe</a>
-                                                            </div>
-
-                                                            <div class="time">
-                                                                <i class="ace-icon fa fa-clock-o"></i>
-                                                                <span class="green">20 min</span>
-                                                            </div>
-
-                                                            <div>
-                                                                <span class="label label-warning label-sm">pending</span>
-
-                                                                <div class="inline position-relative">
-                                                                    <button class="btn btn-minier btn-yellow btn-no-border dropdown-toggle" data-toggle="dropdown" data-position="auto">
-                                                                        <i class="ace-icon fa fa-angle-down icon-only bigger-120"></i>
-                                                                    </button>
-
-                                                                    <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
-                                                                        <li>
-                                                                            <a href="#" class="tooltip-success" data-rel="tooltip" title="Approve">
-                                                                                <span class="green">
-                                                                                    <i class="ace-icon fa fa-check bigger-110"></i>
-                                                                                </span>
-                                                                            </a>
-                                                                        </li>
-
-                                                                        <li>
-                                                                            <a href="#" class="tooltip-warning" data-rel="tooltip" title="Reject">
-                                                                                <span class="orange">
-                                                                                    <i class="ace-icon fa fa-times bigger-110"></i>
-                                                                                </span>
-                                                                            </a>
-                                                                        </li>
-
-                                                                        <li>
-                                                                            <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
-                                                                                <span class="red">
-                                                                                    <i class="ace-icon fa fa-trash-o bigger-110"></i>
-                                                                                </span>
-                                                                            </a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="itemdiv memberdiv">
-                                                        <div class="user">
-                                                            <img alt="Joe Doe's avatar" src="<?php echo Yii::app()->theme->baseUrl;?>/assets//avatars/avatar2.png" />
-                                                        </div>
-
-                                                        <div class="body">
-                                                            <div class="name">
-                                                                <a href="#">Joe Doe</a>
-                                                            </div>
-
-                                                            <div class="time">
-                                                                <i class="ace-icon fa fa-clock-o"></i>
-                                                                <span class="green">1 hour</span>
-                                                            </div>
-
-                                                            <div>
-                                                                <span class="label label-warning label-sm">pending</span>
-
-                                                                <div class="inline position-relative">
-                                                                    <button class="btn btn-minier btn-yellow btn-no-border dropdown-toggle" data-toggle="dropdown" data-position="auto">
-                                                                        <i class="ace-icon fa fa-angle-down icon-only bigger-120"></i>
-                                                                    </button>
-
-                                                                    <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
-                                                                        <li>
-                                                                            <a href="#" class="tooltip-success" data-rel="tooltip" title="Approve">
-                                                                                <span class="green">
-                                                                                    <i class="ace-icon fa fa-check bigger-110"></i>
-                                                                                </span>
-                                                                            </a>
-                                                                        </li>
-
-                                                                        <li>
-                                                                            <a href="#" class="tooltip-warning" data-rel="tooltip" title="Reject">
-                                                                                <span class="orange">
-                                                                                    <i class="ace-icon fa fa-times bigger-110"></i>
-                                                                                </span>
-                                                                            </a>
-                                                                        </li>
-
-                                                                        <li>
-                                                                            <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
-                                                                                <span class="red">
-                                                                                    <i class="ace-icon fa fa-trash-o bigger-110"></i>
-                                                                                </span>
-                                                                            </a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="itemdiv memberdiv">
-                                                        <div class="user">
-                                                            <img alt="Jim Doe's avatar" src="<?php echo Yii::app()->theme->baseUrl;?>/assets//avatars/avatar.png" />
-                                                        </div>
-
-                                                        <div class="body">
-                                                            <div class="name">
-                                                                <a href="#">Jim Doe</a>
-                                                            </div>
-
-                                                            <div class="time">
-                                                                <i class="ace-icon fa fa-clock-o"></i>
-                                                                <span class="green">2 hour</span>
-                                                            </div>
-
-                                                            <div>
-                                                                <span class="label label-warning label-sm">pending</span>
-
-                                                                <div class="inline position-relative">
-                                                                    <button class="btn btn-minier btn-yellow btn-no-border dropdown-toggle" data-toggle="dropdown" data-position="auto">
-                                                                        <i class="ace-icon fa fa-angle-down icon-only bigger-120"></i>
-                                                                    </button>
-
-                                                                    <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
-                                                                        <li>
-                                                                            <a href="#" class="tooltip-success" data-rel="tooltip" title="Approve">
-                                                                                <span class="green">
-                                                                                    <i class="ace-icon fa fa-check bigger-110"></i>
-                                                                                </span>
-                                                                            </a>
-                                                                        </li>
-
-                                                                        <li>
-                                                                            <a href="#" class="tooltip-warning" data-rel="tooltip" title="Reject">
-                                                                                <span class="orange">
-                                                                                    <i class="ace-icon fa fa-times bigger-110"></i>
-                                                                                </span>
-                                                                            </a>
-                                                                        </li>
-
-                                                                        <li>
-                                                                            <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
-                                                                                <span class="red">
-                                                                                    <i class="ace-icon fa fa-trash-o bigger-110"></i>
-                                                                                </span>
-                                                                            </a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="itemdiv memberdiv">
-                                                        <div class="user">
-                                                            <img alt="Alex Doe's avatar" src="<?php echo Yii::app()->theme->baseUrl;?>/assets//avatars/avatar5.png" />
-                                                        </div>
-
-                                                        <div class="body">
-                                                            <div class="name">
-                                                                <a href="#">Alex Doe</a>
-                                                            </div>
-
-                                                            <div class="time">
-                                                                <i class="ace-icon fa fa-clock-o"></i>
-                                                                <span class="green">3 hour</span>
-                                                            </div>
-
-                                                            <div>
-                                                                <span class="label label-danger label-sm">blocked</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="itemdiv memberdiv">
-                                                        <div class="user">
-                                                            <img alt="Bob Doe's avatar" src="<?php echo Yii::app()->theme->baseUrl;?>/assets//avatars/avatar2.png" />
-                                                        </div>
-
-                                                        <div class="body">
-                                                            <div class="name">
-                                                                <a href="#">Bob Doe</a>
-                                                            </div>
-
-                                                            <div class="time">
-                                                                <i class="ace-icon fa fa-clock-o"></i>
-                                                                <span class="green">6 hour</span>
-                                                            </div>
-
-                                                            <div>
-                                                                <span class="label label-success label-sm arrowed-in">approved</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="itemdiv memberdiv">
-                                                        <div class="user">
-                                                            <img alt="Susan's avatar" src="<?php echo Yii::app()->theme->baseUrl;?>/assets//avatars/avatar3.png" />
-                                                        </div>
-
-                                                        <div class="body">
-                                                            <div class="name">
-                                                                <a href="#">Susan</a>
-                                                            </div>
-
-                                                            <div class="time">
-                                                                <i class="ace-icon fa fa-clock-o"></i>
-                                                                <span class="green">yesterday</span>
-                                                            </div>
-
-                                                            <div>
-                                                                <span class="label label-success label-sm arrowed-in">approved</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="itemdiv memberdiv">
-                                                        <div class="user">
-                                                            <img alt="Phil Doe's avatar" src="<?php echo Yii::app()->theme->baseUrl;?>/assets//avatars/avatar4.png" />
-                                                        </div>
-
-                                                        <div class="body">
-                                                            <div class="name">
-                                                                <a href="#">Phil Doe</a>
-                                                            </div>
-
-                                                            <div class="time">
-                                                                <i class="ace-icon fa fa-clock-o"></i>
-                                                                <span class="green">2 days ago</span>
-                                                            </div>
-
-                                                            <div>
-                                                                <span class="label label-info label-sm arrowed-in arrowed-in-right">online</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="itemdiv memberdiv">
-                                                        <div class="user">
-                                                            <img alt="Alexa Doe's avatar" src="<?php echo Yii::app()->theme->baseUrl;?>/assets//avatars/avatar1.png" />
-                                                        </div>
-
-                                                        <div class="body">
-                                                            <div class="name">
-                                                                <a href="#">Alexa Doe</a>
-                                                            </div>
-
-                                                            <div class="time">
-                                                                <i class="ace-icon fa fa-clock-o"></i>
-                                                                <span class="green">3 days ago</span>
-                                                            </div>
-
-                                                            <div>
-                                                                <span class="label label-success label-sm arrowed-in">approved</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="space-4"></div>
-
-                                                <div class="center">
-                                                    <i class="ace-icon fa fa-users fa-2x green middle"></i>
-
-                                                    &nbsp;
-                                                    <a href="#" class="btn btn-sm btn-white btn-info">
-                                                        See all members &nbsp;
-                                                        <i class="ace-icon fa fa-arrow-right"></i>
-                                                    </a>
-                                                </div>
-
-                                                <div class="hr hr-double hr8"></div>
-
-                                                <!-- /section:pages/dashboard.members -->
-                                            </div><!-- /.#member-tab -->
-
-                                            <div id="comment-tab" class="tab-pane">
-                                                <!-- #section:pages/dashboard.comments -->
-                                                <div class="comments">
-                                                    <div class="itemdiv commentdiv">
-                                                        <div class="user">
-                                                            <img alt="Bob Doe's Avatar" src="<?php echo Yii::app()->theme->baseUrl;?>/assets//avatars/avatar.png" />
-                                                        </div>
-
-                                                        <div class="body">
-                                                            <div class="name">
-                                                                <a href="#">Bob Doe</a>
-                                                            </div>
-
-                                                            <div class="time">
-                                                                <i class="ace-icon fa fa-clock-o"></i>
-                                                                <span class="green">6 min</span>
-                                                            </div>
-
-                                                            <div class="text">
-                                                                <i class="ace-icon fa fa-quote-left"></i>
-                                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque commodo massa sed ipsum porttitor facilisis &hellip;
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="tools">
-                                                            <div class="inline position-relative">
-                                                                <button class="btn btn-minier bigger btn-yellow dropdown-toggle" data-toggle="dropdown">
-                                                                    <i class="ace-icon fa fa-angle-down icon-only bigger-120"></i>
-                                                                </button>
-
-                                                                <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
-                                                                    <li>
-                                                                        <a href="#" class="tooltip-success" data-rel="tooltip" title="Approve">
-                                                                            <span class="green">
-                                                                                <i class="ace-icon fa fa-check bigger-110"></i>
-                                                                            </span>
-                                                                        </a>
-                                                                    </li>
-
-                                                                    <li>
-                                                                        <a href="#" class="tooltip-warning" data-rel="tooltip" title="Reject">
-                                                                            <span class="orange">
-                                                                                <i class="ace-icon fa fa-times bigger-110"></i>
-                                                                            </span>
-                                                                        </a>
-                                                                    </li>
-
-                                                                    <li>
-                                                                        <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
-                                                                            <span class="red">
-                                                                                <i class="ace-icon fa fa-trash-o bigger-110"></i>
-                                                                            </span>
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="itemdiv commentdiv">
-                                                        <div class="user">
-                                                            <img alt="Jennifer's Avatar" src="<?php echo Yii::app()->theme->baseUrl;?>/assets//avatars/avatar1.png" />
-                                                        </div>
-
-                                                        <div class="body">
-                                                            <div class="name">
-                                                                <a href="#">Jennifer</a>
-                                                            </div>
-
-                                                            <div class="time">
-                                                                <i class="ace-icon fa fa-clock-o"></i>
-                                                                <span class="blue">15 min</span>
-                                                            </div>
-
-                                                            <div class="text">
-                                                                <i class="ace-icon fa fa-quote-left"></i>
-                                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque commodo massa sed ipsum porttitor facilisis &hellip;
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="tools">
-                                                            <div class="action-buttons bigger-125">
-                                                                <a href="#">
-                                                                    <i class="ace-icon fa fa-pencil blue"></i>
-                                                                </a>
-
-                                                                <a href="#">
-                                                                    <i class="ace-icon fa fa-trash-o red"></i>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="itemdiv commentdiv">
-                                                        <div class="user">
-                                                            <img alt="Joe's Avatar" src="<?php echo Yii::app()->theme->baseUrl;?>/assets//avatars/avatar2.png" />
-                                                        </div>
-
-                                                        <div class="body">
-                                                            <div class="name">
-                                                                <a href="#">Joe</a>
-                                                            </div>
-
-                                                            <div class="time">
-                                                                <i class="ace-icon fa fa-clock-o"></i>
-                                                                <span class="orange">22 min</span>
-                                                            </div>
-
-                                                            <div class="text">
-                                                                <i class="ace-icon fa fa-quote-left"></i>
-                                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque commodo massa sed ipsum porttitor facilisis &hellip;
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="tools">
-                                                            <div class="action-buttons bigger-125">
-                                                                <a href="#">
-                                                                    <i class="ace-icon fa fa-pencil blue"></i>
-                                                                </a>
-
-                                                                <a href="#">
-                                                                    <i class="ace-icon fa fa-trash-o red"></i>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="itemdiv commentdiv">
-                                                        <div class="user">
-                                                            <img alt="Rita's Avatar" src="<?php echo Yii::app()->theme->baseUrl;?>/assets//avatars/avatar3.png" />
-                                                        </div>
-
-                                                        <div class="body">
-                                                            <div class="name">
-                                                                <a href="#">Rita</a>
-                                                            </div>
-
-                                                            <div class="time">
-                                                                <i class="ace-icon fa fa-clock-o"></i>
-                                                                <span class="red">50 min</span>
-                                                            </div>
-
-                                                            <div class="text">
-                                                                <i class="ace-icon fa fa-quote-left"></i>
-                                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque commodo massa sed ipsum porttitor facilisis &hellip;
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="tools">
-                                                            <div class="action-buttons bigger-125">
-                                                                <a href="#">
-                                                                    <i class="ace-icon fa fa-pencil blue"></i>
-                                                                </a>
-
-                                                                <a href="#">
-                                                                    <i class="ace-icon fa fa-trash-o red"></i>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="hr hr8"></div>
-
-                                                <div class="center">
-                                                    <i class="ace-icon fa fa-comments-o fa-2x green middle"></i>
-
-                                                    &nbsp;
-                                                    <a href="#" class="btn btn-sm btn-white btn-info">
-                                                        See all comments &nbsp;
-                                                        <i class="ace-icon fa fa-arrow-right"></i>
-                                                    </a>
-                                                </div>
-
-                                                <div class="hr hr-double hr8"></div>
-
-                                                <!-- /section:pages/dashboard.comments -->
                                             </div>
                                         </div>
-                                    </div><!-- /.widget-main -->
-                                </div><!-- /.widget-body -->
-                            </div><!-- /.widget-box -->
-                        </div><!-- /.col -->
+                                    </div>
 
-                        <div class="col-sm-6">
-                            <div class="widget-box">
-                                <div class="widget-header">
-                                    <h4 class="widget-title lighter smaller">
-                                        <i class="ace-icon fa fa-comment blue"></i>
-                                        Conversation
-                                    </h4>
+                                    <div class="itemdiv commentdiv">
+                                        <div class="user">
+                                            <img alt="Jennifer's Avatar" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/avatars/avatar1.png" />
+                                        </div>
+
+                                        <div class="body">
+                                            <div class="name">
+                                                <a href="#">Jennifer</a>
+                                            </div>
+
+                                            <div class="time">
+                                                <i class="ace-icon fa fa-clock-o"></i>
+                                                <span class="blue">15 min</span>
+                                            </div>
+
+                                            <div class="text">
+                                                <i class="ace-icon fa fa-quote-left"></i>
+                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque commodo massa sed ipsum porttitor facilisis &hellip;
+                                            </div>
+                                        </div>
+
+                                        <div class="tools">
+                                            <div class="action-buttons bigger-125">
+                                                <a href="#">
+                                                    <i class="ace-icon fa fa-pencil blue"></i>
+                                                </a>
+
+                                                <a href="#">
+                                                    <i class="ace-icon fa fa-trash-o red"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="itemdiv commentdiv">
+                                        <div class="user">
+                                            <img alt="Joe's Avatar" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/avatars/avatar2.png" />
+                                        </div>
+
+                                        <div class="body">
+                                            <div class="name">
+                                                <a href="#">Joe</a>
+                                            </div>
+
+                                            <div class="time">
+                                                <i class="ace-icon fa fa-clock-o"></i>
+                                                <span class="orange">22 min</span>
+                                            </div>
+
+                                            <div class="text">
+                                                <i class="ace-icon fa fa-quote-left"></i>
+                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque commodo massa sed ipsum porttitor facilisis &hellip;
+                                            </div>
+                                        </div>
+
+                                        <div class="tools">
+                                            <div class="action-buttons bigger-125">
+                                                <a href="#">
+                                                    <i class="ace-icon fa fa-pencil blue"></i>
+                                                </a>
+
+                                                <a href="#">
+                                                    <i class="ace-icon fa fa-trash-o red"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="itemdiv commentdiv">
+                                        <div class="user">
+                                            <img alt="Rita's Avatar" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/avatars/avatar3.png" />
+                                        </div>
+
+                                        <div class="body">
+                                            <div class="name">
+                                                <a href="#">Rita</a>
+                                            </div>
+
+                                            <div class="time">
+                                                <i class="ace-icon fa fa-clock-o"></i>
+                                                <span class="red">50 min</span>
+                                            </div>
+
+                                            <div class="text">
+                                                <i class="ace-icon fa fa-quote-left"></i>
+                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque commodo massa sed ipsum porttitor facilisis &hellip;
+                                            </div>
+                                        </div>
+
+                                        <div class="tools">
+                                            <div class="action-buttons bigger-125">
+                                                <a href="#">
+                                                    <i class="ace-icon fa fa-pencil blue"></i>
+                                                </a>
+
+                                                <a href="#">
+                                                    <i class="ace-icon fa fa-trash-o red"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <div class="widget-body">
-                                    <div class="widget-main no-padding">
-                                        <!-- #section:pages/dashboard.conversations -->
-                                        <div class="dialogs">
-                                            <div class="itemdiv dialogdiv">
-                                                <div class="user">
-                                                    <img alt="Alexa's Avatar" src="<?php echo Yii::app()->theme->baseUrl;?>/assets//avatars/avatar1.png" />
-                                                </div>
+                                <div class="hr hr8"></div>
 
-                                                <div class="body">
-                                                    <div class="time">
-                                                        <i class="ace-icon fa fa-clock-o"></i>
-                                                        <span class="green">4 sec</span>
-                                                    </div>
+                                <div class="center">
+                                    <i class="ace-icon fa fa-comments-o fa-2x green middle"></i>
 
-                                                    <div class="name">
-                                                        <a href="#">Alexa</a>
-                                                    </div>
-                                                    <div class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque commodo massa sed ipsum porttitor facilisis.</div>
+                                    &nbsp;
+                                    <a href="#" class="btn btn-sm btn-white btn-info">
+                                        See all comments &nbsp;
+                                        <i class="ace-icon fa fa-arrow-right"></i>
+                                    </a>
+                                </div>
 
-                                                    <div class="tools">
-                                                        <a href="#" class="btn btn-minier btn-info">
-                                                            <i class="icon-only ace-icon fa fa-share"></i>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                <div class="hr hr-double hr8"></div>
 
-                                            <div class="itemdiv dialogdiv">
-                                                <div class="user">
-                                                    <img alt="John's Avatar" src="<?php echo Yii::app()->theme->baseUrl;?>/assets//avatars/avatar.png" />
-                                                </div>
+                                <!-- /section:pages/dashboard.comments -->
+                            </div>
+                        </div>
+                    </div><!-- /.widget-main -->
+                </div><!-- /.widget-body -->
+            </div><!-- /.widget-box -->
+        </div><!-- /.col -->
 
-                                                <div class="body">
-                                                    <div class="time">
-                                                        <i class="ace-icon fa fa-clock-o"></i>
-                                                        <span class="blue">38 sec</span>
-                                                    </div>
+        <div class="col-sm-6">
+            <div class="widget-box">
+                <div class="widget-header">
+                    <h4 class="widget-title lighter smaller">
+                        <i class="ace-icon fa fa-comment blue"></i>
+                        Conversation
+                    </h4>
+                </div>
 
-                                                    <div class="name">
-                                                        <a href="#">John</a>
-                                                    </div>
-                                                    <div class="text">Raw denim you probably haven&#39;t heard of them jean shorts Austin.</div>
+                <div class="widget-body">
+                    <div class="widget-main no-padding">
+                        <!-- #section:pages/dashboard.conversations -->
+                        <div class="dialogs">
+                            <div class="itemdiv dialogdiv">
+                                <div class="user">
+                                    <img alt="Alexa's Avatar" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/avatars/avatar1.png" />
+                                </div>
 
-                                                    <div class="tools">
-                                                        <a href="#" class="btn btn-minier btn-info">
-                                                            <i class="icon-only ace-icon fa fa-share"></i>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                <div class="body">
+                                    <div class="time">
+                                        <i class="ace-icon fa fa-clock-o"></i>
+                                        <span class="green">4 sec</span>
+                                    </div>
 
-                                            <div class="itemdiv dialogdiv">
-                                                <div class="user">
-                                                    <img alt="Bob's Avatar" src="<?php echo Yii::app()->theme->baseUrl;?>/assets//avatars/user.jpg" />
-                                                </div>
+                                    <div class="name">
+                                        <a href="#">Alexa</a>
+                                    </div>
+                                    <div class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque commodo massa sed ipsum porttitor facilisis.</div>
 
-                                                <div class="body">
-                                                    <div class="time">
-                                                        <i class="ace-icon fa fa-clock-o"></i>
-                                                        <span class="orange">2 min</span>
-                                                    </div>
+                                    <div class="tools">
+                                        <a href="#" class="btn btn-minier btn-info">
+                                            <i class="icon-only ace-icon fa fa-share"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
 
-                                                    <div class="name">
-                                                        <a href="#">Bob</a>
-                                                        <span class="label label-info arrowed arrowed-in-right">admin</span>
-                                                    </div>
-                                                    <div class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque commodo massa sed ipsum porttitor facilisis.</div>
+                            <div class="itemdiv dialogdiv">
+                                <div class="user">
+                                    <img alt="John's Avatar" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/avatars/avatar.png" />
+                                </div>
 
-                                                    <div class="tools">
-                                                        <a href="#" class="btn btn-minier btn-info">
-                                                            <i class="icon-only ace-icon fa fa-share"></i>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                <div class="body">
+                                    <div class="time">
+                                        <i class="ace-icon fa fa-clock-o"></i>
+                                        <span class="blue">38 sec</span>
+                                    </div>
 
-                                            <div class="itemdiv dialogdiv">
-                                                <div class="user">
-                                                    <img alt="Jim's Avatar" src="<?php echo Yii::app()->theme->baseUrl;?>/assets//avatars/avatar4.png" />
-                                                </div>
+                                    <div class="name">
+                                        <a href="#">John</a>
+                                    </div>
+                                    <div class="text">Raw denim you probably haven&#39;t heard of them jean shorts Austin.</div>
 
-                                                <div class="body">
-                                                    <div class="time">
-                                                        <i class="ace-icon fa fa-clock-o"></i>
-                                                        <span class="grey">3 min</span>
-                                                    </div>
+                                    <div class="tools">
+                                        <a href="#" class="btn btn-minier btn-info">
+                                            <i class="icon-only ace-icon fa fa-share"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
 
-                                                    <div class="name">
-                                                        <a href="#">Jim</a>
-                                                    </div>
-                                                    <div class="text">Raw denim you probably haven&#39;t heard of them jean shorts Austin.</div>
+                            <div class="itemdiv dialogdiv">
+                                <div class="user">
+                                    <img alt="Bob's Avatar" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/avatars/user.jpg" />
+                                </div>
 
-                                                    <div class="tools">
-                                                        <a href="#" class="btn btn-minier btn-info">
-                                                            <i class="icon-only ace-icon fa fa-share"></i>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                <div class="body">
+                                    <div class="time">
+                                        <i class="ace-icon fa fa-clock-o"></i>
+                                        <span class="orange">2 min</span>
+                                    </div>
 
-                                            <div class="itemdiv dialogdiv">
-                                                <div class="user">
-                                                    <img alt="Alexa's Avatar" src="<?php echo Yii::app()->theme->baseUrl;?>/assets//avatars/avatar1.png" />
-                                                </div>
+                                    <div class="name">
+                                        <a href="#">Bob</a>
+                                        <span class="label label-info arrowed arrowed-in-right">admin</span>
+                                    </div>
+                                    <div class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque commodo massa sed ipsum porttitor facilisis.</div>
 
-                                                <div class="body">
-                                                    <div class="time">
-                                                        <i class="ace-icon fa fa-clock-o"></i>
-                                                        <span class="green">4 min</span>
-                                                    </div>
+                                    <div class="tools">
+                                        <a href="#" class="btn btn-minier btn-info">
+                                            <i class="icon-only ace-icon fa fa-share"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
 
-                                                    <div class="name">
-                                                        <a href="#">Alexa</a>
-                                                    </div>
-                                                    <div class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+                            <div class="itemdiv dialogdiv">
+                                <div class="user">
+                                    <img alt="Jim's Avatar" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/avatars/avatar4.png" />
+                                </div>
 
-                                                    <div class="tools">
-                                                        <a href="#" class="btn btn-minier btn-info">
-                                                            <i class="icon-only ace-icon fa fa-share"></i>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                <div class="body">
+                                    <div class="time">
+                                        <i class="ace-icon fa fa-clock-o"></i>
+                                        <span class="grey">3 min</span>
+                                    </div>
 
-                                        <!-- /section:pages/dashboard.conversations -->
-                                        <form>
-                                            <div class="form-actions">
-                                                <div class="input-group">
-                                                    <input placeholder="Type your message here ..." type="text" class="form-control" name="message" />
-                                                    <span class="input-group-btn">
-                                                        <button class="btn btn-sm btn-info no-radius" type="button">
-                                                            <i class="ace-icon fa fa-share"></i>
-                                                            Send
-                                                        </button>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div><!-- /.widget-main -->
-                                </div><!-- /.widget-body -->
-                            </div><!-- /.widget-box -->
-                        </div><!-- /.col -->
-                    </div><!-- /.row -->
+                                    <div class="name">
+                                        <a href="#">Jim</a>
+                                    </div>
+                                    <div class="text">Raw denim you probably haven&#39;t heard of them jean shorts Austin.</div>
 
-                    <!-- PAGE CONTENT ENDS -->
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.page-content -->
-    </div><!-- /.main-content -->
+                                    <div class="tools">
+                                        <a href="#" class="btn btn-minier btn-info">
+                                            <i class="icon-only ace-icon fa fa-share"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
 
-    <div class="footer">
-        <div class="footer-inner">
-            <!-- #section:basics/footer -->
-            <div class="footer-content">
-                <span class="bigger-120">
-                    <span class="blue bolder">Ace</span>
-                    Application &copy; 2013-2014
-                </span>
+                            <div class="itemdiv dialogdiv">
+                                <div class="user">
+                                    <img alt="Alexa's Avatar" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/avatars/avatar1.png" />
+                                </div>
 
-                &nbsp; &nbsp;
-                <span class="action-buttons">
-                    <a href="#">
-                        <i class="ace-icon fa fa-twitter-square light-blue bigger-150"></i>
-                    </a>
+                                <div class="body">
+                                    <div class="time">
+                                        <i class="ace-icon fa fa-clock-o"></i>
+                                        <span class="green">4 min</span>
+                                    </div>
 
-                    <a href="#">
-                        <i class="ace-icon fa fa-facebook-square text-primary bigger-150"></i>
-                    </a>
+                                    <div class="name">
+                                        <a href="#">Alexa</a>
+                                    </div>
+                                    <div class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
 
-                    <a href="#">
-                        <i class="ace-icon fa fa-rss-square orange bigger-150"></i>
-                    </a>
-                </span>
-            </div>
+                                    <div class="tools">
+                                        <a href="#" class="btn btn-minier btn-info">
+                                            <i class="icon-only ace-icon fa fa-share"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-            <!-- /section:basics/footer -->
-        </div>
-    </div>
+                        <!-- /section:pages/dashboard.conversations -->
+                        <form>
+                            <div class="form-actions">
+                                <div class="input-group">
+                                    <input placeholder="Type your message here ..." type="text" class="form-control" name="message" />
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-sm btn-info no-radius" type="button">
+                                            <i class="ace-icon fa fa-share"></i>
+                                            Send
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </form>
+                    </div><!-- /.widget-main -->
+                </div><!-- /.widget-body -->
+            </div><!-- /.widget-box -->
+        </div><!-- /.col -->
+    </div><!-- /.row -->
 
-    <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
-        <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
-    </a>
-</div><!-- /.main-container -->
-
-<!-- basic scripts -->
-
-<!--[if !IE]> -->
-<script type="text/javascript">
-    window.jQuery || document.write("<script src='<?php echo Yii::app()->theme->baseUrl;?>/assets//js/jquery.min.js'>"+"<"+"/script>");
-</script>
-
-<!-- <![endif]-->
-
-<!--[if IE]>
-<script type="text/javascript">
-window.jQuery || document.write("<script src='<?php echo Yii::app()->theme->baseUrl;?>/assets//js/jquery1x.min.js'>"+"<"+"/script>");
-</script>
-<![endif]-->
-<script type="text/javascript">
-    if('ontouchstart' in document.documentElement) document.write("<script src='<?php echo Yii::app()->theme->baseUrl;?>/assets//js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
-</script>
-<script src="<?php echo Yii::app()->theme->baseUrl;?>/assets//js/bootstrap.min.js"></script>
-
-<!-- page specific plugin scripts -->
-
-<!--[if lte IE 8]>
-  <script src="<?php echo Yii::app()->theme->baseUrl;?>/assets//js/excanvas.min.js"></script>
-<![endif]-->
-<script src="<?php echo Yii::app()->theme->baseUrl;?>/assets//js/jquery-ui.custom.min.js"></script>
-<script src="<?php echo Yii::app()->theme->baseUrl;?>/assets//js/jquery.ui.touch-punch.min.js"></script>
-<script src="<?php echo Yii::app()->theme->baseUrl;?>/assets//js/jquery.easypiechart.min.js"></script>
-<script src="<?php echo Yii::app()->theme->baseUrl;?>/assets//js/jquery.sparkline.min.js"></script>
-<script src="<?php echo Yii::app()->theme->baseUrl;?>/assets//js/flot/jquery.flot.min.js"></script>
-<script src="<?php echo Yii::app()->theme->baseUrl;?>/assets//js/flot/jquery.flot.pie.min.js"></script>
-<script src="<?php echo Yii::app()->theme->baseUrl;?>/assets//js/flot/jquery.flot.resize.min.js"></script>
-
-<!-- ace scripts -->
-<script src="<?php echo Yii::app()->theme->baseUrl;?>/assets//js/ace-elements.min.js"></script>
-<script src="<?php echo Yii::app()->theme->baseUrl;?>/assets//js/ace.min.js"></script>
-
+    <!-- PAGE CONTENT ENDS -->
+</div><!-- /.col -->
 <!-- inline scripts related to this page -->
 <script type="text/javascript">
     jQuery(function($) {
@@ -2404,13 +1383,3 @@ window.jQuery || document.write("<script src='<?php echo Yii::app()->theme->base
     })
 </script>
 
-<link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl;?>/assets//css/ace.onpage-help.css" />
-<link rel="stylesheet" href="../docs/assets/js/themes/sunburst.css" />
-
-<script type="text/javascript"> ace.vars['base'] = '..'; </script>
-<script src="<?php echo Yii::app()->theme->baseUrl;?>/assets//js/ace/ace.onpage-help.js"></script>
-<script src="../docs/assets/js/rainbow.js"></script>
-<script src="../docs/assets/js/language/generic.js"></script>
-<script src="../docs/assets/js/language/html.js"></script>
-<script src="../docs/assets/js/language/css.js"></script>
-<script src="../docs/assets/js/language/javascript.js"></script>
