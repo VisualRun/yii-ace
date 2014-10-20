@@ -53,10 +53,10 @@
                                                 <div class="space"></div>
 
                                                 <div class="clearfix">
-                                                    <label class="inline">
+                                                    <!-- <label class="inline">
                                                         <?php echo $form->checkBox($model,'rememberMe',array('class'=>'ace')); ?>
                                                         <span class="lbl"> Remember Me</span>
-                                                    </label>
+                                                    </label> -->
 
                                                     <button type="submit" class="width-35 pull-right btn btn-sm btn-primary">
                                                         <i class="ace-icon fa fa-key"></i>
