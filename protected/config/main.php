@@ -22,6 +22,7 @@ return array(
 		'application.models.*',
 		'application.components.*',
 		'application.extensions.*',
+		'application.widgets.*',
 	),
 
 	'modules'=>array(

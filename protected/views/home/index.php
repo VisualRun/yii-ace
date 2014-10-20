@@ -1,5 +1,3 @@
-
-
 <div class="col-xs-12">
     <!-- PAGE CONTENT BEGINS -->
     <div class="alert alert-block alert-success">
@@ -1170,6 +1168,12 @@ the lightweight, feature-rich and easy to use admin template.
 
     <!-- PAGE CONTENT ENDS -->
 </div><!-- /.col -->
+
+<!-- page specific plugin scripts -->
+<!--[if lte IE 8]>
+  <script src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/excanvas.min.js"></script>
+<![endif]-->
+
 <!-- inline scripts related to this page -->
 <script type="text/javascript">
     jQuery(function($) {

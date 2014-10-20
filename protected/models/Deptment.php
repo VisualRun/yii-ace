@@ -33,13 +33,13 @@ class Deptment extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('id', 'required'),
-			array('id, status, companyId, parentId, opAdminId', 'numerical', 'integerOnly'=>true),
+			array('id, status, parentId, opAdminId', 'numerical', 'integerOnly'=>true),
 			array('code, name', 'length', 'max'=>32),
 			array('remark', 'length', 'max'=>128),
 			array('createdTime', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, code, name, status, companyId, parentId, remark, opAdminId, createdTime', 'safe', 'on'=>'search'),
+			array('id, code, name, status, parentId, remark, opAdminId, createdTime', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -64,7 +64,6 @@ class Deptment extends CActiveRecord
 			'code' => '部门编码',
 			'name' => '部门名称',
 			'status' => '0=停用 1=启用',
-			'companyId' => 'Company',
 			'parentId' => '上级部门ID',
 			'remark' => '备注',
 			'opAdminId' => '操作人ID',
@@ -94,7 +93,6 @@ class Deptment extends CActiveRecord
 		$criteria->compare('code',$this->code,true);
 		$criteria->compare('name',$this->name,true);
 		$criteria->compare('status',$this->status);
-		$criteria->compare('companyId',$this->companyId);
 		$criteria->compare('parentId',$this->parentId);
 		$criteria->compare('remark',$this->remark,true);
 		$criteria->compare('opAdminId',$this->opAdminId);
@@ -102,6 +100,13 @@ class Deptment extends CActiveRecord
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+			'sort'=>array(  
+            	'defaultOrder'=>'id DESC',  
+        	),
+        	'pagination'=>array(
+			    'pagesize'=>Yii::app()->user->getState('numPerPage'),
+			    'currentPage'=>Yii::app()->user->getState('pageNum')-1,
+			),
 		));
 	}
 

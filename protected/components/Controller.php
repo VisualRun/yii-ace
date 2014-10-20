@@ -21,6 +21,13 @@ class Controller extends CController
 	 */
 	public $breadcrumbs=array();
 
+	//每个页面自有的css
+	public $page_css=array();
+
+	//每个页面自有的js
+	public $page_js=array();
+
+
 	public function filters()
 	{
 		return array(

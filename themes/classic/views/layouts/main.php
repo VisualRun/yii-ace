@@ -13,6 +13,9 @@
         <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/font-awesome.min.css" />
 
         <!-- page specific plugin styles -->
+        <?php foreach(Yii::app()->controller->page_css as $value): ?>
+        <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/<?php echo $value ?>" />
+        <?php endforeach; ?>
 
         <!-- text fonts -->
         <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/ace-fonts.css" />

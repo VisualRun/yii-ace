@@ -36,37 +36,26 @@
 </div><!-- /.main-container -->
 <!-- basic scripts -->
 
-
 <script type="text/javascript">
     if('ontouchstart' in document.documentElement) document.write("<script src='<?php echo Yii::app()->theme->baseUrl;?>/assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
 </script>
 <script src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/bootstrap.min.js"></script>
 
 <!-- page specific plugin scripts -->
-
-<!--[if lte IE 8]>
-  <script src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/excanvas.min.js"></script>
-<![endif]-->
-<script src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/jquery-ui.custom.min.js"></script>
-<script src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/jquery.ui.touch-punch.min.js"></script>
-<script src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/jquery.easypiechart.min.js"></script>
-<script src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/jquery.sparkline.min.js"></script>
-<script src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/flot/jquery.flot.min.js"></script>
-<script src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/flot/jquery.flot.pie.min.js"></script>
-<script src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/flot/jquery.flot.resize.min.js"></script>
+<?php foreach(Yii::app()->controller->page_js as $value): ?>
+<script src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/<?php echo $value ?>"></script>
+<?php endforeach; ?>
 
 <!-- ace scripts -->
 <script src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/ace-elements.min.js"></script>
 <script src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/ace.min.js"></script>
 
-
-
-<link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/ace.onpage-help.css" />
-<!-- <link rel="stylesheet" href="../docs/assets/js/themes/sunburst.css" /> -->
+<!-- <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/ace.onpage-help.css" />
+<link rel="stylesheet" href="../docs/assets/js/themes/sunburst.css" /> -->
 
 <script type="text/javascript"> ace.vars['base'] = '..'; </script>
-<script src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/ace/ace.onpage-help.js"></script>
-<!-- <script src="../docs/assets/js/rainbow.js"></script>
+<!-- <script src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/ace/ace.onpage-help.js"></script>
+<script src="../docs/assets/js/rainbow.js"></script>
 <script src="../docs/assets/js/language/generic.js"></script>
 <script src="../docs/assets/js/language/html.js"></script>
 <script src="../docs/assets/js/language/css.js"></script>
