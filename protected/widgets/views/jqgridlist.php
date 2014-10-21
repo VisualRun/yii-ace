@@ -29,7 +29,20 @@
           }
         })
 
-        jQuery(grid_selector).jqGrid(<?php echo $gridSettings ?>);
+        var gridSettings = <?php echo $gridSettings ?>;
+
+        gridSettings['loadComplete'] = function() {
+            var table = this;
+            setTimeout(function(){
+              styleCheckbox(table);
+              
+              updateActionIcons(table);
+              updatePagerIcons(table);
+              enableTooltips(table);
+            }, 0);
+          };
+
+        jQuery(grid_selector).jqGrid(gridSettings);
         $(window).triggerHandler('resize.jqGrid');//trigger window resize to make the grid get the correct size
 
         //enable search/filter toolbar
