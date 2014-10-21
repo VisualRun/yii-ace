@@ -61,6 +61,51 @@ class Deptment extends CActiveRecord
 		return true;
 	}
 
+	public function result($currentPage=0)
+	{
+		$criteria = new CDbCriteria();
+
+        $criteria->select='*';
+        $criteria->order='createdTime DESC,id DESC';
+        if(isset($this->status)){
+        	$criteria->compare('status',$this->status);
+        }else{
+        	$criteria->condition = 'status>=:status';
+        	$criteria->params = array(':status'=>0);
+        }
+        $criteria->compare('name',$this->name,true);
+        $count=$this->count($criteria);
+        $pages=new CPagination($count);
+        $pages->pageVar='pageIndex';
+
+        $pages->currentPage =$currentPage;
+        $pages->pageSize=10;
+        $pages->applyLimit($criteria);
+        $models = $this->findAll($criteria);
+
+        $row = array();
+        foreach ($models as $key => $value) {
+            $row[] = array(
+                'id' => $value->id,
+				'code' => $value->code,
+				'name' => $value->name,
+				'status' => $value->status,
+				'statusid'=>Yii::app()->params['status'][$value->status],
+				'remark' => $value->remark,
+				'opAdminId' => $value->opAdminId,
+				'createdTime' => $value->createdTime,
+                );
+        }
+        // $data = array(
+        //             "result"=>true,
+        //             "rows"=>$row,
+        //             "results"=>$pages->itemCount,
+        //             "hasError"=> false,
+        //             "error"=>""
+        //         );
+        return $row;
+	}
+
 	/**
 	 * @return array customized attribute labels (name=>label)
 	 */

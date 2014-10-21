@@ -21,11 +21,38 @@ class Controller extends CController
 	 */
 	public $breadcrumbs=array();
 
+	public $modelClass = '';
+	
 	//每个页面自有的css
 	public $page_css=array();
 
 	//每个页面自有的js
 	public $page_js=array();
+
+	public function actions(){  
+        return array(
+        	// 'index'=>array(  
+         //            'class'=>'IndexAction',  
+         //            'modelClass'=>$this->modelClass,
+         //        ),
+        	// 'create'=>array(  
+         //            'class'=>'CreateAction',  
+         //            'modelClass'=>$this->modelClass,  
+         //        ),
+        	// 'view'=>array(  
+         //            'class'=>'ViewAction',  
+         //            'modelClass'=>$this->modelClass,  
+         //        ),
+        	// 'updateone'=>array(  
+         //            'class'=>'UpdateoneAction',  
+         //            'modelClass'=>$this->modelClass,  
+         //        ),
+        	'request'=>array(  
+                    'class'=>'RequestAction',  
+                    'modelClass'=>$this->modelClass,  
+                ),
+        	);  
+    }
 
 
 	public function filters()

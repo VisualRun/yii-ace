@@ -7,30 +7,27 @@ class JqGridlist extends CPortlet
 	public $pageSize = 10;
 	public $model = '';
 	public $viewData = [];
-	public $caption = '';
-	public $requestUrl = '';
 	public $enablePager = true;
 	public $enableCellEdit = false;
 	public $gridSettings = [];
 	public $pagerSettings = [];
 	public $enableFilterToolbar = true;
+
 	protected function renderContent()
 	{
 
 		$jsonGridSettings = $this->processingGridSettings($this->gridSettings);
 		$jsonPagerSettings = $this->processingPagerSettings($this->pagerSettings);
-		echo $jsonGridSettings;
-		echo $jsonPagerSettings;
-		exit;
+		// echo $jsonGridSettings;
+		// echo $jsonPagerSettings;
+		// exit;
 
 		$this->render('jqgridlist',
 			array(
-				'model'=>$this->model,
 				'pageSize'=>$this->pageSize,
 				'viewData'=>$this->viewData,
-				'caption'=>$this->caption,
-				'gridSettings'=>$this->jsonGridSettings,
-				'pagerSettings'=>$this->jsonPagerSettings,
+				'gridSettings'=>$jsonGridSettings,
+				'pagerSettings'=>$jsonPagerSettings,
 				'enableFilterToolbar'=>$this->enableFilterToolbar,
 			)
 		);
@@ -40,15 +37,21 @@ class JqGridlist extends CPortlet
     {
         $widgetId = $this->id;
 
-        $gridSettings['url'] = $this->requestUrl . '?action=request';
+        $gridSettings['url'] = Yii::app()->createUrl($this->model.'/request');
         $gridSettings['datatype'] = 'json';
         $gridSettings['mtype'] = 'POST';
+        $gridSettings['height'] = 250;
+        $gridSettings['viewrecords'] = true;
+        $gridSettings['altRows'] = true;
+        $gridSettings['multiselect'] = true;
+        $gridSettings['multiboxonly'] = true;
+        $gridSettings['autowidth'] = true;
         if ($this->enablePager) {
-            $gridSettings['pager'] = "#jqGrid-pager-{$widgetId}";
+            $gridSettings['pager'] = "#grid-pager";
         }
         if ($this->enableCellEdit) {
             $gridSettings['cellEdit'] = true;
-            $gridSettings['cellurl'] = $this->requestUrl . '?action=edit';
+            $gridSettings['cellurl'] = Yii::app()->createUrl($this->model.'/edit');
         }
         $gridSettings = array_merge($gridSettings, $gridUserSettings);
 
@@ -73,15 +76,15 @@ class JqGridlist extends CPortlet
 
             switch ($optionName) {
                 case 'edit':
-                    $editSettings['url'] = $this->requestUrl . '?action=edit';
+                    $editSettings['url'] = Yii::app()->createUrl($this->model.'/edit');
                     $pagerOptions['edit'] = array_merge($editSettings, $optionSettings);
                     break;
                 case 'add':
-                    $addSettings['url'] = $this->requestUrl . '?action=add';
+                    $addSettings['url'] = Yii::app()->createUrl($this->model.'/add');
                     $pagerOptions['add'] = array_merge($addSettings, $optionSettings);
                     break;
                 case 'del':
-                    $delSettings['url'] = $this->requestUrl . '?action=del';
+                    $delSettings['url'] = Yii::app()->createUrl($this->model.'/del');
                     $pagerOptions['del'] = array_merge($delSettings, $optionSettings);
                     break;
                 case 'search':
