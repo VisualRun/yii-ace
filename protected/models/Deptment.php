@@ -54,6 +54,13 @@ class Deptment extends CActiveRecord
 		);
 	}
 
+	public function beforeSave()
+	{
+		$this->createdTime = date('Y-m-d H:i:s');
+		$this->opAdminId = Yii::app()->user->id;
+		return true;
+	}
+
 	/**
 	 * @return array customized attribute labels (name=>label)
 	 */
@@ -100,8 +107,8 @@ class Deptment extends CActiveRecord
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
-			'sort'=>array(  
-            	'defaultOrder'=>'id DESC',  
+			'sort'=>array(
+            	'defaultOrder'=>'id DESC',
         	),
         	'pagination'=>array(
 			    'pagesize'=>Yii::app()->user->getState('numPerPage'),

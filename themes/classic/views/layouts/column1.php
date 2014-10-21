@@ -42,9 +42,9 @@
 <script src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/bootstrap.min.js"></script>
 
 <!-- page specific plugin scripts -->
-<?php foreach(Yii::app()->controller->page_js as $value): ?>
+<?php if(!empty(Yii::app()->controller->page_js)): foreach(Yii::app()->controller->page_js as $value): ?>
 <script src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/<?php echo $value ?>"></script>
-<?php endforeach; ?>
+<?php endforeach; endif; ?>
 
 <!-- ace scripts -->
 <script src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/ace-elements.min.js"></script>

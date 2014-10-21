@@ -52,6 +52,13 @@ class Workplace extends CActiveRecord
 		);
 	}
 
+	public function beforeSave()
+	{
+		$this->createdTime = date('Y-m-d H:i:s');
+		$this->opAdminId = Yii::app()->user->id;
+		return true;
+	}
+
 	/**
 	 * @return array customized attribute labels (name=>label)
 	 */

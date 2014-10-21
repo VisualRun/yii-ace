@@ -6,7 +6,8 @@
         'viewData' => [
             'start'=>isset($_GET['start'])?$_GET['start']:"",
             'end'=>isset($_GET['end'])?$_GET['end']:""
-        ]
+        ],
+        'requestUrl' => Yii::app()->request->getUrl(),
         'gridSettings' => [
             'colNames' => ['Title', 'Author', 'Language'],
             'colModel' => [

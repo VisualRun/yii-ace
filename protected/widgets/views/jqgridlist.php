@@ -10,8 +10,6 @@
   <!-- PAGE CONTENT ENDS -->
 </div>
 <!-- /.col -->
-</div>
-<!-- /.row -->
 
     <!-- inline scripts related to this page -->
     <script type="text/javascript">
@@ -72,7 +70,6 @@
 
         jQuery(grid_selector).jqGrid({
           //direction: "rtl",
-
           //subgrid options
           subGrid : false,
           //subGridModel: [{ name : ['No','Item Name','Qty'], width : [55,200,80] }],
@@ -97,8 +94,6 @@
               ]
             });
           },
-
-
 
           data: grid_data,
           datatype: "local",
