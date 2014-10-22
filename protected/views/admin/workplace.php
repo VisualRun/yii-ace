@@ -16,11 +16,11 @@
                 ['name' => 'statusid', 'index' => 'language', 'editable' => true],
                 ['name' => 'remark', 'index' => 'language', 'editable' => true]
             ],
-            'rowNum' => 2,
-            'rowList' => [2,4,6],
+            'rowNum' => 10,
+            'rowList' => [10,20,30],
             'autowidth' => true,
             'height' => 'auto',
-            
+
         ],
         'pagerSettings' => [
             'edit' => true,
