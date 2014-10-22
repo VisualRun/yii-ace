@@ -5,19 +5,22 @@
             'start'=>isset($_GET['start'])?$_GET['start']:"",
             'end'=>isset($_GET['end'])?$_GET['end']:""
         ],
-        'model' => 'deptment',
+        'model' => 'user',
         'gridSettings' => [
-            'caption' => '部门管理',
-            'colNames' => ['部门编码', '部门名称', '状态', '备注'],
+            'caption' => '员工管理',
+            'colNames' => ['员工编码', '账号', '类别', '姓名', '状态', '备注'],
             'colModel' => [
                 ['name' => 'code', 'index' => 'code', 'editable' => true],
-                ['name' => 'name', 'index' => 'name', 'editable' => true],
+                ['name' => 'account', 'index' => 'account', 'editable' => true],
+                ['name' => 'type', 'index' => 'type', 'editable' => true],
+                ['name' => 'realname', 'index' => 'realname', 'editable' => true],
                 ['name' => 'statusid', 'index' => 'statusid', 'editable' => true],
                 ['name' => 'remark', 'index' => 'remark', 'editable' => true]
             ],
-            'rowNum' => 1,
+            'rowNum' => 10,
             'rowList' => [10,20,30],
             'autowidth' => true,
+
         ],
         'pagerSettings' => [
             'edit' => true,

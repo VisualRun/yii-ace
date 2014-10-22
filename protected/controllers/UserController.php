@@ -1,10 +1,10 @@
 <?php
 class UserController extends Controller
 {
-
-    public function   init()
+    public function init()
     {
         parent::init();
+        $this->modelClass = 'User';
     }
 
 	public function actionIndex()
@@ -25,7 +25,6 @@ class UserController extends Controller
 
   public function actionSetting()
   {
-
     $this->render('setting');
   }
 }

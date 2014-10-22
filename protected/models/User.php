@@ -87,6 +87,78 @@ class User extends CActiveRecord
 		return true;
 	}
 
+	public function result($currentPage=0)
+	{
+		$criteria = new CDbCriteria();
+
+        $criteria->select='*';
+        $criteria->order='createdTime DESC,id DESC';
+        if(isset($this->status)){
+        	$criteria->compare('status',$this->status);
+        }else{
+        	$criteria->condition = 'status>=:status';
+        	$criteria->params = array(':status'=>0);
+        }
+
+        $count=$this->count($criteria);
+        $pages=new CPagination($count);
+        $pages->pageVar='pageIndex';
+
+        $pages->currentPage =$currentPage;
+        $pages->pageSize=10;
+        $pages->applyLimit($criteria);
+        $models = $this->findAll($criteria);
+
+        $row = array();
+        foreach ($models as $key => $value) {
+            $row[] = array(
+                'id' => $value->id,
+				'code' => $value->code,
+				'account' => $value->account,
+				'password' => $value->password,
+				'typeId' => $value->typeId,
+				'type'=>Yii::app()->params['user_type'][$value->typeId],
+				'realname' => $value->realname,
+				'deptId' => $value->deptId,
+				'workplaceId' => $value->workplaceId,
+				'status' => $value->status,
+				'statusid'=>Yii::app()->params['status'][$value->status],
+				'address' => $value->address,
+				'officeTel' => $value->officeTel,
+				'mobile' => $value->mobile,
+				'officeEmail' => $value->officeEmail,
+				'employTime' => $value->employTime,
+				'unemplyTime' =>$value->unemplyTime,
+				'handonStaffId' => $value->handonStaffId,
+				'personNumber' => $value->personNumber,
+				'personAddress' => $value->personAddress,
+				'sex' => Yii::app()->params['gender'][$value->sex],
+				'residence' => $value->residence,
+				'studyLevel' => $value->studyLevel,
+				'yearOfWorking' => $value->yearOfWorking,
+				'graduationYear' => $value->graduationYear,
+				'homeAddress' => $value->homeAddress,
+				'homeTel' => $value->homeTel,
+				'homeEmail' => $value->homeEmail,
+				'reconcactorPerson' => $value->reconcactorPerson,
+				'reconcactorTel' => $value->reconcactorTel,
+				'workYearlimit' => $value->workYearlimit,
+				'remark' => $value->remark,
+				'opAdminId' => $value->opAdminId,
+				'createdTime' => $value->createdTime,
+				'logNum' => $value->logNum,
+                );
+        }
+        // $data = array(
+        //             "result"=>true,
+        //             "rows"=>$row,
+        //             "results"=>$pages->itemCount,
+        //             "hasError"=> false,
+        //             "error"=>""
+        //         );
+        return $row;
+	}
+
 	/**
 	 * @return array customized attribute labels (name=>label)
 	 */

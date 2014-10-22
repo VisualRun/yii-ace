@@ -40,7 +40,7 @@ class JqGridlist extends CPortlet
         $gridSettings['url'] = Yii::app()->createUrl($this->model.'/request');
         $gridSettings['datatype'] = 'json';
         $gridSettings['mtype'] = 'POST';
-        $gridSettings['height'] = 250;
+        $gridSettings['height'] = '250';
         $gridSettings['viewrecords'] = true;
         $gridSettings['altRows'] = true;
         $gridSettings['multiselect'] = true;

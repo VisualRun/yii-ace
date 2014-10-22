@@ -10,16 +10,14 @@
             'caption' => '岗位管理',
             'colNames' => ['岗位编码', '岗位名称', '状态', '备注'],
             'colModel' => [
-                // ['name' => 'myac', 'index' => '', 'width' => '80', 'fixed' => 'true', 'sortable' => false ],
-                ['name' => 'code', 'index' => 'title', 'editable' => true],
-                ['name' => 'name', 'index' => 'author', 'editable' => true],
-                ['name' => 'statusid', 'index' => 'language', 'editable' => true],
-                ['name' => 'remark', 'index' => 'language', 'editable' => true]
+                ['name' => 'code', 'index' => 'code', 'editable' => true],
+                ['name' => 'name', 'index' => 'name', 'editable' => true],
+                ['name' => 'statusid', 'index' => 'statusid', 'editable' => true],
+                ['name' => 'remark', 'index' => 'remark', 'editable' => true]
             ],
             'rowNum' => 10,
             'rowList' => [10,20,30],
             'autowidth' => true,
-            'height' => 'auto',
 
         ],
         'pagerSettings' => [
