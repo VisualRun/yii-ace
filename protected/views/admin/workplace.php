@@ -22,11 +22,11 @@
         ],
         'pagerSettings' => [
             'edit' => true,
-            'editicon' => 'ace-icon fa fa-pencil blue',
+            //'editicon' => 'ace-icon fa fa-pencil blue',
             'add' => true,
-            'addicon' => 'ace-icon fa fa-plus-circle purple',
+            //'addicon' => 'ace-icon fa fa-plus-circle purple',
             'del' => true,
-            'delicon' => 'ace-icon fa fa-trash-o red',
+            //'delicon' => 'ace-icon fa fa-trash-o red',
             'search' => ['multipleSearch' => true]
         ],
         'enableFilterToolbar' => true
