@@ -12,7 +12,7 @@
             'colModel' => [
                 ['name' => 'code', 'index' => 'code', 'editable' => true],
                 ['name' => 'name', 'index' => 'name', 'editable' => true],
-                ['name' => 'statusid', 'index' => 'statusid', 'editable' => true],
+                ['name' => 'status', 'index' => 'status', 'editable' => true, 'edittype' => 'select','editoptions' => ['value' => Yii::app()->params['status']]],
                 ['name' => 'remark', 'index' => 'remark', 'editable' => true]
             ],
             'rowNum' => 1,

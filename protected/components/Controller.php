@@ -35,18 +35,18 @@ class Controller extends CController
          //            'class'=>'IndexAction',  
          //            'modelClass'=>$this->modelClass,
          //        ),
-        	// 'create'=>array(  
-         //            'class'=>'CreateAction',  
-         //            'modelClass'=>$this->modelClass,  
-         //        ),
-        	// 'view'=>array(  
-         //            'class'=>'ViewAction',  
-         //            'modelClass'=>$this->modelClass,  
-         //        ),
-        	// 'updateone'=>array(  
-         //            'class'=>'UpdateoneAction',  
-         //            'modelClass'=>$this->modelClass,  
-         //        ),
+        	'create'=>array(  
+                    'class'=>'CreateAction',  
+                    'modelClass'=>$this->modelClass,  
+                ),
+        	'del'=>array(  
+                    'class'=>'DelAction',  
+                    'modelClass'=>$this->modelClass,  
+                ),
+        	'update'=>array(  
+                    'class'=>'UpdateAction',  
+                    'modelClass'=>$this->modelClass,  
+                ),
         	'request'=>array(  
                     'class'=>'RequestAction',  
                     'modelClass'=>$this->modelClass,  

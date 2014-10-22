@@ -68,7 +68,41 @@
 
 
         //navButtons
-        jQuery(grid_selector).jqGrid('navGrid',pager_selector,<?php echo $pagerSettings ?>)
+        var pagerSettings = [<?php echo $pagerSettings ?>];
+        pagerSettings[1]['beforeShowForm'] = function(e) {
+              var form = $(e[0]);
+              form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
+              style_edit_form(form);
+            };
+        pagerSettings[2]['beforeShowForm'] = function(e) {
+              var form = $(e[0]);
+              form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar')
+              .wrapInner('<div class="widget-header" />')
+              style_edit_form(form);
+            };
+        pagerSettings[3]['beforeShowForm'] = function(e) {
+              var form = $(e[0]);
+              if(form.data('styled')) return false;
+              
+              form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
+              style_delete_form(form);
+              
+              form.data('styled', true);
+            };
+        pagerSettings[4]['afterShowSearch'] = function(e){
+              var form = $(e[0]);
+              form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />')
+              style_search_form(form);
+            };
+        pagerSettings[4]['afterRedraw'] = function(){
+              style_search_filters($(this));
+            };
+        // pagerSettings[6]['beforeShowForm'] = function(e){
+        //       var form = $(e[0]);
+        //       form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />')
+        //     };
+        //console.log(pagerSettings)
+        jQuery(grid_selector).jqGrid('navGrid',pager_selector,pagerSettings[0],pagerSettings[1],pagerSettings[2],pagerSettings[3],pagerSettings[4],pagerSettings[5],pagerSettings[6])
 
 
 

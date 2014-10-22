@@ -136,4 +136,17 @@ class Helpers
        	$type = Yii::app()->user->getState('type');
         return Yii::app()->params['user_type'][$type];
     }
+
+    /**
+     * [cArray 一维对象转为数组]
+     * @param  [object] $ob [一维对象]
+     * @return [array]    [一维数组]
+     */
+    public static function cArray($ob){
+        $arrs=array();
+        foreach($ob as $k=>$v){
+                $arrs[$k]=$ob->$k;
+        }
+        return $arrs;
+    }
 }

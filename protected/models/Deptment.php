@@ -32,8 +32,7 @@ class Deptment extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id', 'required'),
-			array('id, status, parentId, opAdminId', 'numerical', 'integerOnly'=>true),
+			array('status, parentId, opAdminId', 'numerical', 'integerOnly'=>true),
 			array('code, name', 'length', 'max'=>32),
 			array('remark', 'length', 'max'=>128),
 			array('createdTime', 'safe'),
@@ -89,7 +88,7 @@ class Deptment extends CActiveRecord
                 'id' => $value->id,
 				'code' => $value->code,
 				'name' => $value->name,
-				'status' => $value->status,
+				'status' => Yii::app()->params['status'][$value->status],
 				'statusid'=>Yii::app()->params['status'][$value->status],
 				'remark' => $value->remark,
 				'opAdminId' => $value->opAdminId,

@@ -77,6 +77,8 @@ class User extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'dept'=>array(self::BELONGS_TO,'Deptment','deptId'),
+			'workplace'=>array(self::BELONGS_TO,'Workplace','workplaceId'),
 		);
 	}
 
@@ -92,22 +94,22 @@ class User extends CActiveRecord
 		$criteria = new CDbCriteria();
 
         $criteria->select='*';
-        $criteria->order='createdTime DESC,id DESC';
+        $criteria->order='t.createdTime DESC,t.id DESC';
         if(isset($this->status)){
-        	$criteria->compare('status',$this->status);
+        	$criteria->compare('t.status',$this->status);
         }else{
-        	$criteria->condition = 'status>=:status';
+        	$criteria->condition = 't.status>=:status';
         	$criteria->params = array(':status'=>0);
         }
 
-        $count=$this->count($criteria);
+        $count=$this->with(array('dept','workplace'))->count($criteria);
         $pages=new CPagination($count);
         $pages->pageVar='pageIndex';
 
         $pages->currentPage =$currentPage;
         $pages->pageSize=10;
         $pages->applyLimit($criteria);
-        $models = $this->findAll($criteria);
+        $models = $this->with(array('dept','workplace'))->findAll($criteria);
 
         $row = array();
         foreach ($models as $key => $value) {
@@ -116,13 +118,13 @@ class User extends CActiveRecord
 				'code' => $value->code,
 				'account' => $value->account,
 				'password' => $value->password,
-				'typeId' => $value->typeId,
-				'type'=>Yii::app()->params['user_type'][$value->typeId],
+				'typeId' => Yii::app()->params['user_type'][$value->typeId],
+				'type'=> Yii::app()->params['user_type'][$value->typeId],
 				'realname' => $value->realname,
-				'deptId' => $value->deptId,
-				'workplaceId' => $value->workplaceId,
-				'status' => $value->status,
-				'statusid'=>Yii::app()->params['status'][$value->status],
+				'deptId' => isset($value->dept)?$value->dept->name:'无',
+				'workplaceId' => isset($value->workplace)?$value->workplace->name:'无',
+				'status' => Yii::app()->params['status'][$value->status],
+				'statusid'=> Yii::app()->params['status'][$value->status],
 				'address' => $value->address,
 				'officeTel' => $value->officeTel,
 				'mobile' => $value->mobile,
@@ -149,13 +151,6 @@ class User extends CActiveRecord
 				'logNum' => $value->logNum,
                 );
         }
-        // $data = array(
-        //             "result"=>true,
-        //             "rows"=>$row,
-        //             "results"=>$pages->itemCount,
-        //             "hasError"=> false,
-        //             "error"=>""
-        //         );
         return $row;
 	}
 

@@ -67,7 +67,8 @@ class JqGridlist extends CPortlet
             'add' => false,
             'del' => false,
             'search' => false,
-            'view' => false
+            'refresh' => true,
+            'view' => true,
         ];
         foreach ($pagerUserSettings as $optionName => $optionSettings) {
             if ($optionSettings === false) {
@@ -78,25 +79,34 @@ class JqGridlist extends CPortlet
 
             switch ($optionName) {
                 case 'edit':
-                    $editSettings['url'] = Yii::app()->createUrl($this->model.'/edit');
+                    $editSettings['url'] = Yii::app()->createUrl($this->model.'/update');
+                    $editSettings['recreateForm'] = true;
                     $pagerOptions['edit'] = array_merge($editSettings, $optionSettings);
                     break;
                 case 'add':
-                    $addSettings['url'] = Yii::app()->createUrl($this->model.'/add');
+                    $addSettings['url'] = Yii::app()->createUrl($this->model.'/create');
+                    $addSettings['closeAfterAdd'] = true;
+                    $addSettings['recreateForm'] = true;
+                    $addSettings['viewPagerButtons'] = false;
                     $pagerOptions['add'] = array_merge($addSettings, $optionSettings);
                     break;
                 case 'del':
                     $delSettings['url'] = Yii::app()->createUrl($this->model.'/del');
+                    $delSettings['recreateForm'] = true;
                     $pagerOptions['del'] = array_merge($delSettings, $optionSettings);
                     break;
                 case 'search':
                     $pagerOptions['search'] = $optionSettings;
                     break;
+                case 'refresh':
+                    $pagerOptions['refresh'] = $optionSettings;
+                    break;
                 case 'view':
-                    $pagerOptions['view'] = $optionSettings;
+                    $viewSettings['recreateForm'] = true;
+                    $pagerOptions['view'] = array_merge($viewSettings, $optionSettings);
                     break;
                 default:
-                    throw new InvalidParamException("Invalid param `$optionName` in pager settings");
+                    throw new CHttpException("Invalid param `$optionName` in pager settings");
             }
         }
 
@@ -111,6 +121,13 @@ class JqGridlist extends CPortlet
                 $resultSettings[] = json_encode($optionSettings, YII_DEBUG ? JSON_PRETTY_PRINT : 0);
             }
         }
+        $resultOptions['editicon'] = 'ace-icon fa fa-pencil blue';
+        $resultOptions['addicon'] = 'ace-icon fa fa-plus-circle purple';
+        $resultOptions['delicon'] = 'ace-icon fa fa-trash-o red';
+        $resultOptions['searchicon'] = 'ace-icon fa fa-search orange';
+        $resultOptions['refreshicon'] = 'ace-icon fa fa-refresh green';
+        $resultOptions['viewicon'] = 'ace-icon fa fa-search-plus grey';
+
         $resultOptions = json_encode($resultOptions, YII_DEBUG ? JSON_PRETTY_PRINT : 0);
 
         array_unshift($resultSettings, $resultOptions);

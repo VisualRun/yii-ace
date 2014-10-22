@@ -1,6 +1,6 @@
 <?php
 
-class DeptmentController extends Controller
+class WorkplaceController extends Controller
 {
 	public function init(){
 		parent::init();
