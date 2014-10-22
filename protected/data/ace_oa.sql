@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50616
 File Encoding         : 65001
 
-Date: 2014-10-21 00:53:31
+Date: 2014-10-23 01:52:20
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -29,14 +29,15 @@ CREATE TABLE `ao_deptment` (
   `opAdminId` int(8) DEFAULT NULL COMMENT '操作人ID',
   `createdTime` datetime DEFAULT NULL COMMENT '生成时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='部门表';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='部门表';
 
 -- ----------------------------
 -- Records of ao_deptment
 -- ----------------------------
 INSERT INTO `ao_deptment` VALUES ('1', 'd1', '开发部', '1', '0', '测试', '1', '2014-10-21 00:00:29');
 INSERT INTO `ao_deptment` VALUES ('2', 'd2', '客服部', '1', '0', '测试', '1', '2014-10-21 00:00:53');
-INSERT INTO `ao_deptment` VALUES ('3', 'd3', '运营部', '1', '0', '测试', '1', '2014-10-21 00:01:13');
+INSERT INTO `ao_deptment` VALUES ('3', 'd3', '运营部', '1', '0', '测试', '1', '2014-10-23 01:05:00');
+INSERT INTO `ao_deptment` VALUES ('4', 'd4', '测试部', '-1', null, '哈哈', '1', '2014-10-23 01:26:53');
 
 -- ----------------------------
 -- Table structure for ao_user
@@ -88,7 +89,7 @@ CREATE TABLE `ao_user` (
 -- ----------------------------
 -- Records of ao_user
 -- ----------------------------
-INSERT INTO `ao_user` VALUES ('1', 'u1', 'admin', '21232f297a57a5a743894a0e4a801fc3', '1', '管理员', null, null, '1', null, null, null, null, null, null, null, null, null, '0', null, null, null, null, null, null, null, null, null, null, null, null, '2014-10-17 00:39:07', '6');
+INSERT INTO `ao_user` VALUES ('1', 'u1', 'admin', '21232f297a57a5a743894a0e4a801fc3', '1', '管理员', '1', '1', '1', null, null, null, null, null, null, null, null, null, '0', null, null, null, null, null, null, null, null, null, null, '', '1', '2014-10-23 01:51:56', '16');
 
 -- ----------------------------
 -- Table structure for ao_workplace
@@ -103,8 +104,9 @@ CREATE TABLE `ao_workplace` (
   `opAdminId` int(8) DEFAULT NULL COMMENT '操作人ID',
   `createdTime` datetime DEFAULT NULL COMMENT '生成时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='岗位表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='岗位表';
 
 -- ----------------------------
 -- Records of ao_workplace
 -- ----------------------------
+INSERT INTO `ao_workplace` VALUES ('1', 'w1', '程序员', '1', '测试', '1', '2014-10-23 01:36:14');
