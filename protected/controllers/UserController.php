@@ -27,5 +27,19 @@ class UserController extends Controller
   {
     $this->render('setting');
   }
+
+  public function actionPasswdedit()
+  {
+    $this->page_css = array(
+      'jquery-ui.custom.min.css',
+      'jquery.gritter.css',
+      'select2.css',
+      'datepicker.css',
+      'bootstrap-editable.css',
+      );
+    $this->pageTitle = '修改密码';
+    $model = new User;
+    $this->render('passwdedit',array('model'=>$model));
+  }
 }
 ?>
