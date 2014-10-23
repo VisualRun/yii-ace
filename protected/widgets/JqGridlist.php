@@ -40,7 +40,7 @@ class JqGridlist extends CPortlet
         $gridSettings['url'] = Yii::app()->createUrl($this->model.'/request');
         $gridSettings['datatype'] = 'json';
         $gridSettings['mtype'] = 'POST';
-        $gridSettings['height'] = '250';
+        $gridSettings['height'] = 326;
         $gridSettings['viewrecords'] = true;
         $gridSettings['altRows'] = true;
         $gridSettings['multiselect'] = true;
@@ -53,7 +53,7 @@ class JqGridlist extends CPortlet
         }
         if ($this->enableCellEdit) {
             $gridSettings['cellEdit'] = true;
-            $gridSettings['cellurl'] = Yii::app()->createUrl($this->model.'/edit');
+            $gridSettings['cellurl'] = Yii::app()->createUrl($this->model.'/update');
         }
         $gridSettings = array_merge($gridSettings, $gridUserSettings);
 
@@ -80,7 +80,10 @@ class JqGridlist extends CPortlet
             switch ($optionName) {
                 case 'edit':
                     $editSettings['url'] = Yii::app()->createUrl($this->model.'/update');
+                    $editSettings['closeAfterEdit'] = true;
                     $editSettings['recreateForm'] = true;
+                    $editSettings['viewPagerButtons'] = false;
+                    $editSettings['reloadAfterSubmit'] = true;
                     $pagerOptions['edit'] = array_merge($editSettings, $optionSettings);
                     break;
                 case 'add':
@@ -103,6 +106,7 @@ class JqGridlist extends CPortlet
                     break;
                 case 'view':
                     $viewSettings['recreateForm'] = true;
+                    $viewSettings['viewPagerButtons'] = true;
                     $pagerOptions['view'] = array_merge($viewSettings, $optionSettings);
                     break;
                 default:

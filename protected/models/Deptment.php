@@ -55,10 +55,20 @@ class Deptment extends CActiveRecord
 
 	public function beforeSave()
 	{
+        $this->parentId = 0;
 		$this->createdTime = date('Y-m-d H:i:s');
 		$this->opAdminId = Yii::app()->user->id;
 		return true;
 	}
+
+    public function afterSave(){
+        if ($this->isNewRecord) {
+            $this->code = 'D'.str_pad($this->primarykey,2,'0',STR_PAD_LEFT);
+            $this->isNewRecord = false;
+            $this->saveAttributes(array('code'));
+        }
+        return true;
+    }
 
 	public function result($currentPage=0)
 	{

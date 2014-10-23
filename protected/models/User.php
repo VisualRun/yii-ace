@@ -89,6 +89,15 @@ class User extends CActiveRecord
 		return true;
 	}
 
+	public function afterSave(){
+        if ($this->isNewRecord) {
+            $this->code = 'U'.str_pad($this->primarykey,4,'0',STR_PAD_LEFT);
+            $this->isNewRecord = false;
+            $this->saveAttributes(array('code'));
+        }
+        return true;
+    }
+
 	public function result($currentPage=0)
 	{
 		$criteria = new CDbCriteria();

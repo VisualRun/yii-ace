@@ -45,8 +45,8 @@ class CreateAction extends CAction{
         if (Yii::app()->request->isAjaxRequest)
         {
             $data = $_POST;
-            if(!empty($data)){  
-                $model = new $this->modelClass; 
+            if(!empty($data)){
+                $model = new $this->modelClass;
                 $model->attributes = $data;
                 if($model->save())
                     echo true;

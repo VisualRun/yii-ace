@@ -19,7 +19,7 @@ class AdminController extends Controller
 		$this->page_js = array(
 			'date-time/bootstrap-datepicker.min.js',
 			'jqGrid/jquery.jqGrid.min.js',
-			'jqGrid/i18n/grid.locale-en.js',
+			'jqGrid/i18n/grid.locale-cn.js',
 			);
 
 		$this->pageTitle = '部门管理';
@@ -38,7 +38,7 @@ class AdminController extends Controller
 		$this->page_js = array(
 			'date-time/bootstrap-datepicker.min.js',
 			'jqGrid/jquery.jqGrid.min.js',
-			'jqGrid/i18n/grid.locale-en.js',
+			'jqGrid/i18n/grid.locale-cn.js',
 			);
 
 		$this->pageTitle = '岗位管理';
@@ -57,7 +57,7 @@ class AdminController extends Controller
 		$this->page_js = array(
 			'date-time/bootstrap-datepicker.min.js',
 			'jqGrid/jquery.jqGrid.min.js',
-			'jqGrid/i18n/grid.locale-en.js',
+			'jqGrid/i18n/grid.locale-cn.js',
 			);
 
 		$this->pageTitle = '员工管理';

@@ -10,16 +10,14 @@
             'caption' => '员工管理',
             'colNames' => ['员工编码', '账号', '类别', '姓名', '部门', '岗位', '状态', '备注'],
             'colModel' => [
-                ['name' => 'code', 'index' => 'code', 'editable' => true],
+                ['name' => 'code', 'index' => 'code', 'editable' => false],
                 ['name' => 'account', 'index' => 'account', 'editable' => true],
                 ['name' => 'typeId', 'index' => 'typeId', 'editable' => true, 'edittype' => 'select','editoptions' => ['value' => Yii::app()->params['user_type']]],
                 ['name' => 'realname', 'index' => 'realname', 'editable' => true],
-                // ['name' => 'deptId', 'index' => 'deptId', 'editable' => true, 'edittype' => 'select','editoptions' => ['value' => Helpers::cArray(Deptment::model()->findAllByAttributes(array('status'=>1)), 'id', 'name')]],
                 ['name' => 'deptId', 'index' => 'deptId', 'editable' => true, 'edittype' => 'select','editoptions' => ['value' => CHtml::listData(Deptment::model()->findAllByAttributes(array('status'=>1)), 'id', 'name')]],
-                // ['name' => 'workplaceId', 'index' => 'workplaceId', 'editable' => true, 'edittype' => 'select','editoptions' => ['value' => Helpers::cArray(Workplace::model()->findAllByAttributes(array('status'=>1)), 'id', 'name')]],
                 ['name' => 'workplaceId', 'index' => 'workplaceId', 'editable' => true, 'edittype' => 'select','editoptions' => ['value' => CHtml::listData(Workplace::model()->findAllByAttributes(array('status'=>1)), 'id', 'name')]],
                 ['name' => 'status', 'index' => 'status', 'editable' => true, 'edittype' => 'select','editoptions' => ['value' => Yii::app()->params['status']]],
-                ['name' => 'remark', 'index' => 'remark', 'editable' => true]
+                ['name' => 'remark', 'index' => 'remark', 'editable' => true, 'edittype' => 'textarea']
 
             ],
             'rowNum' => 10,

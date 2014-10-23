@@ -58,6 +58,15 @@ class Workplace extends CActiveRecord
 		return true;
 	}
 
+    public function afterSave(){
+        if ($this->isNewRecord) {
+            $this->code = 'W'.str_pad($this->primarykey,3,'0',STR_PAD_LEFT);
+            $this->isNewRecord = false;
+            $this->saveAttributes(array('code'));
+        }
+        return true;
+    }
+
 	public function result($currentPage=0)
 	{
 		$criteria = new CDbCriteria();
@@ -70,7 +79,7 @@ class Workplace extends CActiveRecord
         	$criteria->condition = 'status>=:status';
         	$criteria->params = array(':status'=>0);
         }
-      
+
         $criteria->compare('name',$this->name,true);
         $count=$this->count($criteria);
         $pages=new CPagination($count);
