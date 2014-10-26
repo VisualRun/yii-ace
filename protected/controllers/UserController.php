@@ -39,6 +39,24 @@ class UserController extends Controller
       );
     $this->pageTitle = '修改密码';
     $model = new User;
+    if(isset($_POST['User'])){
+      $data = $_POST['User'];
+      $passwd1 = $data['password'];
+      $passwd2 = $data['createdTime'];
+      $id = $data['id'];
+      if(!empty($passwd1) && !empty($passwd2) && $passwd1 == $passwd2)
+      {
+        $model = User::model()->findByPk($id);
+        if($model)
+        {
+          $model->password = md5($passwd1);
+          $model->save();
+           $this->redirect(array('site/logout'));
+        }
+      }
+    }
+    
+
     $this->render('passwdedit',array('model'=>$model));
   }
 }
