@@ -40,22 +40,25 @@ class UserController extends Controller
     $this->pageTitle = '修改密码';
     $model = new User;
     if(isset($_POST['User'])){
-      $data = $_POST['User'];
+      $data = Yii::app()->request->getParam('User');
       $passwd1 = $data['password'];
       $passwd2 = $data['createdTime'];
-      $id = $data['id'];
+      $id = Yii::app()->request->getParam('id');
       if(!empty($passwd1) && !empty($passwd2) && $passwd1 == $passwd2)
       {
-        $model = User::model()->findByPk($id);
-        if($model)
+        $model1 = User::model()->findByPk($id);
+        if($model1)
         {
-          $model->password = md5($passwd1);
-          $model->save();
+          $model1->password = md5($passwd1);
+          $model1->save();
            $this->redirect(array('site/logout'));
+        }else{
+          $model->addError('createdTime','修改提交出错！请刷新再试！');
         }
+      }else{
+        $model->addError('createdTime','请正确输入！');
       }
     }
-    
 
     $this->render('passwdedit',array('model'=>$model));
   }

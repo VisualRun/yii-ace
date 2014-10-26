@@ -29,8 +29,8 @@
 
                     <div class="col-sm-9">
                         <?php echo $form->passwordField($model,'password',array('id'=>'form-field-pass1')); ?>
+                        <?php echo $form->error($model,'password'); ?>
                     </div>
-                    <?php echo $form->error($model,'password'); ?>
                 </div>
                 <div style="clear:both;"></div>
                 <div class="space-4"></div>
@@ -40,17 +40,17 @@
 
                     <div class="col-sm-9">
                         <?php echo $form->passwordField($model,'createdTime',array('id'=>'form-field-pass2')); ?>
+                        <?php echo $form->error($model,'createdTime'); ?>
                     </div>
-                    <?php echo $form->error($model,'createdTime'); ?>
-                </div>
+                    </div>                    
                 <div style="clear:both;"></div>
             </div>
         </div>
     </div>
     <div class="clearfix form-actions">
         <div class="col-md-offset-3 col-md-9">
+            <input name="id" type="hidden" value="<?php echo Yii::app()->user->id ?>">
             <button type="submit" class="btn btn-info">
-                <?php echo $form->hiddenField($model,'id'); ?>
                 <i class="ace-icon fa fa-check bigger-110"></i>
                 保存
             </button>
