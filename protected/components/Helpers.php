@@ -28,10 +28,9 @@ class Helpers
                 		'href'=>'#',
                 		'class'=>'fa-list-alt',
                 		'item'=>array(
-                			array('text'=>'1212','href'=>'#','action'=>array('index')),
-                			array('text'=>'1212','href'=>'#','action'=>array('index')),
-                			array('text'=>'1212','href'=>'#','action'=>array('index')),
-                			array('text'=>'1212','href'=>'#','action'=>array('index')),
+                			array('text'=>'任务发布','href'=>'#','action'=>array('index')),
+                			array('text'=>'我的任务','href'=>'#','action'=>array('index')),
+                			array('text'=>'所有任务','href'=>'#','action'=>array('index')),
                 		),
                 	),
                 	'user'=>array(
@@ -71,10 +70,9 @@ class Helpers
                 		'href'=>'#',
                 		'class'=>'fa-list-alt',
                 		'item'=>array(
-                			array('text'=>'1212','href'=>'#','action'=>array('index')),
-                			array('text'=>'1212','href'=>'#','action'=>array('index')),
-                			array('text'=>'1212','href'=>'#','action'=>array('index')),
-                			array('text'=>'1212','href'=>'#','action'=>array('index')),
+                			array('text'=>'任务发布','href'=>'#','action'=>array('index')),
+                            array('text'=>'我的任务','href'=>'#','action'=>array('index')),
+                            array('text'=>'所有任务','href'=>'#','action'=>array('index')),
                 		),
                 	),
                 	'user'=>array(
@@ -104,10 +102,8 @@ class Helpers
                 		'href'=>'#',
                 		'class'=>'fa-list-alt',
                 		'item'=>array(
-                			array('text'=>'1212','href'=>'#','action'=>array('index')),
-                			array('text'=>'1212','href'=>'#','action'=>array('index')),
-                			array('text'=>'1212','href'=>'#','action'=>array('index')),
-                			array('text'=>'1212','href'=>'#','action'=>array('index')),
+                			array('text'=>'我的任务','href'=>'#','action'=>array('index')),
+                            array('text'=>'所有任务','href'=>'#','action'=>array('index')),
                 		),
                 	),
                 	'user'=>array(
