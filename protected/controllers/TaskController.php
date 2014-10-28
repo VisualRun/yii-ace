@@ -8,7 +8,55 @@ class TaskController extends Controller
 	}
 
 	public function actionAdd(){
+		$this->page_css = array(
+			'jquery-ui.custom.min.css',
+			'chosen.css',
+			'datepicker.css',
+			'bootstrap-timepicker.css',
+			'daterangepicker.css',
+			'bootstrap-datetimepicker.css',
+			'colorpicker.css',
+			);
+
+		$this->page_js = array(
+			'jquery-ui.custom.min.js',
+			'jquery.ui.touch-punch.min.js',
+			'chosen.jquery.min.js',
+			'fuelux/fuelux.spinner.min.js',
+			'date-time/bootstrap-datepicker.min.js',
+			'date-time/bootstrap-timepicker.min.js',
+			'date-time/moment.min.js',
+			'date-time/daterangepicker.min.js',
+			'date-time/bootstrap-datetimepicker.min.js',
+			'bootstrap-colorpicker.min.js',
+			'jquery.knob.min.js',
+			'jquery.autosize.min.js',
+			'jquery.inputlimiter.1.3.1.min.js',
+			'jquery.maskedinput.min.js',
+			'bootstrap-tag.min.js',
+			);
+
 		$model = new Task;
-		$this->render('add',$model);
+
+		$this->render('add',array('model'=>$model));
+	}
+
+	public function actionList()
+	{
+		$this->page_css = array(
+			'jquery-ui.min.css',
+			'datepicker.css',
+			'ui.jqgrid.css',
+			);
+
+		$this->page_js = array(
+			'date-time/bootstrap-datepicker.min.js',
+			'jqGrid/jquery.jqGrid.min.js',
+			'jqGrid/i18n/grid.locale-cn.js',
+			);
+
+		$this->pageTitle = '任务列表';
+
+		$this->render('list');
 	}
 }

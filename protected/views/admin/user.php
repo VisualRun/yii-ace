@@ -29,7 +29,8 @@
             'edit' => true,
             'add' => true,
             'del' => true,
-            'search' => ['multipleSearch' => true]
+            //'search' => ['multipleSearch' => true]
+            'search' => false,
         ],
         'enableFilterToolbar' => true
       ]

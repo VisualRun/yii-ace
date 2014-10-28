@@ -50,7 +50,7 @@ class Task extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('desc, deadline', 'required'),
+			array('typeId, imtypeId, name, desc, deadline', 'required'),
 			array('typeId, imtypeId, status, openedId, assignedId, finishedId, canceledId, closedId, lastEditedId, opAdminId', 'numerical', 'integerOnly'=>true),
 			array('code, name', 'length', 'max'=>32),
 			array('closedReason', 'length', 'max'=>30),
@@ -74,6 +74,101 @@ class Task extends CActiveRecord
 		);
 	}
 
+	public function beforeSave()
+	{
+		if($this->isNewRecord){
+			$this->openedId = Yii::app()->user->id;
+			$this->openedDate = date('Y-m-d H:i:s');
+		}
+		$this->lastEditedId = Yii::app()->user->id;
+		$this->lastEditedDate = date('Y-m-d H:i:s');
+		$this->createdTime = date('Y-m-d H:i:s');
+		$this->opAdminId = Yii::app()->user->id;
+		return true;
+	}
+
+	public function afterSave(){
+        if ($this->isNewRecord) {
+        	$str = '';
+        	if(isset($this->typeId))
+        		$str .= 'T'.$this->typeId;
+        	if(isset($this->imtypeId))
+        		$str .= 'IM'.$this->imtypeId;
+            $this->code = $str.str_pad($this->primarykey,8,'0',STR_PAD_LEFT);
+            $this->isNewRecord = false;
+            $this->saveAttributes(array('code'));
+        }
+        return true;
+    }
+
+	public function createField()
+	{
+		// NOTE: you may need to adjust the relation name and the related
+		// class name for the relations automatically generated below.
+		return array(
+			'typeId' => array('type'=>'checkbox','data'=>Yii::app()->params['task_type']),
+			'imtypeId' => array('type'=>'checkbox','data'=>Yii::app()->params['task_important_type']),
+			'name' => '任务名称',
+			'desc' => array('type'=>'textarea'),
+			'deadline' => array('type'=>'date'),
+			'assignedId' => array('type'=>'checkbox','data'=>array_merge(array(""=>"不指定"),CHtml::listData(User::model()->findAllByAttributes(array('status'=>1)), 'id', 'account'))),
+			'opAdminId' => array('name'=>'附件','type'=>'file'),
+		);
+	}
+
+	public function result($currentPage=0)
+	{
+		$criteria = new CDbCriteria();
+
+        $criteria->select='*';
+        $criteria->order='t.createdTime DESC,t.id DESC';
+        	
+        $criteria->compare('t.status',$this->status);
+
+        $count=$this->count($criteria);
+        $pages=new CPagination($count);
+        $pages->pageVar='pageIndex';
+
+        $pages->currentPage =$currentPage;
+        $pages->pageSize=10;
+        $pages->applyLimit($criteria);
+        $models = $this->findAll($criteria);
+
+        $row = array();
+        foreach ($models as $key => $value) {
+            $row[] = array(
+                'id' => $value->id,
+				'code' => $value->code,
+				'typeId' => Yii::app()->params['task_type'][$value->typeId],
+				'imtypeId' => Yii::app()->params['task_important_type'][$value->imtypeId],
+				'name' => $value->name,
+				'desc' => $value->desc,
+				'status' => Yii::app()->params['task_status'][$value->status],
+				'deadline' => $value->deadline,
+				'openedId' => $value->openedId,
+				'openedDate' => $value->openedDate,
+				'assignedId' => $value->assignedId,
+				'assignedDate' => $value->assignedDate,
+				'estStarted' => $value->estStarted,
+				'realStarted' => $value->realStarted,
+				'finishedId' => $value->finishedId,
+				'finishedDate' => $value->finishedDate,
+				'canceledId' => $value->canceledId,
+				'canceledDate' => $value->canceledDate,
+				'closedId' => $value->closedId,
+				'closedDate' => $value->closedDate,
+				'closedReason' => $value->closedReason,
+				'lastEditedId' => $value->lastEditedId,
+				'lastEditedDate' => $value->lastEditedDate,
+				'deleted' => $value->deleted,
+				'remark' => $value->remark,
+				'opAdminId' => $value->opAdminId,
+				'createdTime' => $value->createdTime,
+                );
+        }
+        return $row;
+	}
+
 	/**
 	 * @return array customized attribute labels (name=>label)
 	 */
@@ -88,8 +183,8 @@ class Task extends CActiveRecord
 			'desc' => '任务说明',
 			'status' => '0=等待 1=激活 2=完成 3=暂停 4=取消 5=关闭',
 			'deadline' => '任务最后时限',
-			'openedId' => '设置开始人ID',
-			'openedDate' => '设置开始时间',
+			'openedId' => '创建人ID',
+			'openedDate' => '创建时间',
 			'assignedId' => '指派到人ID',
 			'assignedDate' => '指派时间',
 			'estStarted' => '预计开始时间',
@@ -100,7 +195,7 @@ class Task extends CActiveRecord
 			'canceledDate' => '取消时间',
 			'closedId' => '关闭人ID',
 			'closedDate' => '关闭时间',
-			'closedReason' => '关闭愿意',
+			'closedReason' => '关闭原因',
 			'lastEditedId' => '最后操作人ID',
 			'lastEditedDate' => '最后操作时间',
 			'deleted' => '是否删除',

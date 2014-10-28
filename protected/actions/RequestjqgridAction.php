@@ -3,7 +3,7 @@
 /**
  * crud重用
  */
-class RequestAction extends CAction{  
+class RequestjqgridAction extends CAction{  
 	public $modelClass = '';
     public function run(){
     	$obj = $this->modelClass;

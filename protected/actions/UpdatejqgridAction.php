@@ -3,12 +3,9 @@
 /**
  * crud重用
  */
-class DelAction extends CAction{
-	public $renderTo = '/actions/create';
-    public $successRedirect = 'index';
-    public $modelClass;
-    function run(){
-
+class UpdatejqgridAction extends CAction{  
+    public $modelClass;  
+    function run(){  
         if (Yii::app()->request->isAjaxRequest)
         {
             $data = $_POST;
@@ -18,7 +15,7 @@ class DelAction extends CAction{
                     if(empty($pk))    
                         throw new CHttpException(404);    
                     $model = CActiveRecord::model($this->modelClass)->findByPk($pk); 
-                    $model->status = -1;
+                    $model->attributes = $data;
                     if($model->save())
                         echo true;
                     else
@@ -28,5 +25,5 @@ class DelAction extends CAction{
         }
         else
             throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
-    }
+    } 
 }

@@ -37,7 +37,7 @@ class JqGridlist extends CPortlet
     {
         $widgetId = $this->id;
 
-        $gridSettings['url'] = Yii::app()->createUrl($this->model.'/request');
+        $gridSettings['url'] = Yii::app()->createUrl($this->model.'/requestjqgrid');
         $gridSettings['datatype'] = 'json';
         $gridSettings['mtype'] = 'POST';
         $gridSettings['height'] = 326;
@@ -53,7 +53,7 @@ class JqGridlist extends CPortlet
         }
         if ($this->enableCellEdit) {
             $gridSettings['cellEdit'] = true;
-            $gridSettings['cellurl'] = Yii::app()->createUrl($this->model.'/update');
+            $gridSettings['cellurl'] = Yii::app()->createUrl($this->model.'/updatejqgrid');
         }
         $gridSettings = array_merge($gridSettings, $gridUserSettings);
 
@@ -79,7 +79,7 @@ class JqGridlist extends CPortlet
 
             switch ($optionName) {
                 case 'edit':
-                    $editSettings['url'] = Yii::app()->createUrl($this->model.'/update');
+                    $editSettings['url'] = Yii::app()->createUrl($this->model.'/updatejqgrid');
                     $editSettings['closeAfterEdit'] = true;
                     $editSettings['recreateForm'] = true;
                     $editSettings['viewPagerButtons'] = false;
@@ -87,14 +87,14 @@ class JqGridlist extends CPortlet
                     $pagerOptions['edit'] = array_merge($editSettings, $optionSettings);
                     break;
                 case 'add':
-                    $addSettings['url'] = Yii::app()->createUrl($this->model.'/create');
+                    $addSettings['url'] = Yii::app()->createUrl($this->model.'/createjqgrid');
                     $addSettings['closeAfterAdd'] = true;
                     $addSettings['recreateForm'] = true;
                     $addSettings['viewPagerButtons'] = false;
                     $pagerOptions['add'] = array_merge($addSettings, $optionSettings);
                     break;
                 case 'del':
-                    $delSettings['url'] = Yii::app()->createUrl($this->model.'/del');
+                    $delSettings['url'] = Yii::app()->createUrl($this->model.'/deljqgrid');
                     $delSettings['recreateForm'] = true;
                     $pagerOptions['del'] = array_merge($delSettings, $optionSettings);
                     break;

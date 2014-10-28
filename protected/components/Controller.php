@@ -31,24 +31,24 @@ class Controller extends CController
 
 	public function actions(){  
         return array(
-        	// 'index'=>array(  
-         //            'class'=>'IndexAction',  
-         //            'modelClass'=>$this->modelClass,
-         //        ),
         	'create'=>array(  
                     'class'=>'CreateAction',  
+                    'modelClass'=>$this->modelClass,
+                ),
+        	'createjqgrid'=>array(  
+                    'class'=>'CreatejqgridAction',  
                     'modelClass'=>$this->modelClass,  
                 ),
-        	'del'=>array(  
-                    'class'=>'DelAction',  
+        	'deljqgrid'=>array(  
+                    'class'=>'DeljqgridAction',  
                     'modelClass'=>$this->modelClass,  
                 ),
-        	'update'=>array(  
-                    'class'=>'UpdateAction',  
+        	'updatejqgrid'=>array(  
+                    'class'=>'UpdatejqgridAction',  
                     'modelClass'=>$this->modelClass,  
                 ),
-        	'request'=>array(  
-                    'class'=>'RequestAction',  
+        	'requestjqgrid'=>array(  
+                    'class'=>'RequestjqgridAction',  
                     'modelClass'=>$this->modelClass,  
                 ),
         	);  
