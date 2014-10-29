@@ -28,6 +28,7 @@ class TaskController extends Controller
 			'date-time/moment.min.js',
 			'date-time/daterangepicker.min.js',
 			'date-time/bootstrap-datetimepicker.min.js',
+			'date-time/locales/bootstrap-datepicker.zh-CN.js',
 			'bootstrap-colorpicker.min.js',
 			'jquery.knob.min.js',
 			'jquery.autosize.min.js',

@@ -15,7 +15,7 @@
 		<!-- #section:elements.form -->
 		<?php if(!empty($arr)):?>
 		<?php foreach ($arr as $key => $value):?>
-		
+
 			<?php if(!is_array($value)):?>
 			<div class="form-group">
 				<?php echo $form->labelEx($model,$key,array('class'=>'col-sm-3 control-label no-padding-right')); ?>
@@ -62,7 +62,7 @@
 
 		<!-- /section:elements.form -->
 		<div class="space-4"></div>
-	
+
 		<div class="clearfix form-actions">
 			<div class="col-md-offset-3 col-md-9">
 				<button class="btn btn-info" type="button">
@@ -80,7 +80,7 @@
 	<?php $this->endWidget(); ?>
 </div>
 <script type="text/javascript">
-	
+
 	$(function(){
 		$('.id-input-file').ace_file_input({
 			no_file:'没有文件 ...',
@@ -97,7 +97,8 @@
 
 		$('.date-picker').datepicker({
 			autoclose: true,
-			todayHighlight: true
+			todayHighlight: true,
+			language: 'zh-CN'
 		});
 
 		$('textarea[class*=autosize]').autosize({append: "\n"});

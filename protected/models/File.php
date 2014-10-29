@@ -42,6 +42,7 @@ class File extends CActiveRecord
 			array('extra', 'length', 'max'=>255),
 			array('deleted', 'length', 'max'=>1),
 			array('addedDate', 'safe'),
+			array('pathname, title, extension, size, taskID, addedId, addedDate, downloads, extra, deleted','filter','filter'=>array($obj=new CHtmlPurifier(),'purify')),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, pathname, title, extension, size, taskID, addedId, addedDate, downloads, extra, deleted', 'safe', 'on'=>'search'),

@@ -63,6 +63,7 @@ class User extends CActiveRecord
 			array('address, personNumber, personAddress, residence, studyLevel, yearOfWorking, graduationYear, homeAddress, homeTel, homeEmail, reconcactorPerson, reconcactorTel, workYearlimit, remark', 'length', 'max'=>128),
 			array('officeTel, mobile', 'length', 'max'=>64),
 			array('employTime, unemplyTime, createdTime', 'safe'),
+			array('code, account, password, typeId, realname, deptId, workplaceId, status, address, officeTel, mobile, officeEmail, employTime, unemplyTime, handonStaffId, personNumber, personAddress, sex, residence, studyLevel, yearOfWorking, graduationYear, homeAddress, homeTel, homeEmail, reconcactorPerson, reconcactorTel, workYearlimit, remark, opAdminId, createdTime, logNum','filter','filter'=>array($obj=new CHtmlPurifier(),'purify')),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, code, account, password, typeId, realname, deptId, workplaceId, status, address, officeTel, mobile, officeEmail, employTime, unemplyTime, handonStaffId, personNumber, personAddress, sex, residence, studyLevel, yearOfWorking, graduationYear, homeAddress, homeTel, homeEmail, reconcactorPerson, reconcactorTel, workYearlimit, remark, opAdminId, createdTime, logNum', 'safe', 'on'=>'search'),

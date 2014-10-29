@@ -5,9 +5,9 @@
  */
 class CreateAction extends CAction{
 	public $renderTo = '/actions/create';
-    public $successRedirect = 'index';
+    public $successRedirect = 'view';
     public $modelClass;
-    
+
     function run(){
 
         $this->getController()->page_css = array(
@@ -38,17 +38,17 @@ class CreateAction extends CAction{
             'bootstrap-tag.min.js',
             );
 
-        // $saveType = Yii::app()->request->getParam('saveType');
-        // $pk = Yii::app()->request->getParam('id');
-        // if($saveType=='add'&&empty($pk)){
-        $model = new $this->modelClass;
-        $model->scenario = 'new';
-        // }else{
-        //     $model = CActiveRecord::model($this->modelClass)->findByPk($pk);
-        //     if(!$model)
-        //         $arr = array('hasError'=>true,'msg'=>'数据提交失败');
-        //     $model->scenario = 'update';
-        // }
+        //$saveType = Yii::app()->request->getParam('saveType');
+        $pk = Yii::app()->request->getParam('id');
+        if(empty($pk)){
+            $model = new $this->modelClass;
+            $model->scenario = 'new';
+        }else{
+            $model = CActiveRecord::model($this->modelClass)->findByPk($pk);
+            if(!$model)
+                $arr = array('hasError'=>true,'msg'=>'数据提交失败');
+                $model->scenario = 'update';
+        }
 
         if(isset($_POST[$this->modelClass]))
         {
@@ -63,11 +63,14 @@ class CreateAction extends CAction{
                 $model->img='data/' . $filename . '.' . $ext;
             }
             if($model->save()){
-                $arr = array('hasError'=>false,'msg'=>'数据提交成功','model'=>$model->attributes);
+                //$arr = array('hasError'=>false,'msg'=>'数据提交成功','model'=>$model->attributes);
+                $this->getController()->redirect( array($this->successRedirect, 'id'=>$model->{$model->tableSchema->primaryKey}) );
             }else{
                 $arr = array('hasError'=>true,'msg'=>'数据提交失败','error'=>$model->getErrors(),'model'=>$model->attributes);
+                throw new CHttpException(400,$arr);
+                exit;
             }
-            echo json_encode($arr);
+            //echo json_encode($arr);
         }else{
             $this->getController()->render($this->renderTo,array('model'=>$model));
         }

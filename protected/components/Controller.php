@@ -22,36 +22,40 @@ class Controller extends CController
 	public $breadcrumbs=array();
 
 	public $modelClass = '';
-	
+
 	//每个页面自有的css
 	public $page_css=array();
 
 	//每个页面自有的js
 	public $page_js=array();
 
-	public function actions(){  
+	public function actions(){
         return array(
-        	'create'=>array(  
-                    'class'=>'CreateAction',  
+        	'create'=>array(
+                    'class'=>'CreateAction',
                     'modelClass'=>$this->modelClass,
                 ),
-        	'createjqgrid'=>array(  
-                    'class'=>'CreatejqgridAction',  
-                    'modelClass'=>$this->modelClass,  
+            'view'=>array(
+                    'class'=>'ViewAction',
+                    'modelClass'=>$this->modelClass,
                 ),
-        	'deljqgrid'=>array(  
-                    'class'=>'DeljqgridAction',  
-                    'modelClass'=>$this->modelClass,  
+        	'createjqgrid'=>array(
+                    'class'=>'CreatejqgridAction',
+                    'modelClass'=>$this->modelClass,
                 ),
-        	'updatejqgrid'=>array(  
-                    'class'=>'UpdatejqgridAction',  
-                    'modelClass'=>$this->modelClass,  
+        	'deljqgrid'=>array(
+                    'class'=>'DeljqgridAction',
+                    'modelClass'=>$this->modelClass,
                 ),
-        	'requestjqgrid'=>array(  
-                    'class'=>'RequestjqgridAction',  
-                    'modelClass'=>$this->modelClass,  
+        	'updatejqgrid'=>array(
+                    'class'=>'UpdatejqgridAction',
+                    'modelClass'=>$this->modelClass,
                 ),
-        	);  
+        	'requestjqgrid'=>array(
+                    'class'=>'RequestjqgridAction',
+                    'modelClass'=>$this->modelClass,
+                ),
+        	);
     }
 
 

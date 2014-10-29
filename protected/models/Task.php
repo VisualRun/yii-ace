@@ -57,6 +57,7 @@ class Task extends CActiveRecord
 			array('deleted', 'length', 'max'=>1),
 			array('remark', 'length', 'max'=>128),
 			array('openedDate, assignedDate, estStarted, realStarted, finishedDate, canceledDate, closedDate, lastEditedDate, createdTime', 'safe'),
+			array('code, typeId, imtypeId, name, desc, status, deadline, openedId, openedDate, assignedId, assignedDate, estStarted, realStarted, finishedId, finishedDate, canceledId, canceledDate, closedId, closedDate, closedReason, lastEditedId, lastEditedDate, deleted, remark, opAdminId, createdTime','filter','filter'=>array($obj=new CHtmlPurifier(),'purify')),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, code, typeId, imtypeId, name, desc, status, deadline, openedId, openedDate, assignedId, assignedDate, estStarted, realStarted, finishedId, finishedDate, canceledId, canceledDate, closedId, closedDate, closedReason, lastEditedId, lastEditedDate, deleted, remark, opAdminId, createdTime', 'safe', 'on'=>'search'),
@@ -122,7 +123,7 @@ class Task extends CActiveRecord
 
         $criteria->select='*';
         $criteria->order='t.createdTime DESC,t.id DESC';
-        	
+
         $criteria->compare('t.status',$this->status);
 
         $count=$this->count($criteria);
@@ -164,6 +165,9 @@ class Task extends CActiveRecord
 				'remark' => $value->remark,
 				'opAdminId' => $value->opAdminId,
 				'createdTime' => $value->createdTime,
+				'hand' => '<a href="'.Yii::app()->createUrl('/task/create',array('id'=>$value->id)).'"><div class="ui-pg-div align-left ui-pg-button ui-corner-all" data-original-title="编辑所选记录"><span class="ui-icon ace-icon fa fa-pencil blue"></span></div></a>
+				<a href="'.Yii::app()->createUrl('/task/view',array('id'=>$value->id)).'">
+				<div class="ui-pg-div" data-original-title="查看所选记录"><span class="ui-icon ace-icon fa fa-search-plus grey"></span></div></a>',
                 );
         }
         return $row;

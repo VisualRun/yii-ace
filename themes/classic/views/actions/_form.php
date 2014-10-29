@@ -15,7 +15,7 @@
 	<!-- #section:elements.form -->
 		<?php if(!empty($arr)):?>
 		<?php foreach ($arr as $key => $value):?>
-		
+
 			<?php if(!is_array($value)):?>
 			<div class="form-group">
 				<?php echo $form->labelEx($model,$key,array('class'=>'col-sm-3 control-label no-padding-right')); ?>
@@ -59,7 +59,7 @@
 			<?php endif; ?>
 		<?php endforeach; ?>
 		<?php endif; ?>
-		
+
 		<div class="space-4"></div>
 
 		<div class="clearfix form-actions">
@@ -78,3 +78,33 @@
 		</div>
 	<?php $this->endWidget(); ?>
 </div>
+
+<script type="text/javascript">
+
+	$(function(){
+		$('.id-input-file').ace_file_input({
+			no_file:'没有文件 ...',
+			btn_choose:'选择本地文件',
+			btn_change:'修改',
+			droppable:false,
+			onchange:null,
+			thumbnail:false //| true | large
+			//whitelist:'gif|png|jpg|jpeg'
+			//blacklist:'exe|php'
+			//onchange:''
+			//
+		});
+
+		$('.date-picker').datepicker({
+			autoclose: true,
+			todayHighlight: true,
+			language: 'zh-CN'
+		});
+
+		$('textarea[class*=autosize]').autosize({append: "\n"});
+		$('textarea.limited').inputlimiter({
+			remText: '%n 字符剩余...',
+			limitText: '最多允许 : %n.'
+		});
+	})
+</script>

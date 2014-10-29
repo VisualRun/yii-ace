@@ -36,6 +36,7 @@ class Deptment extends CActiveRecord
 			array('code, name', 'length', 'max'=>32),
 			array('remark', 'length', 'max'=>128),
 			array('createdTime', 'safe'),
+            array('code, name, status, parentId, remark, opAdminId, createdTime','filter','filter'=>array($obj=new CHtmlPurifier(),'purify')),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, code, name, status, parentId, remark, opAdminId, createdTime', 'safe', 'on'=>'search'),
