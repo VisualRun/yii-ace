@@ -165,9 +165,8 @@ class Task extends CActiveRecord
 				'remark' => $value->remark,
 				'opAdminId' => $value->opAdminId,
 				'createdTime' => $value->createdTime,
-				'hand' => '<a href="'.Yii::app()->createUrl('/task/create',array('id'=>$value->id)).'"><div class="ui-pg-div align-left ui-pg-button ui-corner-all" data-original-title="编辑所选记录"><span class="ui-icon ace-icon fa fa-pencil blue"></span></div></a>
-				<a href="'.Yii::app()->createUrl('/task/view',array('id'=>$value->id)).'">
-				<div class="ui-pg-div" data-original-title="查看所选记录"><span class="ui-icon ace-icon fa fa-search-plus grey"></span></div></a>',
+				//'hand' => '<a href="'.Yii::app()->createUrl('/task/create',array('id'=>$value->id)).'"><div class="ui-pg-div align-left ui-pg-button ui-corner-all" data-original-title="编辑所选记录"><span class="ui-icon ace-icon fa fa-pencil blue"></span></div></a><a href="'.Yii::app()->createUrl('/task/view',array('id'=>$value->id)).'"><div class="ui-pg-div" data-original-title="查看所选记录"><span class="ui-icon ace-icon fa fa-search-plus grey"></span></div></a>',
+				'hand' => '<a href="'.Yii::app()->createUrl('/task/create',array('id'=>$value->id)).'">编辑</a> | <a href="'.Yii::app()->createUrl('/task/view',array('id'=>$value->id)).'">查看</a>',
                 );
         }
         return $row;
