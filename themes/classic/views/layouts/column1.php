@@ -46,6 +46,9 @@
 <script src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/<?php echo $value ?>"></script>
 <?php endforeach; endif; ?>
 
+<!-- 加载bootbox弹出框 -->
+<script src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/bootbox.min.js"></script>
+
 <!-- ace scripts -->
 <script src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/ace-elements.min.js"></script>
 <script src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/ace.min.js"></script>

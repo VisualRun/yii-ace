@@ -36,14 +36,20 @@ class CreateAction extends CAction{
             'jquery.inputlimiter.1.3.1.min.js',
             'jquery.maskedinput.min.js',
             'bootstrap-tag.min.js',
+            'markdown/markdown.min.js',
+            'markdown/bootstrap-markdown.min.js',
+            'jquery.hotkeys.min.js',
+            'bootstrap-wysiwyg.min.js',
             );
 
         //$saveType = Yii::app()->request->getParam('saveType');
         $pk = Yii::app()->request->getParam('id');
         if(empty($pk)){
+            $this->getController()->pageTitle = '新增';
             $model = new $this->modelClass;
             $model->scenario = 'new';
         }else{
+            $this->getController()->pageTitle = '编辑';
             $model = CActiveRecord::model($this->modelClass)->findByPk($pk);
             if(!$model)
                 $arr = array('hasError'=>true,'msg'=>'数据提交失败');

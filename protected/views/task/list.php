@@ -37,3 +37,16 @@
       ]
     );
 ?>
+<script type="text/javascript">
+    function test_bootbox(){
+        bootbox.dialog({
+            message: "Thank you! Your information was successfully saved!", 
+            buttons: {
+                "success" : {
+                    "label" : "OK",
+                    "className" : "btn-sm btn-primary"
+                }
+            }
+        });
+    }
+</script>

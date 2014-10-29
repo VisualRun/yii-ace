@@ -8,6 +8,7 @@ class ViewAction extends CAction{
     public $renderTo = '/actions/view';  
     public $modelClass;  
     function run(){  
+        $this->getController()->pageTitle = '详情';
         $pk = Yii::app()->request->getParam($this->param);  
         if(empty($pk))    
             throw new CHttpException(404);    

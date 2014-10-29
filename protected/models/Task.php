@@ -110,10 +110,45 @@ class Task extends CActiveRecord
 			'typeId' => array('type'=>'checkbox','data'=>Yii::app()->params['task_type']),
 			'imtypeId' => array('type'=>'checkbox','data'=>Yii::app()->params['task_important_type']),
 			'name' => '任务名称',
+			'desc' => array('type'=>'editor'),
 			'desc' => array('type'=>'textarea'),
 			'deadline' => array('type'=>'date'),
 			'assignedId' => array('type'=>'checkbox','data'=>array_merge(array(""=>"不指定"),CHtml::listData(User::model()->findAllByAttributes(array('status'=>1)), 'id', 'account'))),
 			'opAdminId' => array('name'=>'附件','type'=>'file'),
+		);
+	}
+
+	public function viewField()
+	{
+		// NOTE: you may need to adjust the relation name and the related
+		// class name for the relations automatically generated below.
+		return array(
+			'code' => '任务编码',
+			'typeId' => '主次类别',
+			'imtypeId' => '重要类别',
+			'name' => '任务名称',
+			'desc' => '任务说明',
+			'status' => '状态',
+			'deadline' => '任务最后时限',
+			'openedId' => '创建人ID',
+			'openedDate' => '创建时间',
+			'assignedId' => '指派到人ID',
+			'assignedDate' => '指派时间',
+			'estStarted' => '预计开始时间',
+			'realStarted' => '真实开始时间',
+			'finishedId' => '完成人ID',
+			'finishedDate' => '完成时间',
+			'canceledId' => '取消人ID',
+			'canceledDate' => '取消时间',
+			'closedId' => '关闭人ID',
+			'closedDate' => '关闭时间',
+			'closedReason' => '关闭原因',
+			'lastEditedId' => '最后操作人ID',
+			'lastEditedDate' => '最后操作时间',
+			'deleted' => '是否删除',
+			'remark' => '备注',
+			'opAdminId' => '操作人ID',
+			'createdTime' => '生成时间',
 		);
 	}
 
@@ -166,8 +201,8 @@ class Task extends CActiveRecord
 				'opAdminId' => $value->opAdminId,
 				'createdTime' => $value->createdTime,
 				//'hand' => '<a href="'.Yii::app()->createUrl('/task/create',array('id'=>$value->id)).'"><div class="ui-pg-div align-left ui-pg-button ui-corner-all" data-original-title="编辑所选记录"><span class="ui-icon ace-icon fa fa-pencil blue"></span></div></a><a href="'.Yii::app()->createUrl('/task/view',array('id'=>$value->id)).'"><div class="ui-pg-div" data-original-title="查看所选记录"><span class="ui-icon ace-icon fa fa-search-plus grey"></span></div></a>',
-				'hand' => '<a href="'.Yii::app()->createUrl('/task/create',array('id'=>$value->id)).'">编辑</a> | <a href="'.Yii::app()->createUrl('/task/view',array('id'=>$value->id)).'">查看</a>',
-                );
+				'hand' => '<a href="'.Yii::app()->createUrl('/task/create',array('id'=>$value->id)).'">编辑</a> | <a href="'.Yii::app()->createUrl('/task/view',array('id'=>$value->id)).'">查看</a> | <a href="javascript:void(0);" id="test_bootbox" onclick="test_bootbox()">测试</a>',               
+			);
         }
         return $row;
 	}
