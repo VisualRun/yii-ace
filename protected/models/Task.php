@@ -201,7 +201,63 @@ class Task extends CActiveRecord
 				'opAdminId' => $value->opAdminId,
 				'createdTime' => $value->createdTime,
 				//'hand' => '<a href="'.Yii::app()->createUrl('/task/create',array('id'=>$value->id)).'"><div class="ui-pg-div align-left ui-pg-button ui-corner-all" data-original-title="编辑所选记录"><span class="ui-icon ace-icon fa fa-pencil blue"></span></div></a><a href="'.Yii::app()->createUrl('/task/view',array('id'=>$value->id)).'"><div class="ui-pg-div" data-original-title="查看所选记录"><span class="ui-icon ace-icon fa fa-search-plus grey"></span></div></a>',
-				'hand' => '<a href="'.Yii::app()->createUrl('/task/create',array('id'=>$value->id)).'">编辑</a> | <a href="'.Yii::app()->createUrl('/task/view',array('id'=>$value->id)).'">查看</a> | <a href="javascript:void(0);" id="test_bootbox" onclick="test_bootbox()">测试</a>',               
+				'hand' => '<a href="'.Yii::app()->createUrl('/task/create',array('id'=>$value->id)).'">编辑</a> | <a href="'.Yii::app()->createUrl('/task/view',array('id'=>$value->id)).'">查看</a> | <a href="javascript:void(0);" id="test_bootbox" onclick="test_bootbox()">测试</a>',
+			);
+        }
+        return $row;
+	}
+
+	public function myresult($currentPage=0)
+	{
+		$criteria = new CDbCriteria();
+
+        $criteria->select='*';
+        $criteria->order='t.createdTime DESC,t.id DESC';
+
+        $criteria->compare('t.status',$this->status);
+        $criteria->compare('t.assignedId',Yii::app()->user->id);
+
+        $count=$this->count($criteria);
+        $pages=new CPagination($count);
+        $pages->pageVar='pageIndex';
+
+        $pages->currentPage =$currentPage;
+        $pages->pageSize=10;
+        $pages->applyLimit($criteria);
+        $models = $this->findAll($criteria);
+
+        $row = array();
+        foreach ($models as $key => $value) {
+            $row[] = array(
+                'id' => $value->id,
+				'code' => $value->code,
+				'typeId' => Yii::app()->params['task_type'][$value->typeId],
+				'imtypeId' => Yii::app()->params['task_important_type'][$value->imtypeId],
+				'name' => $value->name,
+				'desc' => $value->desc,
+				'status' => Yii::app()->params['task_status'][$value->status],
+				'deadline' => $value->deadline,
+				'openedId' => $value->openedId,
+				'openedDate' => $value->openedDate,
+				'assignedId' => $value->assignedId,
+				'assignedDate' => $value->assignedDate,
+				'estStarted' => $value->estStarted,
+				'realStarted' => $value->realStarted,
+				'finishedId' => $value->finishedId,
+				'finishedDate' => $value->finishedDate,
+				'canceledId' => $value->canceledId,
+				'canceledDate' => $value->canceledDate,
+				'closedId' => $value->closedId,
+				'closedDate' => $value->closedDate,
+				'closedReason' => $value->closedReason,
+				'lastEditedId' => $value->lastEditedId,
+				'lastEditedDate' => $value->lastEditedDate,
+				'deleted' => $value->deleted,
+				'remark' => $value->remark,
+				'opAdminId' => $value->opAdminId,
+				'createdTime' => $value->createdTime,
+				//'hand' => '<a href="'.Yii::app()->createUrl('/task/create',array('id'=>$value->id)).'"><div class="ui-pg-div align-left ui-pg-button ui-corner-all" data-original-title="编辑所选记录"><span class="ui-icon ace-icon fa fa-pencil blue"></span></div></a><a href="'.Yii::app()->createUrl('/task/view',array('id'=>$value->id)).'"><div class="ui-pg-div" data-original-title="查看所选记录"><span class="ui-icon ace-icon fa fa-search-plus grey"></span></div></a>',
+				'hand' => '<a href="'.Yii::app()->createUrl('/task/create',array('id'=>$value->id)).'">编辑</a> | <a href="'.Yii::app()->createUrl('/task/view',array('id'=>$value->id)).'">查看</a> | <a href="javascript:void(0);" id="test_bootbox" onclick="test_bootbox()">测试</a>',
 			);
         }
         return $row;

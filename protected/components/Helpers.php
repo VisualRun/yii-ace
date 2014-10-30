@@ -30,7 +30,7 @@ class Helpers
                 		'item'=>array(
                             array('text'=>'任务发布','href'=>Yii::app()->createUrl('/task/create'),'action'=>array('create')),
                             // array('text'=>'任务发布','href'=>Yii::app()->createUrl('/task/add'),'action'=>array('add')),
-                			array('text'=>'我的任务','href'=>'#','action'=>array('index')),
+                			array('text'=>'我的任务','href'=>Yii::app()->createUrl('/task/mytask'),'action'=>array('mytask')),
                 			array('text'=>'所有任务','href'=>Yii::app()->createUrl('/task/list'),'action'=>array('list')),
                 		),
                 	),

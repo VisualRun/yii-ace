@@ -59,22 +59,58 @@ class CreateAction extends CAction{
         if(isset($_POST[$this->modelClass]))
         {
             $model->attributes=$_POST[$this->modelClass];
-            $uploaded=CUploadedFile::getInstance($model, 'opAdminId');
+
+            //如果文件上传
+            $uploaded = CUploadedFile::getInstance($model,'opAdminId');
+            print_r($model);exit;
             if(is_object($uploaded) && get_class($uploaded)==='CUploadedFile'){
-                $uploaddir=Yii::getPathOfAlias('webroot') .'/data/';
+                if($uploaded->size > 8*1024*1024){
+                    $model->addError('opAdminId','文件太大！');
+                }
+
+                $uploaddir=Yii::getPathOfAlias('webroot') .'/data/file/';
+
+                $ymd = date("Ymd");
+                $uploaddir .= $ymd . "/";
+                if (!file_exists($uploaddir)) {
+                    mkdir($uploaddir);
+                }
+                @chmod($uploaddir, 0755);
+
                 $filename = md5(uniqid());
-                $ext = $uploadedimage->extensionName;
+                $ext = $uploaded->extensionName;
+                $old_name = $uploaded->name;
                 $uploadfile=$uploaddir . $filename . '.' . $ext;
-                $uploadedimage->saveAs($uploadfile);
-                $model->img='data/' . $filename . '.' . $ext;
+
+                if($uploaded->saveAs($uploadfile))
+                {
+                    $file = new File();
+                    $file->path = $uploadfile;
+                    $file->title = $old_name;
+                    $file->extension = $ext;
+                    $file->extension = $uploaded->size;
+                    $file->save();
+                }
+                else
+                    $model->addError('opAdminId','文件上传失败！');
+
             }
-            if($model->save()){
+            if($model->hasErrors())
+                Yii::app()->end();
+
+            if($model->save())
+            {
+                $id = $model->{$model->tableSchema->primaryKey};
+                if($file){
+                    $file->taskID = $id;
+                    $file->save();
+                }
                 //$arr = array('hasError'=>false,'msg'=>'数据提交成功','model'=>$model->attributes);
-                $this->getController()->redirect( array($this->successRedirect, 'id'=>$model->{$model->tableSchema->primaryKey}) );
+                $this->getController()->redirect( array($this->successRedirect, 'id'=>$id) );
             }else{
                 $arr = array('hasError'=>true,'msg'=>'数据提交失败','error'=>$model->getErrors(),'model'=>$model->attributes);
-                throw new CHttpException(400,$arr);
-                exit;
+                //throw new CHttpException(400,$arr);
+                return false;
             }
             //echo json_encode($arr);
         }else{

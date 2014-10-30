@@ -60,6 +60,15 @@ class File extends CActiveRecord
 		);
 	}
 
+	public function beforeSave()
+	{
+		if($this->isNewRecord){
+			$this->addedId = Yii::app()->user->id;
+			$this->addedDate = date('Y-m-d H:i:s');
+		}
+		return true;
+	}
+
 	/**
 	 * @return array customized attribute labels (name=>label)
 	 */

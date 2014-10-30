@@ -12,15 +12,24 @@ class JqGridlist extends CPortlet
 	public $gridSettings = [];
 	public $pagerSettings = [];
 	public $enableFilterToolbar = true;
+    public $resultType = 'result';
 
 	protected function renderContent()
 	{
+        $this->getController()->page_css = array(
+            'jquery-ui.min.css',
+            'datepicker.css',
+            'ui.jqgrid.css',
+            );
+
+        $this->getController()->page_js = array(
+            'date-time/bootstrap-datepicker.min.js',
+            'jqGrid/jquery.jqGrid.min.js',
+            'jqGrid/i18n/grid.locale-cn.js',
+            );
 
 		$jsonGridSettings = $this->processingGridSettings($this->gridSettings);
 		$jsonPagerSettings = $this->processingPagerSettings($this->pagerSettings);
-		// echo $jsonGridSettings;
-		// echo $jsonPagerSettings;
-		// exit;
 
 		$this->render('jqgridlist',
 			array(
@@ -37,7 +46,7 @@ class JqGridlist extends CPortlet
     {
         $widgetId = $this->id;
 
-        $gridSettings['url'] = Yii::app()->createUrl($this->model.'/requestjqgrid');
+        $gridSettings['url'] = Yii::app()->createUrl($this->model.'/requestjqgrid',array('resultType'=>$this->resultType));
         $gridSettings['datatype'] = 'json';
         $gridSettings['mtype'] = 'POST';
         $gridSettings['height'] = 326;

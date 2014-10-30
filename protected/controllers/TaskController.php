@@ -44,20 +44,13 @@ class TaskController extends Controller
 
 	public function actionList()
 	{
-		$this->page_css = array(
-			'jquery-ui.min.css',
-			'datepicker.css',
-			'ui.jqgrid.css',
-			);
-
-		$this->page_js = array(
-			'date-time/bootstrap-datepicker.min.js',
-			'jqGrid/jquery.jqGrid.min.js',
-			'jqGrid/i18n/grid.locale-cn.js',
-			);
-
 		$this->pageTitle = '任务列表';
-
 		$this->render('list');
+	}
+
+	public function actionMytask(){
+		$user_id = Yii::app()->user->id;
+		$this->pageTitle = '我的任务';
+		$this->render('mytask');
 	}
 }
