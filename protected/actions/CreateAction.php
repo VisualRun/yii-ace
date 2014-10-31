@@ -15,9 +15,8 @@ class CreateAction extends CAction{
             'chosen.css',
             'datepicker.css',
             'bootstrap-timepicker.css',
-            'daterangepicker.css',
             'bootstrap-datetimepicker.css',
-            'colorpicker.css',
+            'dropzone.css',
             );
 
         $this->getController()->page_js = array(
@@ -28,9 +27,8 @@ class CreateAction extends CAction{
             'date-time/bootstrap-datepicker.min.js',
             'date-time/bootstrap-timepicker.min.js',
             'date-time/moment.min.js',
-            'date-time/daterangepicker.min.js',
             'date-time/bootstrap-datetimepicker.min.js',
-            'bootstrap-colorpicker.min.js',
+            'date-time/locales/bootstrap-datepicker.zh-CN.js',
             'jquery.knob.min.js',
             'jquery.autosize.min.js',
             'jquery.inputlimiter.1.3.1.min.js',
@@ -40,6 +38,7 @@ class CreateAction extends CAction{
             'markdown/bootstrap-markdown.min.js',
             'jquery.hotkeys.min.js',
             'bootstrap-wysiwyg.min.js',
+            'dropzone.min.js',
             );
 
         //$saveType = Yii::app()->request->getParam('saveType');
@@ -61,8 +60,8 @@ class CreateAction extends CAction{
             $model->attributes=$_POST[$this->modelClass];
 
             //如果文件上传
-            $uploaded = CUploadedFile::getInstance($model,'opAdminId');
-            print_r($model);exit;
+            $uploaded = CUploadedFile::getInstanceByName($this->modelClass.'[opAdminId]');
+            print_r($uploaded);exit;
             if(is_object($uploaded) && get_class($uploaded)==='CUploadedFile'){
                 if($uploaded->size > 8*1024*1024){
                     $model->addError('opAdminId','文件太大！');

@@ -53,4 +53,21 @@ class TaskController extends Controller
 		$this->pageTitle = '我的任务';
 		$this->render('mytask');
 	}
+
+	public function actionView(){
+		$this->page_css = array(
+			'jquery-ui.min.css',
+			);
+		$this->page_js = array(
+			'jquery-ui.min.js',
+			);
+
+		$pk = Yii::app()->request->getParam('id');
+
+		$model = Task::model()->findByPk($pk);
+
+		$this->pageTitle = '任务详情页';
+
+		$this->render('view',array('model'=>$model));
+	}
 }

@@ -114,7 +114,7 @@ class Task extends CActiveRecord
 			'desc' => array('type'=>'textarea'),
 			'deadline' => array('type'=>'date'),
 			'assignedId' => array('type'=>'checkbox','data'=>array_merge(array(""=>"不指定"),CHtml::listData(User::model()->findAllByAttributes(array('status'=>1)), 'id', 'account'))),
-			'opAdminId' => array('name'=>'附件','type'=>'file'),
+			//'attach' => array('type'=>'file'),
 		);
 	}
 
