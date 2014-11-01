@@ -39,9 +39,9 @@
             e.preventDefault();
 
             $( "#dialog-assigned" ).removeClass('hide').dialog({
-                resizable: false,
+                resizable: true,
                 modal: true,
-                title: "<div class='widget-header'><h4 class='smaller'><i class='ace-icon fa fa-exclamation-triangle red'></i> 将该任务指派给某人？</h4></div>",
+                title: "<div class='widget-header'><h4 class='smaller'><i class='ace-icon fa fa-exclamation-triangle red'></i> 任务指派</h4></div>",
                 title_html: true,
                 buttons: [
                     {

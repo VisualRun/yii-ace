@@ -60,6 +60,7 @@ class TaskController extends Controller
 			);
 		$this->page_js = array(
 			'jquery-ui.min.js',
+			'jquery.ui.touch-punch.min.js',
 			);
 
 		$pk = Yii::app()->request->getParam('id');
@@ -68,6 +69,13 @@ class TaskController extends Controller
 
 		$this->pageTitle = '任务详情页';
 
-		$this->render('view',array('model'=>$model));
+		$assigned = User::model()->findAll('status = 1 && typeId > 1');
+		$assigned_arr = array();
+		foreach($assigned as $key => $value)
+		{
+			$assigned_arr[$value->id] = $value->account;
+		}
+
+		$this->render('view',array('model'=>$model,'assigned_arr'=>$assigned_arr));
 	}
 }

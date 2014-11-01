@@ -49,6 +49,7 @@ class JqGridlist extends CPortlet
         $gridSettings['url'] = Yii::app()->createUrl($this->model.'/requestjqgrid',array('resultType'=>$this->resultType));
         $gridSettings['datatype'] = 'json';
         $gridSettings['mtype'] = 'POST';
+        $gridSettings['jsonReader'] = ['root'=>'griddata','total'=>"totalpages",'page'=>'currpage','records'=>'totalrecords','repeatitems'=>false];
         $gridSettings['height'] = 326;
         $gridSettings['viewrecords'] = true;
         $gridSettings['altRows'] = true;
@@ -100,11 +101,13 @@ class JqGridlist extends CPortlet
                     $addSettings['closeAfterAdd'] = true;
                     $addSettings['recreateForm'] = true;
                     $addSettings['viewPagerButtons'] = false;
+                    $addSettings['reloadAfterSubmit'] = true;
                     $pagerOptions['add'] = array_merge($addSettings, $optionSettings);
                     break;
                 case 'del':
                     $delSettings['url'] = Yii::app()->createUrl($this->model.'/deljqgrid');
                     $delSettings['recreateForm'] = true;
+                    $delSettings['reloadAfterSubmit'] = true;
                     $pagerOptions['del'] = array_merge($delSettings, $optionSettings);
                     break;
                 case 'search':

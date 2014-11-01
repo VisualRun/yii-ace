@@ -35,7 +35,7 @@
             var table = this;
             setTimeout(function(){
               styleCheckbox(table);
-              
+
               updateActionIcons(table);
               updatePagerIcons(table);
               enableTooltips(table);
@@ -69,6 +69,7 @@
 
         //navButtons
         var pagerSettings = [<?php echo $pagerSettings ?>];
+        //console.log(pagerSettings);
         pagerSettings[1]['beforeShowForm'] = function(e) {
               var form = $(e[0]);
               form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
@@ -83,10 +84,10 @@
         pagerSettings[3]['beforeShowForm'] = function(e) {
               var form = $(e[0]);
               if(form.data('styled')) return false;
-              
+
               form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
               style_delete_form(form);
-              
+
               form.data('styled', true);
             };
         pagerSettings[4]['afterShowSearch'] = function(e){

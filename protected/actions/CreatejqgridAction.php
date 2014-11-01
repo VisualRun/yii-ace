@@ -3,7 +3,7 @@
 /**
  * crud重用
  */
-class CreatejqgirdAction extends CAction{
+class CreatejqgridAction extends CAction{
 	public $renderTo = '/actions/create';
     public $successRedirect = 'index';
     public $modelClass;
@@ -14,6 +14,8 @@ class CreatejqgirdAction extends CAction{
             if(!empty($data)){
                 $model = new $this->modelClass;
                 $model->attributes = $data;
+                if(isset($data['password']))
+                    $model->password = md5($model->password);
                 if($model->save())
                     echo true;
                 else

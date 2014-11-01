@@ -117,7 +117,7 @@ class User extends CActiveRecord
         $pages->pageVar='pageIndex';
 
         $pages->currentPage =$currentPage;
-        $pages->pageSize=10;
+        $pages->pageSize=20;
         $pages->applyLimit($criteria);
         $models = $this->with(array('dept','workplace'))->findAll($criteria);
 

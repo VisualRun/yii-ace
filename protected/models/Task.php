@@ -113,7 +113,7 @@ class Task extends CActiveRecord
 			'desc' => array('type'=>'editor'),
 			'desc' => array('type'=>'textarea'),
 			'deadline' => array('type'=>'date'),
-			'assignedId' => array('type'=>'checkbox','data'=>array_merge(array(""=>"不指定"),CHtml::listData(User::model()->findAllByAttributes(array('status'=>1)), 'id', 'account'))),
+			'assignedId' => array('type'=>'checkbox','data'=>array_merge(array(""=>"不指定"),CHtml::listData(User::model()->findAll('status = 1 && typeId > 1'), 'id', 'account'))),
 			//'attach' => array('type'=>'file'),
 		);
 	}
