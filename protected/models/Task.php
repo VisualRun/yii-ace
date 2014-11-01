@@ -72,6 +72,9 @@ class Task extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'opened'=>array(self::BELONGS_TO,'User','openedId'),
+			'assigned'=>array(self::BELONGS_TO,'User','assignedId'),
+			'lastEdited'=>array(self::BELONGS_TO,'User','lastEditedId'),
 		);
 	}
 
@@ -182,9 +185,9 @@ class Task extends CActiveRecord
 				'desc' => $value->desc,
 				'status' => Yii::app()->params['task_status'][$value->status],
 				'deadline' => $value->deadline,
-				'openedId' => $value->openedId,
+				'openedId' => isset($value->opened)?$value->opened->account:'无',
 				'openedDate' => $value->openedDate,
-				'assignedId' => $value->assignedId,
+				'assignedId' => isset($value->assigned)?$value->assigned->account:'无',
 				'assignedDate' => $value->assignedDate,
 				'estStarted' => $value->estStarted,
 				'realStarted' => $value->realStarted,
@@ -195,7 +198,7 @@ class Task extends CActiveRecord
 				'closedId' => $value->closedId,
 				'closedDate' => $value->closedDate,
 				'closedReason' => $value->closedReason,
-				'lastEditedId' => $value->lastEditedId,
+				'lastEditedId' => isset($value->lastEdited)?$value->lastEdited->account:'无',
 				'lastEditedDate' => $value->lastEditedDate,
 				'deleted' => $value->deleted,
 				'remark' => $value->remark,

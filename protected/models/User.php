@@ -99,6 +99,20 @@ class User extends CActiveRecord
         return true;
     }
 
+    public function searchField()
+	{
+		$column = array(
+			'id' => array('name'=>'id','type'=>'hidden','require'=>false),
+			'account' => array('name'=>'账号','type'=>'text','require'=>false,'data-rules'=>json_encode(array('required'=>1))),
+			'deptId' => array('name'=>'部门ID','type'=>'select','data'=>CHtml::listData(Deptment::model()->findAllByAttributes(array('status'=>1)), 'id', 'name'),'require'=>false,'data-rules'=>json_encode(array('required'=>1))),
+			'workplaceId' => array('name'=>'岗位ID','type'=>'select','data'=>CHtml::listData(Workplace::model()->findAllByAttributes(array('status'=>1)), 'id', 'name'),'require'=>false,'data-rules'=>json_encode(array('required'=>1))),
+			'sex' => array('name'=>'性别','type'=>'select','require'=>false,'data'=>Yii::app()->params['gender'],'data-rules'=>json_encode(array('required'=>1))),
+			'status' => array('name'=>'状态','type'=>'select','require'=>false,'data'=>Yii::app()->params['status'],'data-rules'=>json_encode(array('required'=>1))),
+			'createdTime' => array('name'=>'生成时间','type'=>'date','require'=>false,'data-rules'=>json_encode(array('required'=>1))),
+		);
+		return $column;
+	}
+
 	public function result()
 	{
 		$criteria = new CDbCriteria();
