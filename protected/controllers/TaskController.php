@@ -78,4 +78,30 @@ class TaskController extends Controller
 
 		$this->render('view',array('model'=>$model,'assigned_arr'=>$assigned_arr));
 	}
+
+	//任务取消
+	public function actionCacel(){
+		if (Yii::app()->request->isAjaxRequest)
+        {
+        	$pk = Yii::app()->request->getParam('id');
+			$model = Task::model()->findByPk($pk); 	
+        	if(empty($model))
+        	{
+        		echo json_encode(array('type'=>'error','info'=>'没有这个任务！'));
+        		Yii::app()->end();
+        	}
+
+        	if($model->openedId == Yii::app()->user->id && $model->status == 0)
+        	{	
+        		$model->status = 4;
+        		$model->save();
+        		echo json_encode(array('type'=>'success'));
+        		Yii::app()->end();
+        	}else{
+        		echo json_encode(array('type'=>'error','info'=>'数据错误！'));
+        		Yii::app()->end();
+        	}		
+
+        }
+	}
 }

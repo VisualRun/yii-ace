@@ -152,21 +152,22 @@ class Task extends CActiveRecord
 		);
 	}
 
-	public function result($currentPage=0)
+	public function result()
 	{
 		$criteria = new CDbCriteria();
 
-        $criteria->select='*';
-        $criteria->order='t.createdTime DESC,t.id DESC';
+        $criteria->select = '*';
+        $criteria->order = 't.createdTime DESC,t.id DESC';
+        if(!empty(Yii::app()->request->getParam('sidx')))
+        	$criteria->order .= ',t.'.Yii::app()->request->getParam('sidx').' '.Yii::app()->request->getParam('sord');
 
         $criteria->compare('t.status',$this->status);
 
-        $count=$this->count($criteria);
-        $pages=new CPagination($count);
-        $pages->pageVar='pageIndex';
-
-        $pages->currentPage =$currentPage;
-        $pages->pageSize=10;
+        $count = $this->count($criteria);
+        $pages = new CPagination($count);
+        $pages->pageVar = 'page';
+        $pages->currentPage = !empty(Yii::app()->request->getParam('page'))?Yii::app()->request->getParam('page'):10;
+        $pages->pageSize = !empty(Yii::app()->request->getParam('rows'))?Yii::app()->request->getParam('rows'):10;
         $pages->applyLimit($criteria);
         $models = $this->findAll($criteria);
 
@@ -200,29 +201,35 @@ class Task extends CActiveRecord
 				'remark' => $value->remark,
 				'opAdminId' => $value->opAdminId,
 				'createdTime' => $value->createdTime,
-				//'hand' => '<a href="'.Yii::app()->createUrl('/task/create',array('id'=>$value->id)).'"><div class="ui-pg-div align-left ui-pg-button ui-corner-all" data-original-title="编辑所选记录"><span class="ui-icon ace-icon fa fa-pencil blue"></span></div></a><a href="'.Yii::app()->createUrl('/task/view',array('id'=>$value->id)).'"><div class="ui-pg-div" data-original-title="查看所选记录"><span class="ui-icon ace-icon fa fa-search-plus grey"></span></div></a>',
 				'hand' => '<a href="'.Yii::app()->createUrl('/task/create',array('id'=>$value->id)).'">编辑</a> | <a href="'.Yii::app()->createUrl('/task/view',array('id'=>$value->id)).'">查看</a> | <a href="javascript:void(0);" id="test_bootbox" onclick="test_bootbox()">测试</a>',
 			);
         }
-        return $row;
+
+        $data = array(
+                    "totalpages" => $pages->pageCount,
+                    "currpage" => $pages->currentPage+1,
+                    "totalrecords" =>$count,
+                    "griddata" => $row,
+                );
+        return $data;
 	}
 
-	public function myresult($currentPage=0)
+	public function myresult()
 	{
 		$criteria = new CDbCriteria();
 
-        $criteria->select='*';
-        $criteria->order='t.createdTime DESC,t.id DESC';
+        $criteria->select = '*';
+        $criteria->order = 't.createdTime DESC,t.id DESC';
+        if(!empty(Yii::app()->request->getParam('sidx')))
+        	$criteria->order .= ',t.'.Yii::app()->request->getParam('sidx').' '.Yii::app()->request->getParam('sord');
 
         $criteria->compare('t.status',$this->status);
-        $criteria->compare('t.assignedId',Yii::app()->user->id);
 
-        $count=$this->count($criteria);
-        $pages=new CPagination($count);
-        $pages->pageVar='pageIndex';
-
-        $pages->currentPage =$currentPage;
-        $pages->pageSize=10;
+        $count = $this->count($criteria);
+        $pages = new CPagination($count);
+        $pages->pageVar = 'page';
+        $pages->currentPage = !empty(Yii::app()->request->getParam('page'))?Yii::app()->request->getParam('page'):10;
+        $pages->pageSize = !empty(Yii::app()->request->getParam('rows'))?Yii::app()->request->getParam('rows'):10;
         $pages->applyLimit($criteria);
         $models = $this->findAll($criteria);
 
@@ -256,11 +263,16 @@ class Task extends CActiveRecord
 				'remark' => $value->remark,
 				'opAdminId' => $value->opAdminId,
 				'createdTime' => $value->createdTime,
-				//'hand' => '<a href="'.Yii::app()->createUrl('/task/create',array('id'=>$value->id)).'"><div class="ui-pg-div align-left ui-pg-button ui-corner-all" data-original-title="编辑所选记录"><span class="ui-icon ace-icon fa fa-pencil blue"></span></div></a><a href="'.Yii::app()->createUrl('/task/view',array('id'=>$value->id)).'"><div class="ui-pg-div" data-original-title="查看所选记录"><span class="ui-icon ace-icon fa fa-search-plus grey"></span></div></a>',
 				'hand' => '<a href="'.Yii::app()->createUrl('/task/create',array('id'=>$value->id)).'">编辑</a> | <a href="'.Yii::app()->createUrl('/task/view',array('id'=>$value->id)).'">查看</a> | <a href="javascript:void(0);" id="test_bootbox" onclick="test_bootbox()">测试</a>',
 			);
         }
-        return $row;
+        $data = array(
+                    "totalpages" => $pages->pageCount,
+                    "currpage" => $pages->currentPage+1,
+                    "totalrecords" =>$count,
+                    "griddata" => $row,
+                );
+        return $data;
 	}
 
 	/**

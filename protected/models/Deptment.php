@@ -71,25 +71,21 @@ class Deptment extends CActiveRecord
         return true;
     }
 
-	public function result($currentPage=0)
+	public function result()
 	{
 		$criteria = new CDbCriteria();
 
-        $criteria->select='*';
-        $criteria->order='createdTime DESC,id DESC';
-        if(isset($this->status)){
-        	$criteria->compare('status',$this->status);
-        }else{
-        	$criteria->condition = 'status>=:status';
-        	$criteria->params = array(':status'=>0);
-        }
-        $criteria->compare('name',$this->name,true);
-        $count=$this->count($criteria);
-        $pages=new CPagination($count);
-        $pages->pageVar='pageIndex';
+        $criteria->select = '*';
+        $criteria->order = 't.createdTime DESC,t.id DESC';
+        if(!empty(Yii::app()->request->getParam('sidx')))
+        	$criteria->order .= ',t.'.Yii::app()->request->getParam('sidx').' '.Yii::app()->request->getParam('sord');
+        $criteria->compare('t.status',$this->status);
 
-        $pages->currentPage =$currentPage;
-        $pages->pageSize=10;
+        $count = $this->count($criteria);
+        $pages = new CPagination($count);
+        $pages->pageVar = 'page';
+        $pages->currentPage = !empty(Yii::app()->request->getParam('page'))?Yii::app()->request->getParam('page')-1:10;
+        $pages->pageSize = !empty(Yii::app()->request->getParam('rows'))?Yii::app()->request->getParam('rows'):10;
         $pages->applyLimit($criteria);
         $models = $this->findAll($criteria);
 
@@ -106,14 +102,13 @@ class Deptment extends CActiveRecord
 				'createdTime' => $value->createdTime,
                 );
         }
-        // $data = array(
-        //             "result"=>true,
-        //             "rows"=>$row,
-        //             "results"=>$pages->itemCount,
-        //             "hasError"=> false,
-        //             "error"=>""
-        //         );
-        return $row;
+        $data = array(
+                    "totalpages" => $pages->pageCount,
+                    "currpage" => $pages->currentPage+1,
+                    "totalrecords" =>$count,
+                    "griddata" => $row,
+                );
+        return $data;
 	}
 
 	/**

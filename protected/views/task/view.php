@@ -22,7 +22,7 @@
             <i class="ace-icon fa fa-hand-o-right blue "></i>
             指派到人
         </button>
-        <button class="btn btn-white btn-default btn-round">
+        <button id="dialog-cacel-btn" class="btn btn-white btn-default btn-round">
             <i class="ace-icon fa fa-times red2"></i>
             取消任务
         </button>
@@ -62,6 +62,49 @@
                 ]
             });
         });
+
+        $( "#dialog-cacel-btn" ).on('click', function(e) {
+            e.preventDefault();
+
+            $( "#dialog-cacel" ).removeClass('hide').dialog({
+                resizable: true,
+                modal: true,
+                title: "<div class='widget-header'><h4 class='smaller'><i class='ace-icon fa fa-exclamation-triangle red'></i> 取消任务</h4></div>",
+                title_html: true,
+                buttons: [
+                    {
+                        html: "<i class='ace-icon fa fa-check bigger-110'></i>&nbsp; 确认取消",
+                        "class" : "btn btn-danger btn-xs",
+                        click: function() {
+                            $.ajax({
+                                type: "POST",
+                                url: "<?php echo Yii::app()->createUrl('/task/cacel') ?>",
+                                data: "id=<?php echo $model->id ?>",
+                                dataType : 'json',
+                                success: function(msg){
+                                    if(msg.type == 'success')
+                                    {
+                                        $( this ).dialog( "close" );
+                                    }else{
+                                        $( "#dialog-cacel .error_info" ).html(msg.info);
+                                        return false;
+                                    }
+                                }
+                            });
+                            $( this ).dialog( "close" );
+                        }
+                    }
+                    ,
+                    {
+                        html: "<i class='ace-icon fa fa-times bigger-110'></i>&nbsp; 取消",
+                        "class" : "btn btn-xs",
+                        click: function() {
+                            $( this ).dialog( "close" );
+                        }
+                    }
+                ]
+            });
+        });
     })
 
 </script>
@@ -77,4 +120,13 @@
         <i class="ace-icon fa fa-hand-o-right blue bigger-120"></i>
         Are you sure?
     </p>
+</div>
+
+<div id="dialog-cacel" class="hide">
+    <p class="bigger-110 bolder center grey">
+        <i class="ace-icon fa fa-hand-o-right blue bigger-120"></i>
+       取消该任务吗？
+    </p>
+    <div class="space-6"></div>
+    <div class="error_info"></div>
 </div>

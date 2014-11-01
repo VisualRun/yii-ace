@@ -56,7 +56,7 @@ class JqGridlist extends CPortlet
         $gridSettings['multiselect'] = true;
         $gridSettings['multiboxonly'] = true;
         $gridSettings['autowidth'] = true;
-        $gridSettings['loadonce'] = true;
+        $gridSettings['loadonce'] = false;
 
         if ($this->enablePager) {
             $gridSettings['pager'] = "#grid-pager";
