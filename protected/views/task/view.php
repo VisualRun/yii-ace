@@ -19,7 +19,7 @@
     <p>
         <?php if($model->status == 0): ?>
         <button id="dialog-assigned-btn" class="btn btn-white btn-info btn-round">
-            <i class="ace-icon fa fa-hand-o-right dark"></i>
+            <i class="ace-icon fa fa-hand-o-right blue "></i>
             指派到人
         </button>
         <button class="btn btn-white btn-default btn-round">
@@ -34,10 +34,10 @@
 </div>
 
 <script type="text/javascript">
-    $(function(){
+    jQuery(function($) {
         $( "#dialog-assigned-btn" ).on('click', function(e) {
             e.preventDefault();
-        
+
             $( "#dialog-assigned" ).removeClass('hide').dialog({
                 resizable: false,
                 modal: true,
@@ -68,7 +68,7 @@
 
 <div id="dialog-assigned" class="hide">
     <div class="alert alert-info bigger-110">
-        指派给
+        指派给<?php echo CHtml::dropDownList('select_assigned','',$assigned_arr)?>
     </div>
 
     <div class="space-6"></div>
