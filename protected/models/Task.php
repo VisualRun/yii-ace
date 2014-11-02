@@ -75,6 +75,7 @@ class Task extends CActiveRecord
 			'opened'=>array(self::BELONGS_TO,'User','openedId'),
 			'assigned'=>array(self::BELONGS_TO,'User','assignedId'),
 			'lastEdited'=>array(self::BELONGS_TO,'User','lastEditedId'),
+			'remarklist'=>array(self::HAS_MANY,'TaskRemark','','on'=>'remarklist.taskId=t.id'),
 		);
 	}
 

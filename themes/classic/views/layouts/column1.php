@@ -58,11 +58,11 @@
 
 <script type="text/javascript"> ace.vars['base'] = '..'; </script>
 <!-- <script src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/ace/ace.onpage-help.js"></script>
-<script src="../docs/assets/js/rainbow.js"></script>
-<script src="../docs/assets/js/language/generic.js"></script>
-<script src="../docs/assets/js/language/html.js"></script>
-<script src="../docs/assets/js/language/css.js"></script>
-<script src="../docs/assets/js/language/javascript.js"></script> -->
+<script src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/rainbow.js"></script>
+<script src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/language/generic.js"></script>
+<script src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/language/html.js"></script>
+<script src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/language/css.js"></script>
+<script src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/language/javascript.js"></script> -->
 
 </body>
 <?php $this->endContent(); ?>
