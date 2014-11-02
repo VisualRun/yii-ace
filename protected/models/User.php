@@ -118,9 +118,11 @@ class User extends CActiveRecord
 		$criteria = new CDbCriteria();
 
         $criteria->select = '*';
-        $criteria->order = 't.createdTime DESC,t.id DESC';
+        $criteria->order = "";
         if(!empty(Yii::app()->request->getParam('sidx')))
-        	$criteria->order .= ',t.'.Yii::app()->request->getParam('sidx').' '.Yii::app()->request->getParam('sord');
+        	$criteria->order .= 't.'.Yii::app()->request->getParam('sidx').' '.Yii::app()->request->getParam('sord').",";
+        $criteria->order .= 't.createdTime DESC,t.id DESC';
+        
         $criteria->compare('t.status',$this->status);
 
         $count = $this->count($criteria);
