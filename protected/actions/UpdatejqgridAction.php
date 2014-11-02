@@ -18,9 +18,16 @@ class UpdatejqgridAction extends CAction{
                     $model->attributes = $data;
                     if(isset($data['password']))
                         $model->password = md5($model->password);
-                    if($model->save())
+                    if($model->save()){
+                        if($this->modelClass == 'Deptment'){
+                            Helpers::syslog(5,Yii::app()->user->getState('account')."更新了部门 [".$model->name."] 信息",Yii::app()->user->id,$model->id);
+                        }elseif($this->modelClass == 'Workplace'){
+                            Helpers::syslog(6,Yii::app()->user->getState('account')."更新了岗位 [".$model->name."] 信息",Yii::app()->user->id,$model->id);
+                        }elseif($this->modelClass == 'User'){
+                            Helpers::syslog(4,Yii::app()->user->getState('account')."更新了员工 [".$model->account."] 信息",Yii::app()->user->id,$model->id);
+                        }
                         echo true;
-                    else
+                    }else
                         echo json_encode($model->getErrors());
                 }
             }

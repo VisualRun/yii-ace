@@ -42,7 +42,7 @@
         <?php foreach ($menu as $key => $value): ?>
         <li class="<?php if(Yii::app()->controller->id == $key): ?>active <?php if(!empty($value['item'])): ?>open <?php endif;?><?php endif; ?><?php if(!empty($value['item'])): ?>hsub <?php endif;?>">
             <a href="<?php echo $value['href'] ?>" class="<?php if(!empty($value['item'])): ?>dropdown-toggle<?php endif; ?>">
-                <i class="menu-icon fa <?php echo $value['class'] ?>"></i>
+                <i class="menu-icon <?php echo $value['class'] ?>"></i>
                 <span class="menu-text"> <?php echo $value['text'] ?> </span>
                 <?php if(!empty($value['item'])): ?>
                 <b class="arrow fa fa-angle-down"></b>

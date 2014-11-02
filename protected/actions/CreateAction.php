@@ -61,7 +61,7 @@ class CreateAction extends CAction{
 
             //如果文件上传
             $uploaded = CUploadedFile::getInstanceByName($this->modelClass.'[opAdminId]');
-            print_r($uploaded);exit;
+            #print_r($uploaded);exit;
             if(is_object($uploaded) && get_class($uploaded)==='CUploadedFile'){
                 if($uploaded->size > 8*1024*1024){
                     $model->addError('opAdminId','文件太大！');
@@ -97,14 +97,22 @@ class CreateAction extends CAction{
             if($model->hasErrors())
                 Yii::app()->end();
 
+            if($model->assignedId)
+                $model->assignedDate = date('Y-m-d H:i:s');
+
             if($model->save())
             {
                 $id = $model->{$model->tableSchema->primaryKey};
-                if($file){
+                if(isset($file)){
                     $file->taskID = $id;
                     $file->save();
                 }
-                //$arr = array('hasError'=>false,'msg'=>'数据提交成功','model'=>$model->attributes);
+
+                if($this->modelClass == 'Task')
+                {
+                    Helpers::syslog(2,Yii::app()->user->getState('account')."发布了任务 [".$model->name."]",Yii::app()->user->id,$id);
+                }
+
                 $this->getController()->redirect( array($this->successRedirect, 'id'=>$id) );
             }else{
                 $arr = array('hasError'=>true,'msg'=>'数据提交失败','error'=>$model->getErrors(),'model'=>$model->attributes);

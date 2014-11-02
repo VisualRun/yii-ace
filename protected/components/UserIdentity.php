@@ -29,10 +29,12 @@ class UserIdentity extends CUserIdentity
 		{
 			$this->_id=$user->id;
 			$this->setState('type',$user->typeId);
+			$this->setState('account',$user->account);
 			$this->setState('realname',$user->realname);
 			$this->errorCode=self::ERROR_NONE;
 			$user->logNum++;
 			$user->save();
+			Helpers::syslog(4,$user->account."登陆系统",Yii::app()->user->id);
 		}
 		return $this->errorCode==self::ERROR_NONE;
 	}

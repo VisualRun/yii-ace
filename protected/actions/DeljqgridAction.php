@@ -19,9 +19,16 @@ class DeljqgridAction extends CAction{
                         throw new CHttpException(404);    
                     $model = CActiveRecord::model($this->modelClass)->findByPk($pk); 
                     $model->status = -1;
-                    if($model->save())
+                    if($model->save()){
+                        if($this->modelClass == 'Deptment'){
+                            Helpers::syslog(5,Yii::app()->user->getState('account')."删除了部门 [".$model->name."]",Yii::app()->user->id,$model->id);
+                        }elseif($this->modelClass == 'Workplace'){
+                            Helpers::syslog(6,Yii::app()->user->getState('account')."删除了岗位 [".$model->name."]",Yii::app()->user->id,$model->id);
+                        }elseif($this->modelClass == 'User'){
+                            Helpers::syslog(4,Yii::app()->user->getState('account')."删除了员工 [".$model->account."]",Yii::app()->user->id,$model->id);
+                        }
                         echo true;
-                    else
+                    }else
                         echo json_encode($model->getErrors());
                 }
             }

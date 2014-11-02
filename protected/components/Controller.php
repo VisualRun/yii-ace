@@ -29,6 +29,24 @@ class Controller extends CController
 	//每个页面自有的js
 	public $page_js=array();
 
+	public function beforeAction(){
+		//查询权限表
+		$purview = Purview::model()->findByAttributes(array('controller'=>strtoupper($this->getId()),'action'=>strtoupper($this->action->id),'valid'=>1));
+		if($purview)
+		{
+			$tmpusertype = Yii::app()->user->getState('type');
+			$userpurview = UserPurview::model()->findByAttributes(array('usertypeId'=>$tmpusertype,'purviewId'=>$purview->id,'valid'=>1));
+			if(empty($userpurview)){
+				echo '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />';
+				echo "<script>alert('没有权限！')</script>";
+				echo "<script>window.location.href='".Yii::app()->createUrl('/home/index')."'</script>";
+			}else
+				return true;
+		}
+		else
+			return true;
+	}
+
 	public function actions(){
         return array(
         	'create'=>array(

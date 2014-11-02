@@ -50,17 +50,18 @@ class Task extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('typeId, imtypeId, name, desc, deadline', 'required'),
-			array('typeId, imtypeId, status, openedId, assignedId, finishedId, canceledId, closedId, lastEditedId, opAdminId', 'numerical', 'integerOnly'=>true),
+			array('typeId, imtypeId, name, desc, deadline, point', 'required'),
+			array('typeId, imtypeId, status, openedId, assignedId, finishedId, canceledId, closedId, lastEditedId, opAdminId, point', 'numerical', 'integerOnly'=>true),
 			array('code, name', 'length', 'max'=>32),
 			array('closedReason', 'length', 'max'=>30),
 			array('deleted', 'length', 'max'=>1),
+			array('finishedpoint', 'length', 'max'=>8),
 			array('remark', 'length', 'max'=>128),
 			array('openedDate, assignedDate, estStarted, realStarted, finishedDate, canceledDate, closedDate, lastEditedDate, createdTime', 'safe'),
-			array('code, typeId, imtypeId, name, desc, status, deadline, openedId, openedDate, assignedId, assignedDate, estStarted, realStarted, finishedId, finishedDate, canceledId, canceledDate, closedId, closedDate, closedReason, lastEditedId, lastEditedDate, deleted, remark, opAdminId, createdTime','filter','filter'=>array($obj=new CHtmlPurifier(),'purify')),
+			array('code, typeId, imtypeId, name, desc, status, deadline, openedId, openedDate, assignedId, assignedDate, estStarted, realStarted, finishedId, finishedDate, canceledId, canceledDate, closedId, closedDate, closedReason, lastEditedId, lastEditedDate, deleted, remark, opAdminId, createdTime, point, finishedpoint','filter','filter'=>array($obj=new CHtmlPurifier(),'purify')),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, code, typeId, imtypeId, name, desc, status, deadline, openedId, openedDate, assignedId, assignedDate, estStarted, realStarted, finishedId, finishedDate, canceledId, canceledDate, closedId, closedDate, closedReason, lastEditedId, lastEditedDate, deleted, remark, opAdminId, createdTime', 'safe', 'on'=>'search'),
+			array('id, code, typeId, imtypeId, name, desc, status, deadline, openedId, openedDate, assignedId, assignedDate, estStarted, realStarted, finishedId, finishedDate, canceledId, canceledDate, closedId, closedDate, closedReason, lastEditedId, lastEditedDate, deleted, remark, opAdminId, createdTime, point, finishedpoint', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -84,6 +85,7 @@ class Task extends CActiveRecord
 		if($this->isNewRecord){
 			$this->openedId = Yii::app()->user->id;
 			$this->openedDate = date('Y-m-d H:i:s');
+			$this->estStarted = date('Y-m-d');
 		}
 		$this->lastEditedId = Yii::app()->user->id;
 		$this->lastEditedDate = date('Y-m-d H:i:s');
@@ -99,7 +101,7 @@ class Task extends CActiveRecord
         		$str .= 'T'.$this->typeId;
         	if(isset($this->imtypeId))
         		$str .= 'IM'.$this->imtypeId;
-            $this->code = $str.str_pad($this->primarykey,8,'0',STR_PAD_LEFT);
+            $this->code = $str.str_pad($this->primarykey,6,'0',STR_PAD_LEFT);
             $this->isNewRecord = false;
             $this->saveAttributes(array('code'));
         }
@@ -114,8 +116,9 @@ class Task extends CActiveRecord
 			'typeId' => array('type'=>'checkbox','data'=>Yii::app()->params['task_type']),
 			'imtypeId' => array('type'=>'checkbox','data'=>Yii::app()->params['task_important_type']),
 			'name' => '任务名称',
-			'desc' => array('type'=>'editor'),
+			//'desc' => array('type'=>'editor'),
 			'desc' => array('type'=>'textarea'),
+			'point' => array('type'=>'text'),
 			'deadline' => array('type'=>'date'),
 			'assignedId' => array('type'=>'checkbox','data'=>array_merge(array(""=>"不指定"),CHtml::listData(User::model()->findAll('status = 1 && typeId > 1'), 'id', 'account'))),
 			//'attach' => array('type'=>'file'),
@@ -147,6 +150,8 @@ class Task extends CActiveRecord
 			'closedId' => '关闭人ID',
 			'closedDate' => '关闭时间',
 			'closedReason' => '关闭原因',
+			'point' => '任务积分值',
+			'finishedpoint' => '完成任务积分',
 			'lastEditedId' => '最后操作人ID',
 			'lastEditedDate' => '最后操作时间',
 			'deleted' => '是否删除',
@@ -269,6 +274,8 @@ class Task extends CActiveRecord
 				'remark' => $value->remark,
 				'opAdminId' => $value->opAdminId,
 				'createdTime' => $value->createdTime,
+				'point' => $value->point,
+				'finishedpoint' => $value->finishedpoint,
 				'hand' => '<a href="'.Yii::app()->createUrl('/task/create',array('id'=>$value->id)).'">编辑</a> | <a href="'.Yii::app()->createUrl('/task/view',array('id'=>$value->id)).'">查看</a> | <a href="javascript:void(0);" id="test_bootbox" onclick="test_bootbox()">测试</a>',
 			);
         }
@@ -314,6 +321,7 @@ class Task extends CActiveRecord
 			'remark' => '备注',
 			'opAdminId' => '操作人ID',
 			'createdTime' => '生成时间',
+			
 		);
 	}
 
@@ -362,6 +370,8 @@ class Task extends CActiveRecord
 		$criteria->compare('remark',$this->remark,true);
 		$criteria->compare('opAdminId',$this->opAdminId);
 		$criteria->compare('createdTime',$this->createdTime,true);
+		$criteria->compare('point',$this->point,true);
+		$criteria->compare('finishedpoint',$this->finishedpoint,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

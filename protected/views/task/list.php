@@ -8,7 +8,7 @@
         'model' => 'task',
         'gridSettings' => [
             'caption' => '任务列表',
-            'colNames' => ['任务编码', '任务名称', '主次类别', '重要类别', '创建人', '创建时间', '状态','最后操作人ID', '最后操作时间', '操作'],
+            'colNames' => ['任务编码', '任务名称', '主次类别', '重要类别', '创建人', '创建时间', '状态','最后操作', '最后操作时间', '操作'],
             'colModel' => [
                 ['name' => 'code', 'index' => 'code', 'width' => '130', 'editable' => false],
                 ['name' => 'name', 'index' => 'name', 'editable' => false],

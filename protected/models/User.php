@@ -62,11 +62,12 @@ class User extends CActiveRecord
 			array('account', 'length', 'max'=>30),
 			array('address, personNumber, personAddress, residence, studyLevel, yearOfWorking, graduationYear, homeAddress, homeTel, homeEmail, reconcactorPerson, reconcactorTel, workYearlimit, remark', 'length', 'max'=>128),
 			array('officeTel, mobile', 'length', 'max'=>64),
+			array('point', 'length', 'max'=>12),
 			array('employTime, unemplyTime, createdTime', 'safe'),
-			array('code, account, password, typeId, realname, deptId, workplaceId, status, address, officeTel, mobile, officeEmail, employTime, unemplyTime, handonStaffId, personNumber, personAddress, sex, residence, studyLevel, yearOfWorking, graduationYear, homeAddress, homeTel, homeEmail, reconcactorPerson, reconcactorTel, workYearlimit, remark, opAdminId, createdTime, logNum','filter','filter'=>array($obj=new CHtmlPurifier(),'purify')),
+			array('code, account, password, typeId, realname, deptId, workplaceId, status, address, officeTel, mobile, officeEmail, employTime, unemplyTime, handonStaffId, personNumber, personAddress, sex, residence, studyLevel, yearOfWorking, graduationYear, homeAddress, homeTel, homeEmail, reconcactorPerson, reconcactorTel, workYearlimit, remark, opAdminId, createdTime, logNum, point','filter','filter'=>array($obj=new CHtmlPurifier(),'purify')),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, code, account, password, typeId, realname, deptId, workplaceId, status, address, officeTel, mobile, officeEmail, employTime, unemplyTime, handonStaffId, personNumber, personAddress, sex, residence, studyLevel, yearOfWorking, graduationYear, homeAddress, homeTel, homeEmail, reconcactorPerson, reconcactorTel, workYearlimit, remark, opAdminId, createdTime, logNum', 'safe', 'on'=>'search'),
+			array('id, code, account, password, typeId, realname, deptId, workplaceId, status, address, officeTel, mobile, officeEmail, employTime, unemplyTime, handonStaffId, personNumber, personAddress, sex, residence, studyLevel, yearOfWorking, graduationYear, homeAddress, homeTel, homeEmail, reconcactorPerson, reconcactorTel, workYearlimit, remark, opAdminId, createdTime, logNum, point', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -171,6 +172,7 @@ class User extends CActiveRecord
 				'opAdminId' => $value->opAdminId,
 				'createdTime' => $value->createdTime,
 				'logNum' => $value->logNum,
+				'point' => $value->point,
                 );
         }
 
@@ -222,6 +224,7 @@ class User extends CActiveRecord
 			'opAdminId' => '操作员工ID',
 			'createdTime' => '生成时间',
 			'logNum' => '登陆次数',
+			'point' => '积分',
 		);
 	}
 

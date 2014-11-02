@@ -7,41 +7,6 @@ class TaskController extends Controller
 		$this->modelClass = 'Task';
 	}
 
-	public function actionAdd(){
-		$this->page_css = array(
-			'jquery-ui.custom.min.css',
-			'chosen.css',
-			'datepicker.css',
-			'bootstrap-timepicker.css',
-			'daterangepicker.css',
-			'bootstrap-datetimepicker.css',
-			'colorpicker.css',
-			);
-
-		$this->page_js = array(
-			'jquery-ui.custom.min.js',
-			'jquery.ui.touch-punch.min.js',
-			'chosen.jquery.min.js',
-			'fuelux/fuelux.spinner.min.js',
-			'date-time/bootstrap-datepicker.min.js',
-			'date-time/bootstrap-timepicker.min.js',
-			'date-time/moment.min.js',
-			'date-time/daterangepicker.min.js',
-			'date-time/bootstrap-datetimepicker.min.js',
-			'date-time/locales/bootstrap-datepicker.zh-CN.js',
-			'bootstrap-colorpicker.min.js',
-			'jquery.knob.min.js',
-			'jquery.autosize.min.js',
-			'jquery.inputlimiter.1.3.1.min.js',
-			'jquery.maskedinput.min.js',
-			'bootstrap-tag.min.js',
-			);
-
-		$model = new Task;
-
-		$this->render('add',array('model'=>$model));
-	}
-
 	public function actionList()
 	{
 		$this->pageTitle = '任务列表';
@@ -97,7 +62,12 @@ class TaskController extends Controller
         		$assignedid = Yii::app()->request->getParam('assignedid');
         		$model->assignedId = $assignedid;
         		$model->assignedDate = date('Y-m-d H:i:s');
-        		$model->save();
+        		if($model->save())
+        		{
+        		      $assignUser = User::model()->findByPk($assignedid);
+        		      Helpers::syslog(2,Yii::app()->user->getState('account')."将 [".$model->name."] 指派任务给 ".$assignUser->account,Yii::app()->user->id,$pk);
+        		}
+        		
         		echo json_encode(array('type'=>'success'));
         		Yii::app()->end();
         	}else{
@@ -123,7 +93,10 @@ class TaskController extends Controller
         	if($model->openedId == Yii::app()->user->id && $model->status == 0)
         	{	
         		$model->status = 4;
-        		$model->save();
+        		if($model->save())
+        		{
+        			Helpers::syslog(2,Yii::app()->user->getState('account')."将任务 [".$model->name."] 取消",Yii::app()->user->id,$pk);
+        		}
         		echo json_encode(array('type'=>'success'));
         		Yii::app()->end();
         	}else{
@@ -152,7 +125,10 @@ class TaskController extends Controller
         		$model->realStarted = date('Y-m-d H:i:s');
         		$model->assignedId = Yii::app()->user->id;
         		$model->assignedDate = date('Y-m-d H:i:s');
-        		$model->save();
+        		if($model->save())
+        		{
+        			Helpers::syslog(2,Yii::app()->user->getState('account')."承接任务 [".$model->name."]",Yii::app()->user->id,$pk);
+        		}
         		echo json_encode(array('type'=>'success'));
         		Yii::app()->end();
         	}else{
@@ -179,7 +155,10 @@ class TaskController extends Controller
         	{	
         		$model->status = 1;
         		$model->realStarted = date('Y-m-d H:i:s');
-        		$model->save();
+        		if($model->save())
+        		{
+        			Helpers::syslog(2,Yii::app()->user->getState('account')."开始了任务 [".$model->name."]",Yii::app()->user->id,$pk);
+        		}
         		echo json_encode(array('type'=>'success'));
         		Yii::app()->end();
         	}else{
@@ -209,7 +188,10 @@ class TaskController extends Controller
         		$task_remark = new TaskRemark();
         		$task_remark->remark = $remark;
         		$task_remark->taskId = $pk;
-        		$task_remark->save();
+        		if($model->save())
+        		{
+        			Helpers::syslog(2,Yii::app()->user->getState('account')."在任务 [".$model->name."] 中添加备注",Yii::app()->user->id,$pk);
+        		}
         		echo json_encode(array('type'=>'success'));
         		Yii::app()->end();
         	}else{
@@ -236,9 +218,15 @@ class TaskController extends Controller
         		$model->status = 2;
         		$model->finishedId = Yii::app()->user->id;
         		$model->finishedDate = date('Y-m-d H:i:s');
-        		$model->save();
+        		if($model->save())
+        		{
+        			Helpers::syslog(2,Yii::app()->user->getState('account')."完成任务 [".$model->name."]",Yii::app()->user->id,$pk);
+                                //任务完成通知 创建人
+                                $content = "你创建的任务 [".$model->name."] 已由".Yii::app()->user->getState('account')."完成";
+                                Helpers::sendmessage($model->openedId,$content,2,0,$model->id);
+        		}
 
-        		//任务完成通知 创建人
+        		
 
         		echo json_encode(array('type'=>'success'));
         		Yii::app()->end();
@@ -267,9 +255,17 @@ class TaskController extends Controller
         		$model->status = 5;
         		$model->closedId = Yii::app()->user->id;
         		$model->closedDate = date('Y-m-d H:i:s');
-        		$model->save();
+        		if($model->save())
+        		{
+        			Helpers::syslog(2,Yii::app()->user->getState('account')."关闭任务 [".$model->name."]",Yii::app()->user->id,$pk);
+                                //根据任务完成时间 发送积分
+                                $point = Helpers::taskpointlog($model);
+        		        //并通知完成人
+                                $content = "任务 [".$model->name."] 已由".Yii::app()->user->getState('account')."关闭，你将得到 ".$point." 的积分";
+                                Helpers::sendmessage($model->finishedId,$content,2,0,$model->id);
+                        }
 
-        		//根据任务完成时间 发送积分 并通知完成人
+        		
 
         		echo json_encode(array('type'=>'success'));
         		Yii::app()->end();

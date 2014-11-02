@@ -51,7 +51,8 @@ class UserController extends Controller
         {
           $model1->password = md5($passwd1);
           $model1->save();
-           $this->redirect(array('site/logout'));
+          Helpers::syslog(4,Yii::app()->user->getState('account')."修改密码",Yii::app()->user->id);
+          $this->redirect(array('site/logout'));
         }else{
           $model->addError('createdTime','修改提交出错！请刷新再试！');
         }

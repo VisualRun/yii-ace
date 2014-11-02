@@ -24,6 +24,14 @@
 				</div>
 				<?php echo $form->error($model,$key); ?>
 			</div>
+			<?php elseif($value['type']=='text'):?>
+			<div class="form-group">
+				<?php echo $form->labelEx($model,$key,array('class'=>'col-sm-2 control-label no-padding-right')); ?>
+				<div class="col-sm-5">
+					<?php echo $form->textField($model,$key,array('class'=>'col-xs-10 col-sm-5')); ?>
+				</div>
+				<?php echo $form->error($model,$key); ?>
+			</div>
 			<?php elseif($value['type']=='checkbox'):?>
 			<div class="form-group">
 				<?php echo $form->labelEx($model,$key,array('class'=>'col-sm-2 control-label no-padding-right')); ?>

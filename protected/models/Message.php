@@ -1,27 +1,30 @@
 <?php
 
 /**
- * This is the model class for table "{{task_remark}}".
+ * This is the model class for table "{{message}}".
  *
- * The followings are the available columns in table '{{task_remark}}':
+ * The followings are the available columns in table '{{message}}':
  * @property integer $id
  * @property string $code
- * @property integer $taskId
- * @property string $remark
- * @property integer $valid
+ * @property integer $typeId
  * @property integer $userId
+ * @property integer $touserId
+ * @property integer $linkId
+ * @property integer $linkId2
+ * @property string $content
+ * @property integer $checkout
  * @property string $deleted
  * @property integer $opAdminId
  * @property string $createdTime
  */
-class TaskRemark extends CActiveRecord
+class Message extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return '{{task_remark}}';
+		return '{{message}}';
 	}
 
 	/**
@@ -32,15 +35,14 @@ class TaskRemark extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('remark', 'required'),
-			array('taskId, valid, userId, opAdminId', 'numerical', 'integerOnly'=>true),
-			array('code', 'length', 'max'=>32),
+			array('typeId, userId, touserId, linkId, linkId2, checkout, opAdminId', 'numerical', 'integerOnly'=>true),
+			array('content', 'length', 'max'=>256),
 			array('deleted', 'length', 'max'=>1),
 			array('createdTime', 'safe'),
-			array('code, taskId, remark, valid, userId, deleted, opAdminId, createdTime','filter','filter'=>array($obj=new CHtmlPurifier(),'purify')),
+			array('typeId, userId, touserId, linkId, linkId2, content, checkout, deleted, opAdminId, createdTime','filter','filter'=>array($obj=new CHtmlPurifier(),'purify')),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, code, taskId, remark, valid, userId, deleted, opAdminId, createdTime', 'safe', 'on'=>'search'),
+			array('id, typeId, userId, touserId, linkId, linkId2, content, checkout, deleted, opAdminId, createdTime', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -57,23 +59,10 @@ class TaskRemark extends CActiveRecord
 
 	public function beforeSave()
 	{
-		if($this->isNewRecord){
-			$this->userId = Yii::app()->user->id;
-		}
 		$this->createdTime = date('Y-m-d H:i:s');
 		$this->opAdminId = Yii::app()->user->id;
 		return true;
 	}
-
-	public function afterSave(){
-        if ($this->isNewRecord) {
-        	$str = 'T'.$this->taskId.'_';
-            $this->code = $str.str_pad($this->primarykey,4,'0',STR_PAD_LEFT);
-            $this->isNewRecord = false;
-            $this->saveAttributes(array('code'));
-        }
-        return true;
-    }
 
 	/**
 	 * @return array customized attribute labels (name=>label)
@@ -82,11 +71,13 @@ class TaskRemark extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'code' => '任务备注编码',
-			'taskId' => '任务ID',
-			'remark' => '任务备注',
-			'valid' => '0=无效 1=有效',
-			'userId' => '创建人ID',
+			'typeId' => '消息类别',
+			'userId' => '发送人用户ID 0为系统',
+			'touserId' => '接收人用户ID 0为系统',
+			'linkId' => '关联ID',
+			'linkId2' => '关联ID2',
+			'content' => '消息内容',
+			'checkout' => '0=未看 1=已看',
 			'deleted' => '是否删除',
 			'opAdminId' => '操作人ID',
 			'createdTime' => '生成时间',
@@ -112,11 +103,13 @@ class TaskRemark extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('code',$this->code,true);
-		$criteria->compare('taskId',$this->taskId);
-		$criteria->compare('remark',$this->remark,true);
-		$criteria->compare('valid',$this->valid);
+		$criteria->compare('typeId',$this->typeId);
 		$criteria->compare('userId',$this->userId);
+		$criteria->compare('touserId',$this->touserId);
+		$criteria->compare('linkId',$this->linkId);
+		$criteria->compare('linkId2',$this->linkId2);
+		$criteria->compare('content',$this->content,true);
+		$criteria->compare('checkout',$this->checkout);
 		$criteria->compare('deleted',$this->deleted,true);
 		$criteria->compare('opAdminId',$this->opAdminId);
 		$criteria->compare('createdTime',$this->createdTime,true);
@@ -130,7 +123,7 @@ class TaskRemark extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return TaskRemark the static model class
+	 * @return Message the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

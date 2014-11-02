@@ -1,27 +1,27 @@
 <?php
 
 /**
- * This is the model class for table "{{task_remark}}".
+ * This is the model class for table "{{purview}}".
  *
- * The followings are the available columns in table '{{task_remark}}':
+ * The followings are the available columns in table '{{purview}}':
  * @property integer $id
  * @property string $code
- * @property integer $taskId
- * @property string $remark
+ * @property string $name
+ * @property string $controller
+ * @property string $action
  * @property integer $valid
- * @property integer $userId
  * @property string $deleted
  * @property integer $opAdminId
  * @property string $createdTime
  */
-class TaskRemark extends CActiveRecord
+class Purview extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return '{{task_remark}}';
+		return '{{purview}}';
 	}
 
 	/**
@@ -32,15 +32,14 @@ class TaskRemark extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('remark', 'required'),
-			array('taskId, valid, userId, opAdminId', 'numerical', 'integerOnly'=>true),
-			array('code', 'length', 'max'=>32),
+			array('valid, opAdminId', 'numerical', 'integerOnly'=>true),
+			array('name', 'length', 'max'=>32),
+			array('controller, action, code', 'length', 'max'=>64),
 			array('deleted', 'length', 'max'=>1),
 			array('createdTime', 'safe'),
-			array('code, taskId, remark, valid, userId, deleted, opAdminId, createdTime','filter','filter'=>array($obj=new CHtmlPurifier(),'purify')),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, code, taskId, remark, valid, userId, deleted, opAdminId, createdTime', 'safe', 'on'=>'search'),
+			array('id, code, name, controller, action, valid, deleted, opAdminId, createdTime', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -57,23 +56,55 @@ class TaskRemark extends CActiveRecord
 
 	public function beforeSave()
 	{
-		if($this->isNewRecord){
-			$this->userId = Yii::app()->user->id;
-		}
+		$this->controller = strtoupper($this->controller);
+		$this->action = strtoupper($this->action);
+		$this->code = $this->controller.'_'.$this->action;
 		$this->createdTime = date('Y-m-d H:i:s');
 		$this->opAdminId = Yii::app()->user->id;
 		return true;
 	}
 
-	public function afterSave(){
-        if ($this->isNewRecord) {
-        	$str = 'T'.$this->taskId.'_';
-            $this->code = $str.str_pad($this->primarykey,4,'0',STR_PAD_LEFT);
-            $this->isNewRecord = false;
-            $this->saveAttributes(array('code'));
+	public function result()
+	{
+		$criteria = new CDbCriteria();
+
+        $criteria->select = '*';
+        $criteria->order = "";
+        if(!empty(Yii::app()->request->getParam('sidx')))
+        	$criteria->order .= 't.'.Yii::app()->request->getParam('sidx').' '.Yii::app()->request->getParam('sord').",";
+        $criteria->order .= 't.createdTime DESC,t.id DESC';
+
+        $count = $this->count($criteria);
+        $pages = new CPagination($count);
+        $pages->pageVar = 'page';
+        $pages->currentPage = !empty(Yii::app()->request->getParam('page'))?Yii::app()->request->getParam('page'):10;
+        $pages->pageSize = !empty(Yii::app()->request->getParam('rows'))?Yii::app()->request->getParam('rows'):10;
+        $pages->applyLimit($criteria);
+        $models = $this->findAll($criteria);
+
+        $row = array();
+        foreach ($models as $key => $value) {
+            $row[] = array(
+                'id' => $value->id,
+				'code' => $value->code,
+				'name' => $value->name,
+				'controller' => $value->controller,
+				'action' => $value->action,
+				'valid' => Yii::app()->params['valid'][$value->valid],
+				'deleted' => $value->deleted,
+				'opAdminId' => $value->opAdminId,
+				'createdTime' => $value->createdTime,
+			);
         }
-        return true;
-    }
+
+        $data = array(
+                    "totalpages" => $pages->pageCount,
+                    "currpage" => $pages->currentPage+1,
+                    "totalrecords" =>$count,
+                    "griddata" => $row,
+                );
+        return $data;
+	}
 
 	/**
 	 * @return array customized attribute labels (name=>label)
@@ -82,11 +113,11 @@ class TaskRemark extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'code' => '任务备注编码',
-			'taskId' => '任务ID',
-			'remark' => '任务备注',
+			'code' => '权限编码',
+			'name' => '权限名称',
+			'controller' => '控制器名',
+			'action' => '方法名',
 			'valid' => '0=无效 1=有效',
-			'userId' => '创建人ID',
 			'deleted' => '是否删除',
 			'opAdminId' => '操作人ID',
 			'createdTime' => '生成时间',
@@ -113,10 +144,10 @@ class TaskRemark extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('code',$this->code,true);
-		$criteria->compare('taskId',$this->taskId);
-		$criteria->compare('remark',$this->remark,true);
+		$criteria->compare('name',$this->name,true);
+		$criteria->compare('controller',$this->controller,true);
+		$criteria->compare('action',$this->action,true);
 		$criteria->compare('valid',$this->valid);
-		$criteria->compare('userId',$this->userId);
 		$criteria->compare('deleted',$this->deleted,true);
 		$criteria->compare('opAdminId',$this->opAdminId);
 		$criteria->compare('createdTime',$this->createdTime,true);
@@ -130,7 +161,7 @@ class TaskRemark extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return TaskRemark the static model class
+	 * @return Purview the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
