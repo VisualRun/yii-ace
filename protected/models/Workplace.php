@@ -68,6 +68,17 @@ class Workplace extends CActiveRecord
         return true;
     }
 
+    public function searchField()
+	{
+		$column = array(
+			'id' => array('name'=>'id','type'=>'hidden'),
+			'name' => array('name'=>'岗位名称','type'=>'text'),
+			'status' => array('name'=>'状态','type'=>'select','data'=>Yii::app()->params['status']),
+			//'createdTime' => array('name'=>'选择时间','type'=>'daterange'),
+		);
+		return $column;
+	}
+
 	public function result()
 	{
 		$criteria = new CDbCriteria();
@@ -83,6 +94,7 @@ class Workplace extends CActiveRecord
         $criteria->order .= 't.createdTime DESC,t.id DESC';
 
         $criteria->compare('t.status',$this->status);
+        $criteria->compare('t.name',$this->name);
 
         $count = $this->count($criteria);
         $pages = new CPagination($count);

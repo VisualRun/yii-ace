@@ -37,7 +37,7 @@ class PointLog extends CActiveRecord
 			array('log_desc', 'length', 'max'=>128),
 			array('deleted', 'length', 'max'=>1),
 			array('createdTime', 'safe'),
-			array('id, userId, log_type, log_point, log_desc, linkId, valid, deleted, opAdminId, createdTime','filter','filter'=>array($obj=new CHtmlPurifier(),'purify')),
+			array('userId, log_type, log_point, log_desc, linkId, valid, deleted, opAdminId, createdTime','filter','filter'=>array($obj=new CHtmlPurifier(),'purify')),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, userId, log_type, log_point, log_desc, linkId, valid, deleted, opAdminId, createdTime', 'safe', 'on'=>'search'),
@@ -60,6 +60,72 @@ class PointLog extends CActiveRecord
 		$this->createdTime = date('Y-m-d H:i:s');
 		$this->opAdminId = Yii::app()->user->id;
 		return true;
+	}
+
+	public function searchmyField()
+	{
+		$column = array(
+			'id' => array('name'=>'id','type'=>'hidden'),
+			'log_type' => array('name'=>'积分类型','type'=>'select','data'=>Yii::app()->params['point_type']),
+			'log_desc' => array('name'=>'积分说明','type'=>'text'),
+		);
+		return $column;
+	}
+
+	public function myresult()
+	{
+		$criteria = new CDbCriteria();
+
+        $criteria->select = '*';
+        $criteria->order = "";
+        $sidx = Yii::app()->request->getParam('sidx');
+        $page = Yii::app()->request->getParam('page');
+        $rows = Yii::app()->request->getParam('rows');
+
+        if(!empty($sidx))
+        	$criteria->order .= 't.'.Yii::app()->request->getParam('sidx').' '.Yii::app()->request->getParam('sord').",";
+        $criteria->order .= 't.createdTime DESC,t.id DESC';
+
+        $criteria->compare('t.log_type',$this->log_type);
+        $criteria->compare('t.log_desc',$this->log_desc);
+       	$criteria->compare('t.userId',Yii::app()->user->id);
+
+        if(isset($_GET['start'])&&!empty($_GET['start']))
+        	$criteria->compare('createdTime >',$_GET['start']);
+        if(isset($_GET['end'])&&!empty($_GET['end']))
+        	$criteria->compare('createdTime <=',$_GET['end']);
+
+        $count = $this->count($criteria);
+        $pages = new CPagination($count);
+        $pages->pageVar = 'page';
+        $pages->currentPage = !empty($page)?Yii::app()->request->getParam('page')-1:10;
+        $pages->pageSize = !empty($rows)?Yii::app()->request->getParam('rows'):10;
+        $pages->applyLimit($criteria);
+        $models = $this->findAll($criteria);
+
+        $row = array();
+        foreach ($models as $key => $value) {
+            $row[] = array(
+                'id' => $value->id,
+				'userId' => Yii::app()->user->getState('account'),
+				'log_type' => Yii::app()->params['point_type'][$value->log_type],
+				'log_point' => $value->log_point,
+				'log_desc' => $value->log_desc,
+				'linkId' => $value->linkId,
+				'valid' => Yii::app()->params['valid'][$value->deleted],
+				'deleted' => Yii::app()->params['is_ync'][$value->deleted],
+				'opAdminId' => $value->opAdminId,
+				'createdTime' => $value->createdTime,
+                );
+        }
+
+        $data = array(
+                    "totalpages" => $pages->pageCount,
+                    "currpage" => $pages->currentPage+1,
+                    "totalrecords" =>$count,
+                    "griddata" => $row,
+                );
+        return $data;
 	}
 
 	/**

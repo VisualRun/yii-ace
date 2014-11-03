@@ -120,7 +120,7 @@ class Task extends CActiveRecord
 			'desc' => array('type'=>'textarea'),
 			'point' => array('type'=>'text'),
 			'deadline' => array('type'=>'date'),
-			'assignedId' => array('type'=>'checkbox','data'=>array_merge(array(""=>"不指定"),CHtml::listData(User::model()->findAll('status = 1 && typeId > 1'), 'id', 'account'))),
+			'assignedId' => array('type'=>'checkbox','data'=>CHtml::listData(User::model()->findAll('status = 1 && typeId > 1'), 'id', 'account')),
 			//'attach' => array('type'=>'file'),
 		);
 	}
@@ -141,7 +141,6 @@ class Task extends CActiveRecord
 			'openedDate' => '创建时间',
 			'assignedId' => '指派到人ID',
 			'assignedDate' => '指派时间',
-			'estStarted' => '预计开始时间',
 			'realStarted' => '真实开始时间',
 			'finishedId' => '完成人ID',
 			'finishedDate' => '完成时间',
@@ -149,16 +148,24 @@ class Task extends CActiveRecord
 			'canceledDate' => '取消时间',
 			'closedId' => '关闭人ID',
 			'closedDate' => '关闭时间',
-			'closedReason' => '关闭原因',
 			'point' => '任务积分值',
 			'finishedpoint' => '完成任务积分',
 			'lastEditedId' => '最后操作人ID',
 			'lastEditedDate' => '最后操作时间',
-			'deleted' => '是否删除',
-			'remark' => '备注',
-			'opAdminId' => '操作人ID',
-			'createdTime' => '生成时间',
 		);
+	}
+
+	public function searchField()
+	{
+		$column = array(
+			'id' => array('name'=>'id','type'=>'hidden'),
+			'typeId' => array('name'=>'主次类别','type'=>'select','data'=>Yii::app()->params['task_type']),
+			'imtypeId' => array('name'=>'重要类别','type'=>'select','data'=>Yii::app()->params['task_important_type']),
+			'openedId' => array('name'=>'创建人','type'=>'select','data'=>CHtml::listData(User::model()->findAllByAttributes(array('status'=>1)), 'id', 'account')),
+			'status' => array('name'=>'状态','type'=>'select','data'=>Yii::app()->params['task_status']),
+			//'createdTime' => array('name'=>'选择时间','type'=>'daterange'),
+		);
+		return $column;
 	}
 
 	public function result()
@@ -175,18 +182,28 @@ class Task extends CActiveRecord
         	$criteria->order .= 't.'.Yii::app()->request->getParam('sidx').' '.Yii::app()->request->getParam('sord').",";
         $criteria->order .= 't.createdTime DESC,t.id DESC';
 
+        $criteria->compare('t.typeId',$this->typeId);
+        $criteria->compare('t.imtypeId',$this->imtypeId);
+        $criteria->compare('t.openedId',$this->openedId);
         $criteria->compare('t.status',$this->status);
 
         $count = $this->count($criteria);
         $pages = new CPagination($count);
         $pages->pageVar = 'page';
-        $pages->currentPage = !empty($page)?Yii::app()->request->getParam('page'):10;
+        $pages->currentPage = !empty($page)?Yii::app()->request->getParam('page')-1:10;
         $pages->pageSize = !empty($rows)?Yii::app()->request->getParam('rows'):10;
         $pages->applyLimit($criteria);
         $models = $this->findAll($criteria);
 
         $row = array();
         foreach ($models as $key => $value) {
+        	$hand = "";
+        	if(Yii::app()->user->id == $value->openedId && $value->status == 0)
+        	{
+        		$hand .= '<a href="'.Yii::app()->createUrl('/task/create',array('id'=>$value->id)).'">编辑</a> | ';
+        	}
+        	$hand .= '<a href="'.Yii::app()->createUrl('/task/view',array('id'=>$value->id)).'">查看</a>';
+
             $row[] = array(
                 'id' => $value->id,
 				'code' => $value->code,
@@ -215,7 +232,7 @@ class Task extends CActiveRecord
 				'remark' => $value->remark,
 				'opAdminId' => $value->opAdminId,
 				'createdTime' => $value->createdTime,
-				'hand' => '<a href="'.Yii::app()->createUrl('/task/create',array('id'=>$value->id)).'">编辑</a> | <a href="'.Yii::app()->createUrl('/task/view',array('id'=>$value->id)).'">查看</a> | <a href="javascript:void(0);" id="test_bootbox" onclick="test_bootbox()">测试</a>',
+				'hand' => $hand,
 			);
         }
 
@@ -226,6 +243,19 @@ class Task extends CActiveRecord
                     "griddata" => $row,
                 );
         return $data;
+	}
+
+	public function searchmyField()
+	{
+		$column = array(
+			'id' => array('name'=>'id','type'=>'hidden'),
+			'typeId' => array('name'=>'主次类别','type'=>'select','data'=>Yii::app()->params['task_type']),
+			'imtypeId' => array('name'=>'重要类别','type'=>'select','data'=>Yii::app()->params['task_important_type']),
+			'openedId' => array('name'=>'创建人','type'=>'select','data'=>CHtml::listData(User::model()->findAllByAttributes(array('status'=>1)), 'id', 'account')),
+			'status' => array('name'=>'状态','type'=>'select','data'=>Yii::app()->params['task_status']),
+			//'createdTime' => array('name'=>'选择时间','type'=>'daterange'),
+		);
+		return $column;
 	}
 
 	public function myresult()
@@ -242,18 +272,29 @@ class Task extends CActiveRecord
         	$criteria->order .= 't.'.Yii::app()->request->getParam('sidx').' '.Yii::app()->request->getParam('sord').",";
         $criteria->order .= 't.createdTime DESC,t.id DESC';
 
+        $criteria->compare('t.typeId',$this->typeId);
+        $criteria->compare('t.imtypeId',$this->imtypeId);
+        $criteria->compare('t.openedId',$this->openedId);
         $criteria->compare('t.status',$this->status);
+        $criteria->compare('t.assignedId',Yii::app()->user->id);
 
         $count = $this->count($criteria);
         $pages = new CPagination($count);
         $pages->pageVar = 'page';
-        $pages->currentPage = !empty($page)?Yii::app()->request->getParam('page'):10;
+        $pages->currentPage = !empty($page)?Yii::app()->request->getParam('page')-1:10;
         $pages->pageSize = !empty($rows)?Yii::app()->request->getParam('rows'):10;
         $pages->applyLimit($criteria);
         $models = $this->findAll($criteria);
 
         $row = array();
         foreach ($models as $key => $value) {
+        	$hand = "";
+        	if(Yii::app()->user->id == $value->openedId && $value->status == 0)
+        	{
+        		$hand .= '<a href="'.Yii::app()->createUrl('/task/create',array('id'=>$value->id)).'">编辑</a> | ';
+        	}
+        	$hand .= '<a href="'.Yii::app()->createUrl('/task/view',array('id'=>$value->id)).'">查看</a>';
+        	
             $row[] = array(
                 'id' => $value->id,
 				'code' => $value->code,
@@ -263,9 +304,9 @@ class Task extends CActiveRecord
 				'desc' => $value->desc,
 				'status' => Yii::app()->params['task_status'][$value->status],
 				'deadline' => $value->deadline,
-				'openedId' => $value->openedId,
+				'openedId' => isset($value->opened)?$value->opened->account:'无',
 				'openedDate' => $value->openedDate,
-				'assignedId' => $value->assignedId,
+				'assignedId' => isset($value->assigned)?$value->assigned->account:'无',
 				'assignedDate' => $value->assignedDate,
 				'estStarted' => $value->estStarted,
 				'realStarted' => $value->realStarted,
@@ -276,7 +317,7 @@ class Task extends CActiveRecord
 				'closedId' => $value->closedId,
 				'closedDate' => $value->closedDate,
 				'closedReason' => $value->closedReason,
-				'lastEditedId' => $value->lastEditedId,
+				'lastEditedId' => isset($value->lastEdited)?$value->lastEdited->account:'无',
 				'lastEditedDate' => $value->lastEditedDate,
 				'deleted' => $value->deleted,
 				'remark' => $value->remark,
@@ -284,7 +325,7 @@ class Task extends CActiveRecord
 				'createdTime' => $value->createdTime,
 				'point' => $value->point,
 				'finishedpoint' => $value->finishedpoint,
-				'hand' => '<a href="'.Yii::app()->createUrl('/task/create',array('id'=>$value->id)).'">编辑</a> | <a href="'.Yii::app()->createUrl('/task/view',array('id'=>$value->id)).'">查看</a> | <a href="javascript:void(0);" id="test_bootbox" onclick="test_bootbox()">测试</a>',
+				'hand' => $hand,
 			);
         }
         $data = array(

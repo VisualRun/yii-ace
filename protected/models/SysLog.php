@@ -38,7 +38,7 @@ class SysLog extends CActiveRecord
 			array('code, content', 'length', 'max'=>32),
 			array('deleted', 'length', 'max'=>1),
 			array('createdTime', 'safe'),
-			array('id, code, typeId, linkId, linkId2, content, valid, deleted, opAdminId, createdTime, userId','filter','filter'=>array($obj=new CHtmlPurifier(),'purify')),
+			array('code, typeId, linkId, linkId2, content, valid, deleted, opAdminId, createdTime, userId','filter','filter'=>array($obj=new CHtmlPurifier(),'purify')),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, code, typeId, linkId, linkId2, content, valid, deleted, opAdminId, createdTime, userId', 'safe', 'on'=>'search'),
@@ -53,6 +53,7 @@ class SysLog extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'user'=>array(self::BELONGS_TO,'User','userId'),
 		);
 	}
 
@@ -66,7 +67,7 @@ class SysLog extends CActiveRecord
 	public function afterSave(){
         if ($this->isNewRecord) {
         	$str = 'SL'.$this->typeId.'_';
-            $this->code = $str.str_pad($this->primarykey,11,'0',STR_PAD_LEFT);
+            $this->code = $str.str_pad($this->primarykey,10,'0',STR_PAD_LEFT);
             $this->isNewRecord = false;
             $this->saveAttributes(array('code'));
         }

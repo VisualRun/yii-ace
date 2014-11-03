@@ -1,6 +1,6 @@
 <div class="col-xs-12">
 <div class="row">
-    <?php $this->renderPartial('/actions/_search',array('model'=>$model,)); ?>
+    <?php $this->renderPartial('_searchmy',array('model'=>$model,)); ?>
 </div>
 <div class="space-10"></div>
 <?php

@@ -34,7 +34,7 @@ class UserIdentity extends CUserIdentity
 			$this->errorCode=self::ERROR_NONE;
 			$user->logNum++;
 			$user->save();
-			Helpers::syslog(4,$user->account."登陆系统",Yii::app()->user->id);
+			Helpers::syslog(4,$user->account." 登陆系统",Yii::app()->user->id);
 		}
 		return $this->errorCode==self::ERROR_NONE;
 	}

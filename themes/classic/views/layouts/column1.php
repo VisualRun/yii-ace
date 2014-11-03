@@ -20,7 +20,7 @@
             <!-- /section:settings.box -->
             <div class="page-header">
                 <h1>
-                    控制台
+                    <?php echo $this->pageTitle; ?>
                     <!-- <small>
                         <i class="ace-icon fa fa-angle-double-right"></i>
                         overview &amp; stats
@@ -46,8 +46,9 @@
 <script src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/<?php echo $value ?>"></script>
 <?php endforeach; endif; ?>
 
-<!-- 加载bootbox弹出框 -->
-<script src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/bootbox.min.js"></script>
+<!-- 弹出框 -->
+<script src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/jquery-ui.min.js"></script>
+<script src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/jquery.ui.touch-punch.min.js"></script>
 
 <!-- ace scripts -->
 <script src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/ace-elements.min.js"></script>

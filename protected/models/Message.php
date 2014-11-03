@@ -54,6 +54,7 @@ class Message extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'user'=>array(self::BELONGS_TO,'User','userId'),
 		);
 	}
 
@@ -62,6 +63,76 @@ class Message extends CActiveRecord
 		$this->createdTime = date('Y-m-d H:i:s');
 		$this->opAdminId = Yii::app()->user->id;
 		return true;
+	}
+
+	public function searchmyField()
+	{
+		$column = array(
+			'id' => array('name'=>'id','type'=>'hidden'),
+			'typeId' => array('name'=>'消息类别','type'=>'select','data'=>Yii::app()->params['message_type']),
+			'userId' => array('name'=>'发送人','type'=>'select','data'=>CHtml::listData(User::model()->findAllByAttributes(array('status'=>1)), 'id', 'account')),
+			'checkout' => array('name'=>'状态','type'=>'select','data'=>Yii::app()->params['status']),
+		);
+		return $column;
+	}
+
+	public function myresult()
+	{
+		$criteria = new CDbCriteria();
+
+        $criteria->select = '*';
+        $criteria->order = "";
+        $sidx = Yii::app()->request->getParam('sidx');
+        $page = Yii::app()->request->getParam('page');
+        $rows = Yii::app()->request->getParam('rows');
+
+        if(!empty($sidx))
+        	$criteria->order .= 't.'.Yii::app()->request->getParam('sidx').' '.Yii::app()->request->getParam('sord').",";
+        $criteria->order .= 't.createdTime DESC,t.id DESC';
+
+        $criteria->compare('t.typeId',$this->typeId);
+        $criteria->compare('t.userId',$this->userId);
+        $criteria->compare('t.checkout',$this->checkout);
+       	$criteria->compare('t.touserId',Yii::app()->user->id);
+
+        if(isset($_GET['start'])&&!empty($_GET['start']))
+        	$criteria->compare('createdTime >',$_GET['start']);
+        if(isset($_GET['end'])&&!empty($_GET['end']))
+        	$criteria->compare('createdTime <=',$_GET['end']);
+
+        $count = $this->count($criteria);
+        $pages = new CPagination($count);
+        $pages->pageVar = 'page';
+        $pages->currentPage = !empty($page)?Yii::app()->request->getParam('page')-1:10;
+        $pages->pageSize = !empty($rows)?Yii::app()->request->getParam('rows'):10;
+        $pages->applyLimit($criteria);
+        $models = $this->findAll($criteria);
+
+        $row = array();
+        foreach ($models as $key => $value) {
+            $row[] = array(
+                'id' => $value->id,
+				'typeId' => Yii::app()->params['message_type'][$value->typeId],
+				'userId' => isset($value->user)?$value->user->account:'系统',
+				'touserId' => Yii::app()->user->getState('account'),
+				'linkId' => $value->linkId,
+				'linkId2' => $value->linkId2,
+				'content' => Helpers::substrUtf8($value->content,20),
+				'checkout' => Yii::app()->params['checkout'][$value->checkout],
+				'deleted' => Yii::app()->params['is_ync'][$value->deleted],
+				'opAdminId' => $value->opAdminId,
+				'createdTime' => $value->createdTime,
+				'hand'=> '<button onclick="checkmessage(this)" class="checkmessage btn btn-warning btn-xs" data-id="'.$value->id.'"><i class="ace-icon fa fa-search-plus "></i> 查看</button>',
+                );
+        }
+
+        $data = array(
+                    "totalpages" => $pages->pageCount,
+                    "currpage" => $pages->currentPage+1,
+                    "totalrecords" =>$count,
+                    "griddata" => $row,
+                );
+        return $data;
 	}
 
 	/**

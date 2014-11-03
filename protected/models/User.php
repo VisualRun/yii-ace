@@ -105,8 +105,9 @@ class User extends CActiveRecord
 		$column = array(
 			'id' => array('name'=>'id','type'=>'hidden'),
 			'account' => array('name'=>'账号','type'=>'text'),
-			'deptId' => array('name'=>'部门ID','type'=>'select','data'=>CHtml::listData(Deptment::model()->findAllByAttributes(array('status'=>1)), 'id', 'name')),
-			'workplaceId' => array('name'=>'岗位ID','type'=>'select','data'=>CHtml::listData(Workplace::model()->findAllByAttributes(array('status'=>1)), 'id', 'name')),
+			'typeId' => array('name'=>'类别','type'=>'select','data'=>Yii::app()->params['user_type']),
+			'deptId' => array('name'=>'部门','type'=>'select','data'=>CHtml::listData(Deptment::model()->findAllByAttributes(array('status'=>1)), 'id', 'name')),
+			'workplaceId' => array('name'=>'岗位','type'=>'select','data'=>CHtml::listData(Workplace::model()->findAllByAttributes(array('status'=>1)), 'id', 'name')),
 			'sex' => array('name'=>'性别','type'=>'select','data'=>Yii::app()->params['gender']),
 			'status' => array('name'=>'状态','type'=>'select','data'=>Yii::app()->params['status']),
 			'createdTime' => array('name'=>'选择时间','type'=>'daterange'),
@@ -128,11 +129,17 @@ class User extends CActiveRecord
         	$criteria->order .= 't.'.Yii::app()->request->getParam('sidx').' '.Yii::app()->request->getParam('sord').",";
         $criteria->order .= 't.createdTime DESC,t.id DESC';
 
+        $criteria->compare('t.typeId',$this->typeId);
         $criteria->compare('t.status',$this->status);
         $criteria->compare('t.account',$this->account);
        	$criteria->compare('t.deptId',$this->deptId);
         $criteria->compare('t.workplaceId',$this->workplaceId);
         $criteria->compare('t.sex',$this->sex);
+
+        if(isset($_GET['start'])&&!empty($_GET['start']))
+        	$criteria->compare('createdTime >',$_GET['start']);
+        if(isset($_GET['end'])&&!empty($_GET['end']))
+        	$criteria->compare('createdTime <=',$_GET['end']);
 
         $count = $this->count($criteria);
         $pages = new CPagination($count);

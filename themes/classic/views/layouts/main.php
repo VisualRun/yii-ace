@@ -17,6 +17,10 @@
         <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/<?php echo $value ?>" />
         <?php endforeach; endif; ?>
 
+
+        <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/jquery-ui.min.css" />
+
+        
         <!-- text fonts -->
         <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/ace-fonts.css" />
 

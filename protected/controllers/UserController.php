@@ -13,6 +13,30 @@ class UserController extends Controller
 		$this->render('index');
 	}
 
+  public function actionMessage()
+  {
+    $this->pageTitle = '个人消息';
+    $model = new Message();
+    $model->unsetAttributes();
+    if(isset($_GET)&&!empty($_GET))
+        $model->attributes=$_GET;
+
+    $this->render('message',array('model'=>$model));
+  }
+
+  public function actionPoint()
+  {
+    $this->pageTitle = '个人积分';
+    $model = new PointLog();
+    $model->unsetAttributes();
+    if(isset($_GET)&&!empty($_GET))
+        $model->attributes=$_GET;
+
+    $user = User::model()->findByPk(Yii::app()->user->id);
+
+    $this->render('point',array('model'=>$model,'user'=>$user));
+  }
+
 	public function actionProfile()
 	{
     $user_id = Yii::app()->user->id;
@@ -51,7 +75,7 @@ class UserController extends Controller
         {
           $model1->password = md5($passwd1);
           $model1->save();
-          Helpers::syslog(4,Yii::app()->user->getState('account')."修改密码",Yii::app()->user->id);
+          Helpers::syslog(4,Yii::app()->user->getState('account')." 修改密码",Yii::app()->user->id);
           $this->redirect(array('site/logout'));
         }else{
           $model->addError('createdTime','修改提交出错！请刷新再试！');

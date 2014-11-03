@@ -81,7 +81,7 @@ class SiteController extends AController
 	 */
 	public function actionLogout()
 	{
-		Helpers::syslog(4,Yii::app()->user->getState('account')."退出系统",Yii::app()->user->id);
+		Helpers::syslog(4,Yii::app()->user->getState('account')." 退出系统",Yii::app()->user->id);
 		Yii::app()->user->logout();
 		$this->redirect(Yii::app()->homeUrl);
 	}

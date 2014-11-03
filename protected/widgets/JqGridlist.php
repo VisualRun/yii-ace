@@ -24,9 +24,11 @@ class JqGridlist extends CPortlet
 
         $this->getController()->page_js = array(
             'date-time/bootstrap-datepicker.min.js',
+            'date-time/bootstrap-datepicker.min.js',
+            'date-time/locales/bootstrap-datepicker.zh-CN.js',
             'jqGrid/jquery.jqGrid.min.js',
             'jqGrid/i18n/grid.locale-cn.js',
-            'date-time/locales/bootstrap-datepicker.zh-CN.js',
+            
             );
 
 		$jsonGridSettings = $this->processingGridSettings($this->gridSettings);

@@ -28,7 +28,7 @@ class Helpers
                 		'href'=>'#',
                 		'class'=>'fa fa-tasks',
                 		'item'=>array(
-                            array('text'=>'发布任务','href'=>Yii::app()->createUrl('/task/create'),'action'=>array('create')),
+                            array('text'=>'发布任务','href'=>Yii::app()->createUrl('/task/add'),'action'=>array('add')),
                 			array('text'=>'我的任务','href'=>Yii::app()->createUrl('/task/mytask'),'action'=>array('mytask')),
                 			array('text'=>'所有任务','href'=>Yii::app()->createUrl('/task/list'),'action'=>array('list')),
                 		),
@@ -38,8 +38,8 @@ class Helpers
                 		'href'=>'#',
                 		'class'=>'glyphicon glyphicon-user',
                 		'item'=>array(
-                            array('text'=>'个人提醒','href'=>Yii::app()->createUrl('/user/message'),'action'=>array('message')),
-                			array('text'=>'个人资料','href'=>Yii::app()->createUrl('/user/profile'),'action'=>array('profile')),
+                            array('text'=>'个人消息','href'=>Yii::app()->createUrl('/user/message'),'action'=>array('message')),
+                			array('text'=>'个人积分','href'=>Yii::app()->createUrl('/user/point'),'action'=>array('point')),
                 			array('text'=>'修改密码','href'=>Yii::app()->createUrl('/user/passwdedit'),'action'=>array('passwdedit')),
                 		),
                 	),
@@ -89,8 +89,8 @@ class Helpers
                 		'href'=>'#',
                 		'class'=>'glyphicon glyphicon-user',
                 		'item'=>array(
-                            array('text'=>'个人提醒','href'=>Yii::app()->createUrl('/user/message'),'action'=>array('message')),
-                			array('text'=>'个人资料','href'=>Yii::app()->createUrl('/user/profile'),'action'=>array('profile')),
+                            array('text'=>'个人消息','href'=>Yii::app()->createUrl('/user/message'),'action'=>array('message')),
+                			array('text'=>'个人积分','href'=>Yii::app()->createUrl('/user/point'),'action'=>array('point')),
                 			array('text'=>'修改密码','href'=>Yii::app()->createUrl('/user/passwdedit'),'action'=>array('passwdedit')),
                 		),
                 	),
@@ -121,7 +121,8 @@ class Helpers
                 		'class'=>'glyphicon glyphicon-user',
                 		'item'=>array(
 					array('text'=>'个人提醒','href'=>Yii::app()->createUrl('/user/message'),'action'=>array('message')),
-                			array('text'=>'个人资料','href'=>Yii::app()->createUrl('/user/profile'),'action'=>array('profile')),
+                			array('text'=>'个人消息','href'=>Yii::app()->createUrl('/user/profile'),'action'=>array('profile')),
+                            array('text'=>'个人积分','href'=>Yii::app()->createUrl('/user/point'),'action'=>array('point')),
                 			array('text'=>'修改密码','href'=>Yii::app()->createUrl('/user/passwdedit'),'action'=>array('passwdedit')),
                 		),
                 	),
@@ -240,7 +241,7 @@ class Helpers
      * 处理url中的参数 组成数组
      */
     public static function arrparam(){
-        $queryString = Yii::app()->getRequest()->queryString;
+        $queryString = urldecode(Yii::app()->getRequest()->queryString);
         if(!empty($queryString))
         {
             $tmparr = explode('&',$queryString);
@@ -248,13 +249,90 @@ class Helpers
             foreach($tmparr as $key => $value)
             {
                 $tmp = explode('=',$value);
-                $arr[$tmp[0]]=$tmp[1];
+                $arr[$tmp[0]]=trim($tmp[1]);
             }
             return $arr;
         }
         else
             return array();
 
+    }
+
+
+    public static function substrUtf8($str, $cutLength, $etc = '...') {
+        $result = '';
+        $i = 0;
+        $n = 0.0;
+        $strLength = strlen($str); //字符串的字节数
+
+        while ($n < $cutLength && $i < $strLength) {
+
+            $tempStr = substr($str, $i, 1);
+            $ascnum = ord($tempStr); //得到字符串中第$i位字符的ASCII码
+
+            if ($ascnum >= 252) {
+
+                //如果ASCII位高于252
+                $result = $result . substr($str, $i, 6); //根据UTF-8编码规范，将6个连续的字符计为单个字符
+                $i = $i + 6; //实际Byte计为6
+                $n ++; //字串长度计1
+
+            } elseif ($ascnum >= 248) {
+
+                //如果ASCII位高于248
+                $result = $result . substr($str, $i, 5); //根据UTF-8编码规范，将5个连续的字符计为单个字符
+                $i = $i + 5; //实际Byte计为5
+                $n ++; //字串长度计1
+
+            } elseif ($ascnum >= 240) {
+
+                //如果ASCII位高于240
+                $result = $result . substr($str, $i, 4); //根据UTF-8编码规范，将4个连续的字符计为单个字符
+                $i = $i + 4; //实际Byte计为4
+                $n ++; //字串长度计1
+
+            } elseif ($ascnum >= 224) {
+
+                //如果ASCII位高于224
+                $result = $result . substr($str, $i, 3); //根据UTF-8编码规范，将3个连续的字符计为单个字符
+                $i = $i + 3 ; //实际Byte计为3
+                $n ++; //字串长度计1
+
+            } elseif ($ascnum >= 192) {
+
+                //如果ASCII位高于192
+                $result = $result . substr($str, $i, 2); //根据UTF-8编码规范，将2个连续的字符计为单个字符
+                $i = $i + 2; //实际Byte计为2
+                $n ++; //字串长度计1
+
+            } elseif ($ascnum >= 65 && $ascnum <= 90 && $ascnum != 73) {
+
+                //如果是大写字母 I除外
+                $result = $result . substr($str, $i, 1);
+                $i = $i + 1; //实际的Byte数仍计1个
+                $n ++; //但考虑整体美观，大写字母计成一个高位字符
+
+            } elseif (!(array_search($ascnum, array(37, 38, 64, 109 ,119)) === FALSE)) {
+
+                //%,&,@,m,w 字符按１个字符宽
+                $result = $result . substr($str, $i, 1);
+                $i = $i + 1; //实际的Byte数仍计1个
+                $n ++; //但考虑整体美观，这些字条计成一个高位字符
+
+            } else {
+
+                //其他情况下，包括小写字母和半角标点符号
+                $result = $result . substr($str, $i, 1);
+                $i = $i + 1; //实际的Byte数计1个
+                $n = $n + 0.5; //其余的小写字母和半角标点等于半个高位字符宽...
+            }
+        }
+
+        if ($i < $strLength) {
+            $result = $result . $etc; //超过长度时在尾处加上省略号
+        }
+
+        return $result;
     }
 
 }

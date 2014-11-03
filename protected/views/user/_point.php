@@ -1,4 +1,4 @@
-    <?php $data_search = $model->searchField();?>
+    <?php $data_search = $model->searchmyField();?>
     <?php if(!empty($data_search)):?>
     <?php $form=$this->beginWidget('CActiveForm', array(
         'id'=>'search-form',

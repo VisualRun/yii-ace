@@ -37,6 +37,7 @@ class Purview extends CActiveRecord
 			array('controller, action, code', 'length', 'max'=>64),
 			array('deleted', 'length', 'max'=>1),
 			array('createdTime', 'safe'),
+			array('code, name, controller, action, valid, deleted, opAdminId, createdTime','filter','filter'=>array($obj=new CHtmlPurifier(),'purify')),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, code, name, controller, action, valid, deleted, opAdminId, createdTime', 'safe', 'on'=>'search'),
@@ -64,6 +65,18 @@ class Purview extends CActiveRecord
 		return true;
 	}
 
+	public function searchField()
+	{
+		$column = array(
+			'id' => array('name'=>'id','type'=>'hidden'),
+			'code' => array('name'=>'权限编码','type'=>'text'),
+			'name' => array('name'=>'权限名称','type'=>'text'),
+			'valid' => array('name'=>'状态','type'=>'select','data'=>Yii::app()->params['valid']),
+			//'createdTime' => array('name'=>'选择时间','type'=>'daterange'),
+		);
+		return $column;
+	}
+
 	public function result()
 	{
 		$criteria = new CDbCriteria();
@@ -78,10 +91,14 @@ class Purview extends CActiveRecord
         	$criteria->order .= 't.'.Yii::app()->request->getParam('sidx').' '.Yii::app()->request->getParam('sord').",";
         $criteria->order .= 't.createdTime DESC,t.id DESC';
 
+        $criteria->compare('t.code',$this->code);
+        $criteria->compare('t.name',$this->name);
+        $criteria->compare('t.valid',$this->valid);
+
         $count = $this->count($criteria);
         $pages = new CPagination($count);
         $pages->pageVar = 'page';
-        $pages->currentPage = !empty($page)?Yii::app()->request->getParam('page'):10;
+        $pages->currentPage = !empty($page)?Yii::app()->request->getParam('page')-1:10;
         $pages->pageSize = !empty($rows)?Yii::app()->request->getParam('rows'):10;
         $pages->applyLimit($criteria);
         $models = $this->findAll($criteria);

@@ -97,8 +97,11 @@ class CreateAction extends CAction{
             if($model->hasErrors())
                 Yii::app()->end();
 
-            if($model->assignedId)
+            if($model->assignedId != 0){
                 $model->assignedDate = date('Y-m-d H:i:s');
+                $content = "任务 [".$model->name."] 已由".Yii::app()->user->getState('account')."关闭，你将得到 ".$point." 的积分";
+                Helpers::sendmessage($model->finishedId,$content,2,0,$model->id);
+            }
 
             if($model->save())
             {

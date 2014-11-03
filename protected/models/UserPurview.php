@@ -35,6 +35,7 @@ class UserPurview extends CActiveRecord
 			array('purviewId', 'length', 'max'=>64),
 			array('deleted', 'length', 'max'=>1),
 			array('createdTime', 'safe'),
+			array('usertypeId, purviewId, valid, deleted, opAdminId, createdTime','filter','filter'=>array($obj=new CHtmlPurifier(),'purify')),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, usertypeId, purviewId, valid, deleted, opAdminId, createdTime', 'safe', 'on'=>'search'),
@@ -60,6 +61,19 @@ class UserPurview extends CActiveRecord
 		return true;
 	}
 
+	public function searchField()
+	{
+		$column = array(
+			'id' => array('name'=>'id','type'=>'hidden'),
+			'purviewId' => array('name'=>'权限编码','type'=>'text'),
+			'opAdminId' => array('name'=>'权限名称','type'=>'text'),
+			'valid' => array('name'=>'状态','type'=>'select','data'=>Yii::app()->params['valid']),
+			'usertypeId' => array('name'=>'用户分类','type'=>'select','data'=>Yii::app()->params['user_type']),
+			//'createdTime' => array('name'=>'选择时间','type'=>'daterange'),
+		);
+		return $column;
+	}
+
 	public function result()
 	{
 		$criteria = new CDbCriteria();
@@ -74,13 +88,18 @@ class UserPurview extends CActiveRecord
         	$criteria->order .= 't.'.Yii::app()->request->getParam('sidx').' '.Yii::app()->request->getParam('sord').",";
         $criteria->order .= 't.createdTime DESC,t.id DESC';
 
-        $count = $this->count($criteria);
+        $criteria->compare('purview.code',$this->purviewId);
+        $criteria->compare('purview.name',$this->opAdminId);
+        $criteria->compare('t.valid',$this->valid);
+        $criteria->compare('t.usertypeId',$this->usertypeId);
+
+        $count = $this->with(array('purview'))->count($criteria);
         $pages = new CPagination($count);
         $pages->pageVar = 'page';
-        $pages->currentPage = !empty($page)?Yii::app()->request->getParam('page'):10;
+        $pages->currentPage = !empty($page)?Yii::app()->request->getParam('page')-1:10;
         $pages->pageSize = !empty($rows)?Yii::app()->request->getParam('rows'):10;
         $pages->applyLimit($criteria);
-        $models = $this->findAll($criteria);
+        $models = $this->with(array('purview'))->findAll($criteria);
 
         $row = array();
         foreach ($models as $key => $value) {

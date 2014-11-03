@@ -1,18 +1,208 @@
 <div class="col-xs-12">
-    <div class="profile-user-info profile-user-info-striped">
-        <?php $arr = $model->viewField();?>
-        <?php if(!empty($arr)):?>
-        <?php foreach ($arr as $key => $value):?>
-        <div class="profile-info-row">
-            <div class="profile-info-name"> <?php echo $value ?> </div>
+    <!-- <div class="row"> -->
+        <div id="recent-box" class="widget-box transparent">
+            <div class="widget-header">
+                <h4 class="widget-title lighter smaller">
+                    <i class="ace-icon fa fa-tasks blue"></i>&nbsp;&nbsp;
+                    <strong><?php echO $model->name ?></strong>
+                </h4>
+                <?php if($model->status < 2 && time()+86400 > strtotime($model->deadline)): ?>
+                <div class="alert alert-info bigger-110">
+                    <i class="ace-icon fa fa-exclamation-triangle red"></i>
+                    还有不足一天，就到最后期限，请尽快处理
+                </div>    
+                <?php endif; ?>
+                <div class="widget-toolbar no-border">
+                    <ul id="recent-tab" class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#task-tab" data-toggle="tab"> <strong>任务信息</strong></a>
+                        </li>
 
-            <div class="profile-info-value">
-                <?php echo $model->$key ?>
+                        <li class="">
+                            <a href="#remark-tab" data-toggle="tab"> <strong>备 注</strong> </a>
+                        </li>
+
+                        <li class="">
+                            <a href="#log-tab" data-toggle="tab"> <strong>操作日志</strong> </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="widget-body">
+                <div class="widget-main padding-4">
+                    <div class="tab-content padding-8">
+                        <div id="task-tab" class="tab-pane active">
+                            <div class="profile-user-info profile-user-info-striped">
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name"> 任务编码 </div>
+
+                                    <div class="profile-info-value">
+                                        <?php echo $model->code ?>
+                                    </div>
+                                    <div class="profile-info-name"> 状态 </div>
+
+                                    <div class="profile-info-value">
+                                        <?php echo Yii::app()->params['task_status'][$model->status] ?>
+                                    </div>
+                                </div>
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name"> 主次类别 </div>
+
+                                    <div class="profile-info-value">
+                                        <?php echo Yii::app()->params['task_type'][$model->typeId] ?>
+                                    </div>
+                                    <div class="profile-info-name"> 重要类别 </div>
+
+                                    <div class="profile-info-value">
+                                        <?php echo Yii::app()->params['task_important_type'][$model->imtypeId] ?>
+                                    </div>
+                                </div>
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name"> 创建人 </div>
+
+                                    <div class="profile-info-value">
+                                        <?php echo $model->opened->account ?>
+                                    </div>
+                                    <div class="profile-info-name"> 创建时间 </div>
+
+                                    <div class="profile-info-value">
+                                        <?php echo $model->openedDate ?>
+                                    </div>
+                                </div>
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name"> 积分值 </div>
+
+                                    <div class="profile-info-value">
+                                        <?php echo $model->point ?>
+                                        <div class="alert alert-info bigger-110">
+                                            <i class="ace-icon fa fa-exclamation-triangle red"></i>
+                                            超时没有完成，得到积分会减少，甚至为负数
+                                        </div>
+                                    </div>
+                                    <div class="profile-info-name"> 最后期限 </div>
+
+                                    <div class="profile-info-value">
+                                        <?php echo $model->deadline ?>
+                                    </div>
+                                </div>                
+                            </div>
+                            <div class="space-4"></div>
+                            <div class="profile-user-info profile-user-info-striped">
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name"> 任务说明 </div>
+
+                                    <div class="profile-info-value">
+                                        <?php echo $model->desc ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="space-4"></div>
+                            <?php if($model->assignedId != 0 && $model->status != 4): ?>
+                            <div class="profile-user-info profile-user-info-striped">
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name"> 指派给 </div>
+
+                                    <div class="profile-info-value">
+                                        <?php echo $model->assigned->account ?>
+                                    </div>
+                                    <div class="profile-info-name"> 指派时间 </div>
+
+                                    <div class="profile-info-value">
+                                        <?php echo $model->assignedDate ?>
+                                    </div>
+                                </div>
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name"> 完成时间 </div>
+
+                                    <div class="profile-info-value">
+                                        <?php echo $model->finishedDate ?>
+                                    </div>
+                                    <div class="profile-info-name"> 关闭时间 </div>
+
+                                    <div class="profile-info-value">
+                                        <?php echo $model->canceledDate ?>
+                                    </div>
+                                </div>
+                                <?php if($model->status == 5): ?>
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name"> 最后得到积分 </div>
+
+                                    <div class="profile-info-value">
+                                        <?php echo $model->finishedpoint ?>
+                                    </div>
+                                    <div class="profile-info-name"></div>
+
+                                    <div class="profile-info-value">
+                                    </div>
+                                </div>
+                                <?php endif; ?>
+                            </div>
+                            <?php endif; ?>
+                        </div>
+                        <div id="remark-tab" class="tab-pane">
+                            <div class="profile-user-info profile-user-info-striped">
+                                <?php if(!empty($remark)): ?>
+                                <?php foreach($remark as $k => $v): ?>
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name"> 备注人 </div>
+
+                                    <div class="profile-info-value">
+                                        <?php if(!empty($v->user)): ?>
+                                        <?php echo $v->user->account ?>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="profile-info-name">备注内容</div>
+
+                                    <div class="profile-info-value">
+                                        <?php echo $v->remark ?>
+                                    </div>
+                                    <div class="profile-info-name">时间</div>
+
+                                    <div class="profile-info-value">
+                                        <?php echo $v->createdTime ?>
+                                    </div>
+                                </div>
+                                <?php endforeach; ?>
+                                <?php else: ?>
+                                    <p>没有备注内容</p>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <div id="log-tab" class="tab-pane">
+                            <div class="profile-user-info profile-user-info-striped">
+                                <?php if(!empty($log)): ?>
+                                <?php foreach($log as $k => $v): ?>
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name"> 操作人 </div>
+
+                                    <div class="profile-info-value">
+                                        <?php if(!empty($v->user)): ?>
+                                        <?php echo $v->user->account ?>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="profile-info-name">操作内容</div>
+
+                                    <div class="profile-info-value">
+                                        <?php echo $v->content ?>
+                                    </div>
+                                    <div class="profile-info-name">时间</div>
+
+                                    <div class="profile-info-value">
+                                        <?php echo $v->createdTime ?>
+                                    </div>
+                                </div>
+                                <?php endforeach; ?>
+                                <?php else: ?>
+                                    <p>没有操作日志</p>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <?php endforeach; ?>
-        <?php endif; ?>
-    </div>
+    
     <div class="space-4"></div>
     <div class="clearfix form-actions">
     <?php if(Yii::app()->user->id == $model->openedId): ?>
@@ -292,7 +482,7 @@
                             {
                                 $( "#dialog-remark .error_info" ).removeClass('hide').html('请填写备注！');
                                 return false;
-                            } 
+                            }
                             $.ajax({
                                 type: "POST",
                                 url: "<?php echo Yii::app()->createUrl('/task/remark') ?>",
