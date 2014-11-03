@@ -1,3 +1,8 @@
+<div class="col-xs-12">
+<div class="row">
+    <?php $this->renderPartial('/actions/_search',array('model'=>$model,)); ?>
+</div>
+<div class="space-10"></div>
 <?php
     $this->widget('JqGridlist',
       [
@@ -31,3 +36,4 @@
       ]
     );
 ?>
+</div>

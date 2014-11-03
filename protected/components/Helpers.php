@@ -161,7 +161,7 @@ class Helpers
      * @param  [string] $content [日志内容]
      * @param  [string] $linkId [关联ID]
      * @param  [string] $linkId2 [关联ID2]
-     * @return [boolean] true 
+     * @return [boolean] true
      */
     public static function syslog($typeId,$content,$userId=0,$linkId='',$linkId2=''){
         $sys = new SysLog();
@@ -177,17 +177,17 @@ class Helpers
     /**
      * [taskpointlog 关闭任务后计算积分]
      * @param  [object] $ob [任务对象]
-     * @return [] 积分值 
+     * @return [] 积分值
      */
     public static function taskpointlog($ob){
         $log = new PointLog();
-        
-        
+
+
         if($ob->deadline >= date('Y-m-d',strtotime($ob->finishedDate)))
         {
             $point = $ob->point;
         }else{
-            $daynum = (strtotime($ob->deadline) - strtotime($ob->estStarted))/86400; 
+            $daynum = (strtotime($ob->deadline) - strtotime($ob->estStarted))/86400;
             $average = round($ob->point/$daynum,2);
 
             $overdaynum = (strtotime(date('Y-m-d',strtotime($ob->finishedDate))) - strtotime($ob->deadline))/86400;
@@ -222,8 +222,8 @@ class Helpers
      * @param  [object] $userId [发送者]
      * @param  [object] $linkId [关联ID]
      * @param  [object] $linkId2 [关联ID2]
-     * @return [boolean] true 
-     */    
+     * @return [boolean] true
+     */
     public static function sendmessage($touserId,$content,$typeId,$userId=0,$linkId='',$linkId2=''){
         $mess = new Message();
         $mess->touserId = $touserId;
@@ -234,6 +234,27 @@ class Helpers
         $mess->linkId2 = $linkId2;
         $mess->save();
         return true;
+    }
+
+    /**
+     * 处理url中的参数 组成数组
+     */
+    public static function arrparam(){
+        $queryString = Yii::app()->getRequest()->queryString;
+        if(!empty($queryString))
+        {
+            $tmparr = explode('&',$queryString);
+            $arr = array();
+            foreach($tmparr as $key => $value)
+            {
+                $tmp = explode('=',$value);
+                $arr[$tmp[0]]=$tmp[1];
+            }
+            return $arr;
+        }
+        else
+            return array();
+
     }
 
 }

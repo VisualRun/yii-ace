@@ -167,7 +167,11 @@ class Task extends CActiveRecord
 
         $criteria->select = '*';
         $criteria->order = "";
-        if(!empty(Yii::app()->request->getParam('sidx')))
+        $sidx = Yii::app()->request->getParam('sidx');
+        $page = Yii::app()->request->getParam('page');
+        $rows = Yii::app()->request->getParam('rows');
+
+        if(!empty($sidx))
         	$criteria->order .= 't.'.Yii::app()->request->getParam('sidx').' '.Yii::app()->request->getParam('sord').",";
         $criteria->order .= 't.createdTime DESC,t.id DESC';
 
@@ -176,8 +180,8 @@ class Task extends CActiveRecord
         $count = $this->count($criteria);
         $pages = new CPagination($count);
         $pages->pageVar = 'page';
-        $pages->currentPage = !empty(Yii::app()->request->getParam('page'))?Yii::app()->request->getParam('page'):10;
-        $pages->pageSize = !empty(Yii::app()->request->getParam('rows'))?Yii::app()->request->getParam('rows'):10;
+        $pages->currentPage = !empty($page)?Yii::app()->request->getParam('page'):10;
+        $pages->pageSize = !empty($rows)?Yii::app()->request->getParam('rows'):10;
         $pages->applyLimit($criteria);
         $models = $this->findAll($criteria);
 
@@ -230,7 +234,11 @@ class Task extends CActiveRecord
 
         $criteria->select = '*';
         $criteria->order = "";
-        if(!empty(Yii::app()->request->getParam('sidx')))
+        $sidx = Yii::app()->request->getParam('sidx');
+        $page = Yii::app()->request->getParam('page');
+        $rows = Yii::app()->request->getParam('rows');
+
+        if(!empty($sidx))
         	$criteria->order .= 't.'.Yii::app()->request->getParam('sidx').' '.Yii::app()->request->getParam('sord').",";
         $criteria->order .= 't.createdTime DESC,t.id DESC';
 
@@ -239,8 +247,8 @@ class Task extends CActiveRecord
         $count = $this->count($criteria);
         $pages = new CPagination($count);
         $pages->pageVar = 'page';
-        $pages->currentPage = !empty(Yii::app()->request->getParam('page'))?Yii::app()->request->getParam('page'):10;
-        $pages->pageSize = !empty(Yii::app()->request->getParam('rows'))?Yii::app()->request->getParam('rows'):10;
+        $pages->currentPage = !empty($page)?Yii::app()->request->getParam('page'):10;
+        $pages->pageSize = !empty($rows)?Yii::app()->request->getParam('rows'):10;
         $pages->applyLimit($criteria);
         $models = $this->findAll($criteria);
 
@@ -321,7 +329,7 @@ class Task extends CActiveRecord
 			'remark' => '备注',
 			'opAdminId' => '操作人ID',
 			'createdTime' => '生成时间',
-			
+
 		);
 	}
 

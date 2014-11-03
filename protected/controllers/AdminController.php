@@ -11,18 +11,30 @@ class AdminController extends Controller
 	public function actionDeptment()
 	{
 		$this->pageTitle = '部门管理';
-		$this->render('deptment');
+        $model = new Deptment();
+        $model->unsetAttributes();
+        if(isset($_GET)&&!empty($_GET))
+            $model->attributes=$_GET;
+		$this->render('deptment',array('model'=>$model));
 	}
 
 	public function actionWorkplace()
 	{
 		$this->pageTitle = '岗位管理';
-		$this->render('workplace');
+        $model = new Workplace();
+        $model->unsetAttributes();
+        if(isset($_GET)&&!empty($_GET))
+            $model->attributes=$_GET;
+		$this->render('workplace',array('model'=>$model));
 	}
 
 	public function actionUser()
 	{
 		$this->pageTitle = '员工管理';
-		$this->render('user');
+        $model = new User();
+        $model->unsetAttributes();
+        if(isset($_GET)&&!empty($_GET))
+            $model->attributes=$_GET;
+		$this->render('user',array('model'=>$model));
 	}
 }

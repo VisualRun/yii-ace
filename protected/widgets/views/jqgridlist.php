@@ -1,15 +1,9 @@
-<div class="col-xs-12">
-  <table id="grid-table"></table>
+<table id="grid-table"></table>
+<div id="grid-pager"></div>
 
-  <div id="grid-pager"></div>
-
-  <script type="text/javascript">
+    <script type="text/javascript">
       var $path_base = "..";//this will be used for editurl parameter
     </script>
-
-  <!-- PAGE CONTENT ENDS -->
-</div>
-<!-- /.col -->
 
     <!-- inline scripts related to this page -->
     <script type="text/javascript">

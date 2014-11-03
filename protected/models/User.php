@@ -103,13 +103,13 @@ class User extends CActiveRecord
     public function searchField()
 	{
 		$column = array(
-			'id' => array('name'=>'id','type'=>'hidden','require'=>false),
-			'account' => array('name'=>'账号','type'=>'text','require'=>false,'data-rules'=>json_encode(array('required'=>1))),
-			'deptId' => array('name'=>'部门ID','type'=>'select','data'=>CHtml::listData(Deptment::model()->findAllByAttributes(array('status'=>1)), 'id', 'name'),'require'=>false,'data-rules'=>json_encode(array('required'=>1))),
-			'workplaceId' => array('name'=>'岗位ID','type'=>'select','data'=>CHtml::listData(Workplace::model()->findAllByAttributes(array('status'=>1)), 'id', 'name'),'require'=>false,'data-rules'=>json_encode(array('required'=>1))),
-			'sex' => array('name'=>'性别','type'=>'select','require'=>false,'data'=>Yii::app()->params['gender'],'data-rules'=>json_encode(array('required'=>1))),
-			'status' => array('name'=>'状态','type'=>'select','require'=>false,'data'=>Yii::app()->params['status'],'data-rules'=>json_encode(array('required'=>1))),
-			'createdTime' => array('name'=>'生成时间','type'=>'date','require'=>false,'data-rules'=>json_encode(array('required'=>1))),
+			'id' => array('name'=>'id','type'=>'hidden'),
+			'account' => array('name'=>'账号','type'=>'text'),
+			'deptId' => array('name'=>'部门ID','type'=>'select','data'=>CHtml::listData(Deptment::model()->findAllByAttributes(array('status'=>1)), 'id', 'name')),
+			'workplaceId' => array('name'=>'岗位ID','type'=>'select','data'=>CHtml::listData(Workplace::model()->findAllByAttributes(array('status'=>1)), 'id', 'name')),
+			'sex' => array('name'=>'性别','type'=>'select','data'=>Yii::app()->params['gender']),
+			'status' => array('name'=>'状态','type'=>'select','data'=>Yii::app()->params['status']),
+			'createdTime' => array('name'=>'选择时间','type'=>'daterange'),
 		);
 		return $column;
 	}
@@ -120,17 +120,25 @@ class User extends CActiveRecord
 
         $criteria->select = '*';
         $criteria->order = "";
-        if(!empty(Yii::app()->request->getParam('sidx')))
+        $sidx = Yii::app()->request->getParam('sidx');
+        $page = Yii::app()->request->getParam('page');
+        $rows = Yii::app()->request->getParam('rows');
+
+        if(!empty($sidx))
         	$criteria->order .= 't.'.Yii::app()->request->getParam('sidx').' '.Yii::app()->request->getParam('sord').",";
         $criteria->order .= 't.createdTime DESC,t.id DESC';
-        
+
         $criteria->compare('t.status',$this->status);
+        $criteria->compare('t.account',$this->account);
+       	$criteria->compare('t.deptId',$this->deptId);
+        $criteria->compare('t.workplaceId',$this->workplaceId);
+        $criteria->compare('t.sex',$this->sex);
 
         $count = $this->count($criteria);
         $pages = new CPagination($count);
         $pages->pageVar = 'page';
-        $pages->currentPage = !empty(Yii::app()->request->getParam('page'))?Yii::app()->request->getParam('page')-1:10;
-        $pages->pageSize = !empty(Yii::app()->request->getParam('rows'))?Yii::app()->request->getParam('rows'):10;
+        $pages->currentPage = !empty($page)?Yii::app()->request->getParam('page')-1:10;
+        $pages->pageSize = !empty($rows)?Yii::app()->request->getParam('rows'):10;
         $pages->applyLimit($criteria);
         $models = $this->findAll($criteria);
 

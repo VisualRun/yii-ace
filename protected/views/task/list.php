@@ -1,3 +1,8 @@
+<div class="col-xs-12">
+<div class="row">
+    <?php $this->renderPartial('/actions/_search',array('model'=>$model,)); ?>
+</div>
+<div class="space-10"></div>
 <?php
     $this->widget('JqGridlist',
       [
@@ -37,10 +42,11 @@
       ]
     );
 ?>
+</div>
 <script type="text/javascript">
     function test_bootbox(){
         bootbox.dialog({
-            message: "Thank you! Your information was successfully saved!", 
+            message: "Thank you! Your information was successfully saved!",
             buttons: {
                 "success" : {
                     "label" : "OK",

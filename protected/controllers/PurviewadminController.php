@@ -11,12 +11,20 @@ class PurviewadminController extends Controller
 	public function actionAllpurview()
 	{
 		$this->pageTitle = '权限管理';
-		$this->render('allpurview');
+        $model = new Purview();
+        $model->unsetAttributes();
+        if(isset($_GET)&&!empty($_GET))
+            $model->attributes=$_GET;
+		$this->render('allpurview',array('model'=>$model));
 	}
 
 	public function actionUserpurview()
 	{
 		$this->pageTitle = '用户权限';
-		$this->render('userpurview');
+        $model = new UserPurview();
+        $model->unsetAttributes();
+        if(isset($_GET)&&!empty($_GET))
+            $model->attributes=$_GET;
+		$this->render('userpurview',array('model'=>$model));
 	}
 }

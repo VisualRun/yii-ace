@@ -6,7 +6,7 @@
 class RequestjqgridAction extends CAction{
 	public $modelClass = '';
     public function run(){
-        
+
     	$obj = $this->modelClass;
         $model=new $obj();
         $model->unsetAttributes();  // clear any default values

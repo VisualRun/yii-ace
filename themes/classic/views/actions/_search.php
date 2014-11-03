@@ -1,71 +1,75 @@
-<?php
-Yii::app()->clientScript->registerScript('search', "
-$('.search-button').click(function(){
-    $('.search-form').toggle();
-    return false;
-}); 
-$('.search-form form').submit(function(){
-    $.fn.yiiGridView.update('form-grid', {
-        data: $(this).serialize()
-    });
-    return false;
-});
-");
-
-?>
-<?php $arr = $model->searchField();?>
-
-
-<div class="wide form">
-
-<?php $form=$this->beginWidget('CActiveForm', array(
-    'action'=>Yii::app()->createUrl($this->route),
-    'method'=>'get',
-)); ?><?php if(!empty($arr)):?>
-<?php foreach ($arr as $key => $value):?>
-    <span class="row">
-        <?php echo $form->label($model,$key); ?>
-        <?php echo $form->textField($model,$key); ?>
-    </span>
-<?php endforeach;?><?php endif;?>
- <div class="row" style="width:auto;float:left"><span>
-      时间 ：</span><?php 
-$this->widget('zii.widgets.jui.CJuiDatePicker',array(
-    'attribute'=>'start_time',
-    'language'=>'zh_cn',
-    'name'=>'start_time',
-    'options'=>array(
-        'dateFormat'=>'yy-mm-dd ',
-    ),
-    'htmlOptions'=>array(
-        'style'=>'height:18px;margin:0;',
-    ),
-));
-?>
-     <span style="padding-left:10px"> 至：</span>
-     <?php 
-$this->widget('zii.widgets.jui.CJuiDatePicker',array(
-    'attribute'=>'end_time',
-    'language'=>'zh_cn',
-    'name'=>'end_time',
-    'options'=>array(
-        'dateFormat'=>'yy-mm-dd ',
-    ),
-    'htmlOptions'=>array(
-        'style'=>'height:18px;margin:0;',
-    ),
-));
-?> 
-    </div> <span> <div class="ic_button" style="padding-left:0px;float:left">
-        <?php echo CHtml::submitButton(Yii::t('user','Search'),array('class'=>'button_b_Db','style'=>'width:86px;margin-top:0')); ?>
-    </div></span>
-    
-
-    
-
-<?php $this->endWidget(); ?>
-<div class="ic_button" style="padding-left:0px;float:left">
-<input type="button" value="刷新页面" onClick="window.location.reload();"/>
-</div></span>
-</div>
-
+    <?php $data_search = $model->searchField();?>
+    <?php if(!empty($data_search)):?>
+    <?php $form=$this->beginWidget('CActiveForm', array(
+        'id'=>'search-form',
+        'method'=>'get',
+        'enableClientValidation'=>false,
+        'clientOptions'=>array(
+            'validateOnSubmit'=>true,
+        ),
+        'htmlOptions'=>array(
+            'class'=>'form-horizontal',
+        ),
+    )); ?>
+    <?php foreach ($data_search as $key => $value):?>
+    <?php if($value['type']=='text'):?>
+    <div class="control-group col-xs-4 no-padding-left" style="margin-bottom:10px;">
+        <label class="col-sm-3 control-label no-padding-right">
+            <?php echo $value['name'];?>：
+        </label>
+        <div class="col-sm-9">
+            <input class="form-control" name="<?php echo $key;?>" type="text" value='<?php echo $model->{$key};?>' >
+        </div>
+    </div>
+    <?php elseif($value['type']=='select'):?>
+    <div class="control-group col-xs-4 no-padding-left " style="margin-bottom:10px;">
+        <label class="col-sm-3 control-label no-padding-right"><?php echo $value['name'];?>：</label>
+        <div class="col-sm-9">
+            <select class="form-control" name="<?php echo $key;?>" value='<?php echo $model->{$key};?>' >
+                <option value=""> 请选择 </option>
+                <?php foreach ($value['data'] as $k =>$v):?>
+                <option <?php if($model->{$key} == $k): ?>selected="selected"<?php endif; ?> value="<?php echo $k;?>">
+                    <?php echo $v;?>
+                </option>
+                <?php endforeach;?>
+            </select>
+        </div>
+    </div>
+    <?php elseif($value['type']=='daterange'):?>
+    <div class="control-group col-xs-4 no-padding-left" style="margin-bottom:10px;">
+        <label class="col-sm-3 control-label no-padding-right"><?php echo $value['name'];?>：</label>
+        <div class=" input-daterange input-group col-sm-9" style="padding-left:12px;padding-right:12px;">
+            <input type="text" name="start" class="form-control col-sm-3" value='<?php echo isset($_GET['start'])?$_GET['start']:"";?>'>
+            <span class="input-group-addon">
+                <i class="fa fa-exchange"></i>
+            </span>
+            <input type="text" name="end" class="form-control  col-sm-3" value='<?php echo isset($_GET['end'])?$_GET['end']:"";?>'>
+        </div>
+    </div>
+    <?php endif;?>
+    <?php endforeach;?>
+    <div class="control-group col-xs-4 no-padding-left" style="margin-bottom:10px;">
+        <label class="col-sm-3 control-label no-padding-right"></label>
+        <div class="col-sm-9" >
+            <button type="submit" class="btn btn-white btn-default btn-round">
+                <i class="ace-icon glyphicon glyphicon-search"></i>
+                搜索
+            </button>
+            <button class="btn btn-white btn-default btn-round">
+                <i class="ace-icon glyphicon glyphicon-repeat red2"></i>
+                重置
+            </button>
+        </div>
+    </div>
+    <?php $this->endWidget(); ?>
+    <?php endif;?>
+    <script>
+        jQuery(function($) {
+            $('.input-daterange').datepicker({
+                autoclose:true,
+                todayHighlight: true,
+                language: 'zh-CN',
+                dateFormat: 'yyyy-mm-dd',
+            });
+        })
+    </script>

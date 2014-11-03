@@ -26,6 +26,7 @@ class JqGridlist extends CPortlet
             'date-time/bootstrap-datepicker.min.js',
             'jqGrid/jquery.jqGrid.min.js',
             'jqGrid/i18n/grid.locale-cn.js',
+            'date-time/locales/bootstrap-datepicker.zh-CN.js',
             );
 
 		$jsonGridSettings = $this->processingGridSettings($this->gridSettings);
@@ -46,7 +47,9 @@ class JqGridlist extends CPortlet
     {
         $widgetId = $this->id;
 
-        $gridSettings['url'] = Yii::app()->createUrl($this->model.'/requestjqgrid',array('resultType'=>$this->resultType));
+        //print_r(Helpers::arrparam());exit;
+
+        $gridSettings['url'] = Yii::app()->createUrl($this->model.'/requestjqgrid',array_merge(array('resultType'=>$this->resultType),Helpers::arrparam()));
         $gridSettings['datatype'] = 'json';
         $gridSettings['mtype'] = 'POST';
         $gridSettings['jsonReader'] = ['root'=>'griddata','total'=>"totalpages",'page'=>'currpage','records'=>'totalrecords','repeatitems'=>false];

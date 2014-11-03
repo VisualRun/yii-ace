@@ -10,13 +10,21 @@ class TaskController extends Controller
 	public function actionList()
 	{
 		$this->pageTitle = '任务列表';
-		$this->render('list');
+                $model = new Task();
+                $model->unsetAttributes();
+                if(isset($_GET)&&!empty($_GET))
+                    $model->attributes=$_GET;
+		$this->render('list',array('model'=>$model));
 	}
 
 	public function actionMytask(){
 		$user_id = Yii::app()->user->id;
 		$this->pageTitle = '我的任务';
-		$this->render('mytask');
+                $model = new Task();
+                $model->unsetAttributes();
+                if(isset($_GET)&&!empty($_GET))
+                    $model->attributes=$_GET;
+		$this->render('mytask',array('model'=>$model));
 	}
 
 	public function actionView(){
@@ -50,7 +58,7 @@ class TaskController extends Controller
         {
         	$pk = Yii::app()->request->getParam('id');
 
-			$model = Task::model()->findByPk($pk); 	
+			$model = Task::model()->findByPk($pk);
         	if(empty($model))
         	{
         		echo json_encode(array('type'=>'error','info'=>'没有这个任务！'));
@@ -58,7 +66,7 @@ class TaskController extends Controller
         	}
 
         	if($model->openedId == Yii::app()->user->id && $model->status == 0)
-        	{	
+        	{
         		$assignedid = Yii::app()->request->getParam('assignedid');
         		$model->assignedId = $assignedid;
         		$model->assignedDate = date('Y-m-d H:i:s');
@@ -67,13 +75,13 @@ class TaskController extends Controller
         		      $assignUser = User::model()->findByPk($assignedid);
         		      Helpers::syslog(2,Yii::app()->user->getState('account')."将 [".$model->name."] 指派任务给 ".$assignUser->account,Yii::app()->user->id,$pk);
         		}
-        		
+
         		echo json_encode(array('type'=>'success'));
         		Yii::app()->end();
         	}else{
         		echo json_encode(array('type'=>'error','info'=>'数据错误！'));
         		Yii::app()->end();
-        	}		
+        	}
 
         }
 	}
@@ -83,7 +91,7 @@ class TaskController extends Controller
 		if (Yii::app()->request->isAjaxRequest)
         {
         	$pk = Yii::app()->request->getParam('id');
-			$model = Task::model()->findByPk($pk); 	
+			$model = Task::model()->findByPk($pk);
         	if(empty($model))
         	{
         		echo json_encode(array('type'=>'error','info'=>'没有这个任务！'));
@@ -91,7 +99,7 @@ class TaskController extends Controller
         	}
 
         	if($model->openedId == Yii::app()->user->id && $model->status == 0)
-        	{	
+        	{
         		$model->status = 4;
         		if($model->save())
         		{
@@ -102,7 +110,7 @@ class TaskController extends Controller
         	}else{
         		echo json_encode(array('type'=>'error','info'=>'数据错误！'));
         		Yii::app()->end();
-        	}		
+        	}
 
         }
 	}
@@ -112,7 +120,7 @@ class TaskController extends Controller
 		if (Yii::app()->request->isAjaxRequest)
         {
         	$pk = Yii::app()->request->getParam('id');
-			$model = Task::model()->findByPk($pk); 	
+			$model = Task::model()->findByPk($pk);
         	if(empty($model))
         	{
         		echo json_encode(array('type'=>'error','info'=>'没有这个任务！'));
@@ -120,7 +128,7 @@ class TaskController extends Controller
         	}
 
         	if(empty($model->assignedId) && $model->status == 0 && $model->openedId != Yii::app()->user->id )
-        	{	
+        	{
         		$model->status = 1;
         		$model->realStarted = date('Y-m-d H:i:s');
         		$model->assignedId = Yii::app()->user->id;
@@ -134,7 +142,7 @@ class TaskController extends Controller
         	}else{
         		echo json_encode(array('type'=>'error','info'=>'数据错误！'));
         		Yii::app()->end();
-        	}		
+        	}
 
         }
 	}
@@ -144,7 +152,7 @@ class TaskController extends Controller
 		if (Yii::app()->request->isAjaxRequest)
         {
         	$pk = Yii::app()->request->getParam('id');
-			$model = Task::model()->findByPk($pk); 	
+			$model = Task::model()->findByPk($pk);
         	if(empty($model))
         	{
         		echo json_encode(array('type'=>'error','info'=>'没有这个任务！'));
@@ -152,7 +160,7 @@ class TaskController extends Controller
         	}
 
         	if($model->assignedId == Yii::app()->user->id && $model->status == 0)
-        	{	
+        	{
         		$model->status = 1;
         		$model->realStarted = date('Y-m-d H:i:s');
         		if($model->save())
@@ -164,7 +172,7 @@ class TaskController extends Controller
         	}else{
         		echo json_encode(array('type'=>'error','info'=>'数据错误！'));
         		Yii::app()->end();
-        	}		
+        	}
 
         }
 	}
@@ -174,7 +182,7 @@ class TaskController extends Controller
 		if (Yii::app()->request->isAjaxRequest)
         {
         	$pk = Yii::app()->request->getParam('id');
-			$model = Task::model()->findByPk($pk); 	
+			$model = Task::model()->findByPk($pk);
         	if(empty($model))
         	{
         		echo json_encode(array('type'=>'error','info'=>'没有这个任务！'));
@@ -182,7 +190,7 @@ class TaskController extends Controller
         	}
 
         	if($model->status < 2)
-        	{	
+        	{
         		$remark = trim(Yii::app()->request->getParam('remark'));
 
         		$task_remark = new TaskRemark();
@@ -206,7 +214,7 @@ class TaskController extends Controller
 		if (Yii::app()->request->isAjaxRequest)
         {
         	$pk = Yii::app()->request->getParam('id');
-			$model = Task::model()->findByPk($pk); 	
+			$model = Task::model()->findByPk($pk);
         	if(empty($model))
         	{
         		echo json_encode(array('type'=>'error','info'=>'没有这个任务！'));
@@ -214,7 +222,7 @@ class TaskController extends Controller
         	}
 
         	if($model->assignedId == Yii::app()->user->id && $model->status == 1)
-        	{	
+        	{
         		$model->status = 2;
         		$model->finishedId = Yii::app()->user->id;
         		$model->finishedDate = date('Y-m-d H:i:s');
@@ -226,14 +234,14 @@ class TaskController extends Controller
                                 Helpers::sendmessage($model->openedId,$content,2,0,$model->id);
         		}
 
-        		
+
 
         		echo json_encode(array('type'=>'success'));
         		Yii::app()->end();
         	}else{
         		echo json_encode(array('type'=>'error','info'=>'数据错误！'));
         		Yii::app()->end();
-        	}		
+        	}
 
         }
 	}
@@ -243,7 +251,7 @@ class TaskController extends Controller
 		if (Yii::app()->request->isAjaxRequest)
         {
         	$pk = Yii::app()->request->getParam('id');
-			$model = Task::model()->findByPk($pk); 	
+			$model = Task::model()->findByPk($pk);
         	if(empty($model))
         	{
         		echo json_encode(array('type'=>'error','info'=>'没有这个任务！'));
@@ -251,7 +259,7 @@ class TaskController extends Controller
         	}
 
         	if($model->openedId == Yii::app()->user->id && $model->status == 2)
-        	{	
+        	{
         		$model->status = 5;
         		$model->closedId = Yii::app()->user->id;
         		$model->closedDate = date('Y-m-d H:i:s');
@@ -265,14 +273,14 @@ class TaskController extends Controller
                                 Helpers::sendmessage($model->finishedId,$content,2,0,$model->id);
                         }
 
-        		
+
 
         		echo json_encode(array('type'=>'success'));
         		Yii::app()->end();
         	}else{
         		echo json_encode(array('type'=>'error','info'=>'数据错误！'));
         		Yii::app()->end();
-        	}		
+        	}
 
         }
 	}
