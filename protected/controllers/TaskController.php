@@ -105,7 +105,9 @@ class TaskController extends Controller
 
 	    if($model->scenario == 'new')
                 $model->status = 0;
-
+				
+			$model->deadline = date('Y-m-d',strtotime($model->deadline));	
+			
             if($model->save())
             {
                 $id = $model->primarykey;
