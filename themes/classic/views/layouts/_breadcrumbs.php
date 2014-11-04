@@ -8,17 +8,6 @@
             <i class="ace-icon fa fa-home home-icon"></i>
             <a href="<?php  echo $this->createUrl('/home/index'); ?>">首页</a>
         </li>
-        <?php if(is_array(Yii::app()->controller->menu_nav)): ?>
-        <?php foreach(Yii::app()->controller->menu_nav as $key => $value): ?>
-        <li>
-            <?php if(isset($value->href)): ?>
-            <a href="<?php echo $value->href ?>"><?php echo $value->value ?></a>
-            <?php else: ?>
-            <?php echo $value->value ?>
-            <?php endif; ?>
-        </li>
-        <?php endforeach; ?>
-        <?php endif; ?>
         <li class="active"><?php echo $this->pageTitle ?></li>
     </ul><!-- /.breadcrumb -->
 
