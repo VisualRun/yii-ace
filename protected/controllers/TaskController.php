@@ -60,10 +60,10 @@ class TaskController extends Controller
             $model->attributes=$_POST['Task'];
 
             //如果文件上传
-            $uploaded = CUploadedFile::getInstanceByName('Task[opAdminId]');
-            #print_r($uploaded);exit;
+            $uploaded = CUploadedFile::getInstanceByName('attach');
+            //print_r($uploaded);exit;
             if(is_object($uploaded) && get_class($uploaded)==='CUploadedFile'){
-                if($uploaded->size > 8*1024*1024){
+                if($uploaded->size > 10*1024*1024){
                     $model->addError('opAdminId','文件太大！');
                 }
 
@@ -84,7 +84,7 @@ class TaskController extends Controller
                 if($uploaded->saveAs($uploadfile))
                 {
                     $file = new File();
-                    $file->path = $uploadfile;
+                    $file->pathname = Yii::app()->request->baseUrl.'/data/file/'.$ymd."/". $filename . '.' . $ext;
                     $file->title = $old_name;
                     $file->extension = $ext;
                     $file->extension = $uploaded->size;
@@ -94,12 +94,17 @@ class TaskController extends Controller
                     $model->addError('opAdminId','文件上传失败！');
 
             }
-            if($model->hasErrors())
+            if($model->hasErrors()){
+		print_r($model->getErrors());
                 Yii::app()->end();
+	    }
 
             if($model->assignedId != 0){
                 $model->assignedDate = date('Y-m-d H:i:s');
             }
+
+	    if($model->scenario == 'new')
+                $model->status = 0;
 
             if($model->save())
             {
@@ -180,12 +185,13 @@ class TaskController extends Controller
 		{
 			$assigned_arr[$value->id] = $value->account;
 		}
+	$file = File::model()->findAll("taskId = $pk");
 
         $remark = TaskRemark::model()->with(array('user'))->findAll("taskId = $pk && valid = 1");
 
         $log = SysLog::model()->with(array('user'))->findAll("linkId = $pk && valid = 1");
 
-		$this->render('view',array('model'=>$model,'assigned_arr'=>$assigned_arr,'remark'=>$remark,'log'=>$log));
+		$this->render('view',array('model'=>$model,'assigned_arr'=>$assigned_arr,'remark'=>$remark,'log'=>$log,'file'=>$file));
 	}
 
 	//任务指派

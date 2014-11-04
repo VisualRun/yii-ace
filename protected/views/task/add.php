@@ -8,6 +8,7 @@
         ),
         'htmlOptions'=>array(
         	'name'=>'task_form',
+	    'enctype'=>'multipart/form-data',
             'class'=>'form-horizontal',
             'onSubmit'=>'return GetCheckbox()',
         ),

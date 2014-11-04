@@ -121,7 +121,7 @@ class Task extends CActiveRecord
 			'point' => array('type'=>'text'),
 			'deadline' => array('type'=>'date'),
 			'assignedId' => array('type'=>'checkbox','data'=>CHtml::listData(User::model()->findAll('status = 1 && typeId > 1'), 'id', 'account')),
-			//'attach' => array('type'=>'file'),
+			'attach' => array('type'=>'file'),
 		);
 	}
 

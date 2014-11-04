@@ -104,6 +104,20 @@
                                     </div>
                                 </div>
                             </div>
+			    <?php if(!empty($file)): ?>
+			    <div class="space-4"></div>
+                            <div class="profile-user-info profile-user-info-striped">
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name"> 任务附件 </div>
+
+                                    <div class="profile-info-value">
+                                        <?php foreach($file as $k => $v): ?>
+					<a target="_blank" href="<?php echo $v->pathname; ?>" ><?php echo $v->title; ?></a>&nbsp;&nbsp;
+                                        <?php endforeach;?>
+                                    </div>
+                                </div>
+                            </div>
+			    <?php endif; ?>	
                             <div class="space-4"></div>
                             <?php if($model->assignedId != 0 && $model->status != 4): ?>
                             <div class="profile-user-info profile-user-info-striped">
