@@ -39,12 +39,10 @@
     <?php elseif($value['type']=='daterange'):?>
     <div class="control-group col-xs-4 no-padding-left" style="margin-bottom:10px;">
         <label class="col-sm-3 control-label no-padding-right"><?php echo $value['name'];?>：</label>
-        <div class=" input-daterange input-group col-sm-9" style="padding-left:12px;padding-right:12px;">
-            <input type="text" name="start" class="form-control col-sm-3" value='<?php echo isset($_GET['start'])?$_GET['start']:"";?>' data-date-format="yyyy-mm-dd">
-            <span class="input-group-addon">
-                <i class="fa fa-exchange"></i>
-            </span>
-            <input type="text" name="end" class="form-control  col-sm-3" value='<?php echo isset($_GET['end'])?$_GET['end']:"";?>' data-date-format="yyyy-mm-dd">
+        <div class="col-sm-9" style="padding-left:12px;padding-right:12px;">
+            <input type="text" name="start" class="date-picker col-sm-5" value='<?php echo isset($_GET['start'])?$_GET['start']:"";?>' data-date-format="yyyy-mm-dd">
+            <span class="col-sm-2">~</span>
+            <input type="text" name="end" class="date-picker col-sm-5" value='<?php echo isset($_GET['end'])?$_GET['end']:"";?>' data-date-format="yyyy-mm-dd">
         </div>
     </div>
     <?php endif;?>
@@ -66,11 +64,10 @@
     <?php endif;?>
     <script>
         jQuery(function($) {
-            $('.input-daterange').datepicker({
-                autoclose:true,
+            $('.date-picker').datepicker({
+                autoclose: true,
                 todayHighlight: true,
-                //language: 'zh-CN',
-                dateFormat: "DD MM yy"
+                language: 'zh-CN'
             });
         })
     </script>

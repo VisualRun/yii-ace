@@ -16,7 +16,7 @@
             'colNames' => ['用户类别', '权限编码', '权限名称', '状态','添加日期'],
             'colModel' => [
                 ['name' => 'usertypeId', 'index' => 'usertypeId', 'editable' => true, 'edittype' => 'select','editoptions' => ['value' => Yii::app()->params['user_type']]],
-                ['name' => 'purviewId', 'index' => 'purviewId', 'editable' => true, 'edittype' => 'select','editoptions' => ['value' => CHtml::listData(Purview::model()->findAllByAttributes(array('valid'=>1)), 'id', 'code')]],
+                ['name' => 'purviewId', 'index' => 'purviewId', 'editable' => true, 'edittype' => 'select','editoptions' => ['value' => CHtml::listData(Purview::model()->findAllByAttributes(array('valid'=>1)), 'id', 'name')]],
                 ['name' => 'purviewName', 'index' => 'purviewId', 'editable' => false],
                 ['name' => 'valid', 'index' => 'valid', 'editable' => true, 'edittype' => 'select','editoptions' => ['value' => Yii::app()->params['valid']]],
                 ['name' => 'createdTime', 'index' => 'createdTime', 'editable' => false, 'formatter'=> "date", 'formatoptions' => ['srcformat'=>'Y-m-d H:i:s','newformat'=>'H:i y/m/d']],

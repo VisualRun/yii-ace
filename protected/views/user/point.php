@@ -1,6 +1,6 @@
 <div class="col-xs-12">
 <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-12">
         <div class="alert alert-success">
             <strong>我的总积分：</strong>
             <?php echo $user->point ?>
