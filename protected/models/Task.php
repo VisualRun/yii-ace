@@ -120,7 +120,7 @@ class Task extends CActiveRecord
 			'desc' => array('type'=>'textarea'),
 			'point' => array('type'=>'text'),
 			'deadline' => array('type'=>'date'),
-			'assignedId' => array('type'=>'checkbox','data'=>CHtml::listData(User::model()->findAll('status = 1 && typeId > 1'), 'id', 'account')),
+			'assignedId' => array('type'=>'checkbox','data'=>CHtml::listData(User::model()->findAll('status = 1 && id != '.Yii::app()->user->id), 'id', 'account')),
 			'attach' => array('type'=>'file'),
 		);
 	}
