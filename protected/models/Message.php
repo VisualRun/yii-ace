@@ -72,6 +72,7 @@ class Message extends CActiveRecord
 			'typeId' => array('name'=>'消息类别','type'=>'select','data'=>Yii::app()->params['message_type']),
 			'userId' => array('name'=>'发送人','type'=>'select','data'=>CHtml::listData(User::model()->findAllByAttributes(array('status'=>1)), 'id', 'account')),
 			'checkout' => array('name'=>'状态','type'=>'select','data'=>Yii::app()->params['status']),
+            'createdTime' => array('name'=>'选择时间','type'=>'daterange'),
 		);
 		return $column;
 	}
@@ -96,9 +97,9 @@ class Message extends CActiveRecord
        	$criteria->compare('t.touserId',Yii::app()->user->id);
 
         if(isset($_GET['start'])&&!empty($_GET['start']))
-        	$criteria->compare('createdTime >',$_GET['start']);
+            $criteria->compare('UNIX_TIMESTAMP(t.createdTime) >',strtotime($_GET['start']));
         if(isset($_GET['end'])&&!empty($_GET['end']))
-        	$criteria->compare('createdTime <=',$_GET['end']);
+            $criteria->compare('UNIX_TIMESTAMP(t.createdTime) <',strtotime($_GET['end'])+86400);
 
         $count = $this->count($criteria);
         $pages = new CPagination($count);

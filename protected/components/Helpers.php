@@ -29,7 +29,8 @@ class Helpers
                 		'class'=>'fa fa-tasks',
                 		'item'=>array(
                             array('text'=>'发布任务','href'=>Yii::app()->createUrl('/task/add'),'action'=>array('add')),
-                			array('text'=>'我的任务','href'=>Yii::app()->createUrl('/task/mytask'),'action'=>array('mytask')),
+                            array('text'=>'我发布的任务','href'=>Yii::app()->createUrl('/task/mypublishtask'),'action'=>array('mypublishtask')),
+                			array('text'=>'我处理的任务','href'=>Yii::app()->createUrl('/task/myhandletask'),'action'=>array('myhandletask')),
                 			array('text'=>'所有任务','href'=>Yii::app()->createUrl('/task/list'),'action'=>array('list')),
                 		),
                 	),
@@ -56,7 +57,7 @@ class Helpers
                     'purviewadmin'=>array(
                         'text'=>'权限中心',
                         'href'=>'#',
-                        'class'=>'fa fa-cog',
+                        'class'=>'fa fa-cogs',
                         'item'=>array(
                             array('text'=>'权限管理','href'=>Yii::app()->createUrl('/purviewadmin/allpurview'),'action'=>array('allpurview')),
                             array('text'=>'用户权限','href'=>Yii::app()->createUrl('/purviewadmin/userpurview'),'action'=>array('userpurview')),
@@ -79,8 +80,9 @@ class Helpers
                 		'href'=>'#',
                 		'class'=>'fa fa-tasks',
                 		'item'=>array(
-                			array('text'=>'发布任务','href'=>Yii::app()->createUrl('/task/create'),'action'=>array('create')),
-                            array('text'=>'我的任务','href'=>Yii::app()->createUrl('/task/mytask'),'action'=>array('mytask')),
+                			array('text'=>'发布任务','href'=>Yii::app()->createUrl('/task/add'),'action'=>array('add')),
+                            array('text'=>'我发布的任务','href'=>Yii::app()->createUrl('/task/mypublishtask'),'action'=>array('mypublishtask')),
+                            array('text'=>'我处理的任务','href'=>Yii::app()->createUrl('/task/myhandletask'),'action'=>array('myhandletask')),
                             array('text'=>'所有任务','href'=>Yii::app()->createUrl('/task/list'),'action'=>array('list')),
                 		),
                 	),
@@ -111,7 +113,7 @@ class Helpers
                 		'href'=>'#',
                 		'class'=>'fa fa-tasks',
                 		'item'=>array(
-                			array('text'=>'我的任务','href'=>Yii::app()->createUrl('/task/mytask'),'action'=>array('mytask')),
+                			array('text'=>'我处理的任务','href'=>Yii::app()->createUrl('/task/myhandletask'),'action'=>array('myhandletask')),
                             array('text'=>'所有任务','href'=>Yii::app()->createUrl('/task/list'),'action'=>array('list')),
                 		),
                 	),

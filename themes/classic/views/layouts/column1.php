@@ -35,6 +35,35 @@
     <?php include "_footer.php";?>
 </div><!-- /.main-container -->
 <!-- basic scripts -->
+<script type="text/javascript">
+    function get_notice(){
+        $.ajax({
+            type: "POST",
+            url: "<?php echo Yii::app()->createUrl('/user/notice') ?>",
+            dataType : 'json',
+            success: function(msg){
+                if(msg.task >0)
+                {
+                    $("#navbar_task").html(msg.task).removeClass('hide').parent('a').find('i').addClass('icon-animated-vertical');
+                }else{
+                    $("#navbar_task").html('').addClass('hide').parent('a').find('i').removeClass('icon-animated-vertical');
+                }
+
+                if(msg.message >0)
+                {
+                    $("#navbar_message").html(msg.message).removeClass('hide').parent('a').find('i').addClass('icon-animated-bell');
+                }else{
+                    $("#navbar_message").html('').addClass('hide').parent('a').find('i').removeClass('icon-animated-bell');
+                }
+
+            }
+        });
+        setTimeout("get_notice()",30000);
+    }
+
+     get_notice();
+</script>
+
 
 <script type="text/javascript">
     if('ontouchstart' in document.documentElement) document.write("<script src='<?php echo Yii::app()->theme->baseUrl;?>/assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");

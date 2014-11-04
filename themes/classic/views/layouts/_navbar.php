@@ -35,113 +35,17 @@
         <!-- #section:basics/navbar.dropdown -->
         <div class="navbar-buttons navbar-header pull-right" role="navigation">
             <ul class="nav ace-nav">
-                <li class="grey">
-                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                        <i class="ace-icon fa fa-tasks"></i>
-                        <span class="badge badge-grey">4</span>
-                    </a>
-
-                    <ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
-                        <li class="dropdown-header">
-                            <i class="ace-icon fa fa-check"></i>
-                            4 Tasks to complete
-                        </li>
-
-                        <li>
-                            <a href="#">
-                                <div class="clearfix">
-                                    <span class="pull-left">Software Update</span>
-                                    <span class="pull-right">65%</span>
-                                </div>
-
-                                <div class="progress progress-mini">
-                                    <div style="width:65%" class="progress-bar"></div>
-                                </div>
-                            </a>
-                        </li>
-
-                        <li class="dropdown-footer">
-                            <a href="#">
-                                See tasks with details
-                                <i class="ace-icon fa fa-arrow-right"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
                 <li class="purple">
-                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                        <i class="ace-icon fa fa-bell icon-animated-bell"></i>
-                        <span class="badge badge-important">8</span>
+                    <a class="dropdown-toggle" href="<?php echo Yii::app()->createUrl('task/myhandletask') ?>">
+                        <i class="ace-icon fa fa-tasks "></i>
+                        <span id="navbar_task" class="badge badge-grey hide"></span>
                     </a>
-
-                    <ul class="dropdown-menu-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close">
-                        <li class="dropdown-header">
-                            <i class="ace-icon fa fa-exclamation-triangle"></i>
-                            8 Notifications
-                        </li>
-
-                        <li>
-                            <a href="#">
-                                <div class="clearfix">
-                                    <span class="pull-left">
-                                        <i class="btn btn-xs no-hover btn-pink fa fa-comment"></i>
-                                        New Comments
-                                    </span>
-                                    <span class="pull-right badge badge-info">+12</span>
-                                </div>
-                            </a>
-                        </li>
-
-                        <li class="dropdown-footer">
-                            <a href="#">
-                                See all notifications
-                                <i class="ace-icon fa fa-arrow-right"></i>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
-
                 <li class="green">
-                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                        <i class="ace-icon fa fa-envelope icon-animated-vertical"></i>
-                        <span class="badge badge-success">5</span>
+                    <a class="dropdown-toggle" href="<?php echo Yii::app()->createUrl('user/message') ?>">
+                        <i class="ace-icon fa fa-envelope "></i>
+                        <span id="navbar_message" class="badge badge-success hide"></span>
                     </a>
-
-                    <ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
-                        <li class="dropdown-header">
-                            <i class="ace-icon fa fa-envelope-o"></i>
-                            5 Messages
-                        </li>
-
-                        <li class="dropdown-content">
-                            <ul class="dropdown-menu dropdown-navbar">
-                                <li>
-                                    <a href="#">
-                                        <img src="<?php echo Yii::app()->theme->baseUrl;?>/assets/avatars/avatar.png" class="msg-photo" alt="Alex's Avatar" />
-                                        <span class="msg-body">
-                                            <span class="msg-title">
-                                                <span class="blue">Alex:</span>
-                                                Ciao sociis natoque penatibus et auctor ...
-                                            </span>
-
-                                            <span class="msg-time">
-                                                <i class="ace-icon fa fa-clock-o"></i>
-                                                <span>a moment ago</span>
-                                            </span>
-                                        </span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="dropdown-footer">
-                            <a href="inbox.html">
-                                See all messages
-                                <i class="ace-icon fa fa-arrow-right"></i>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
 
                 <!-- #section:basics/navbar.user_menu -->
@@ -150,7 +54,7 @@
                         <img class="nav-user-photo" src="<?php echo Yii::app()->theme->baseUrl;?>/assets/avatars/avatar2.png" alt="avatar2's Photo" />
                         <span class="user-info">
                             <small>欢迎回来,</small>
-                            <?php echo Yii::app()->user->getState('realname'); ?>
+                            <?php echo Yii::app()->user->getState('account'); ?>
                         </span>
 
                         <i class="ace-icon fa fa-caret-down"></i>
@@ -165,9 +69,9 @@
                         </li>
 
                         <li>
-                            <a href="<?php echo $this->createUrl('/user/profile');?>">
+                            <a href="<?php echo $this->createUrl('/task/myhandletask');?>">
                                 <i class="ace-icon fa fa-user"></i>
-                                个人资料
+                                个人任务
                             </a>
                         </li>
 

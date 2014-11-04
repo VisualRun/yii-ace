@@ -110,7 +110,7 @@ class User extends CActiveRecord
 			'workplaceId' => array('name'=>'岗位','type'=>'select','data'=>CHtml::listData(Workplace::model()->findAllByAttributes(array('status'=>1)), 'id', 'name')),
 			'sex' => array('name'=>'性别','type'=>'select','data'=>Yii::app()->params['gender']),
 			'status' => array('name'=>'状态','type'=>'select','data'=>Yii::app()->params['status']),
-			'createdTime' => array('name'=>'选择时间','type'=>'daterange'),
+			//'createdTime' => array('name'=>'选择时间','type'=>'daterange'),
 		);
 		return $column;
 	}

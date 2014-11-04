@@ -52,6 +52,8 @@ class HomeController extends Controller
 		//查询还未指派的的任务
 		$criteria=new CDbCriteria;
 		$criteria->select = '*';
+		$criteria->addCondition("openedId != :openedId");
+		$criteria->params[':openedId'] = Yii::app()->user->id;
 		$criteria->addCondition("assignedId = :assignedId");
 		$criteria->params[':assignedId'] = 0;
 		$criteria->addCondition("status = :status");

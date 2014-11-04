@@ -87,5 +87,34 @@ class UserController extends Controller
 
     $this->render('passwdedit',array('model'=>$model));
   }
+
+  //页面ajax轮训的，获取提醒信息
+  public function actionNotice(){
+    if (Yii::app()->request->isAjaxRequest)
+    {
+      $userid = Yii::app()->user->id;
+
+      //查询有几个没有完成的任务
+      $criteria=new CDbCriteria;
+      $criteria->select = 'id';
+      $criteria->addCondition("assignedId = :assignedId");
+      $criteria->params[':assignedId']=$userid;
+      $criteria->addCondition("status = :status");
+      $criteria->params[':status'] = 1;
+      $task = Task::model()->count($criteria);
+
+      //查询有几个未读的message
+      $criteria=new CDbCriteria;
+      $criteria->select = 'id';
+      $criteria->addCondition("touserId = :touserId");
+      $criteria->params[':touserId']=$userid;
+      $criteria->addCondition("checkout = :checkout");
+      $criteria->params[':checkout'] = 0;
+      $message = Message::model()->count($criteria);
+
+      echo json_encode(array('task'=>$task,'message'=>$message));
+      Yii::app()->end();
+    }
+  }
 }
 ?>

@@ -10,6 +10,12 @@ class AdminController extends Controller
 
 	public function actionDeptment()
 	{
+        $this->menu_nav = array(
+                array(
+                    'value'=>'组织中心',
+                ),
+            );
+
 		$this->pageTitle = '部门管理';
         $model = new Deptment();
         $model->unsetAttributes();

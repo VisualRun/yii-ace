@@ -23,6 +23,9 @@ class Controller extends CController
 
 	public $modelClass = '';
 
+    //每个页面的menu_nav
+    public $menu_nav=array();
+
 	//每个页面自有的css
 	public $page_css=array();
 

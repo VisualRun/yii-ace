@@ -5,20 +5,20 @@
 
     <div class="sidebar-shortcuts" id="sidebar-shortcuts">
         <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
-            <button class="btn btn-success">
-                <i class="ace-icon fa fa-signal"></i>
+            <button onclick="location.href='<?php echo Yii::app()->createUrl('task/list') ?>'" class="btn btn-success">
+                <i class="ace-icon fa fa-tasks"></i>
             </button>
 
-            <button class="btn btn-info">
-                <i class="ace-icon fa fa-pencil"></i>
+            <button onclick="location.href='<?php echo Yii::app()->createUrl('user/message') ?>'" onclick class="btn btn-info">
+                <i class="ace-icon glyphicon glyphicon-user"></i>
             </button>
 
             <!-- #section:basics/sidebar.layout.shortcuts -->
-            <button class="btn btn-warning">
+            <button onclick="location.href='<?php echo Yii::app()->createUrl('admin/user') ?>'" class="btn btn-warning">
                 <i class="ace-icon fa fa-users"></i>
             </button>
 
-            <button class="btn btn-danger">
+            <button onclick="location.href='<?php echo Yii::app()->createUrl('purviewadmin/allpurview') ?>'" class="btn btn-danger">
                 <i class="ace-icon fa fa-cogs"></i>
             </button>
 

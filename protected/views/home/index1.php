@@ -24,6 +24,14 @@ the lightweight, feature-rich and easy to use admin template.
                 <!-- #section:custom/widget-box.header.options -->
                 <div class="widget-header widget-header-large">
                     <h4 class="widget-title">最新动态</h4>
+
+                    <div class="widget-toolbar">
+
+                        <a href="#" data-action="collapse">
+                            <i class="ace-icon fa fa-chevron-up"></i>
+                        </a>
+
+                    </div>
                 </div>
 
                 <!-- /section:custom/widget-box.header.options -->
@@ -51,6 +59,27 @@ the lightweight, feature-rich and easy to use admin template.
                 <!-- #section:custom/widget-box.header.options -->
                 <div class="widget-header widget-header-large">
                     <h4 class="widget-title">个人待处理任务</h4>
+                    <div class="widget-toolbar">
+                        <div class="widget-menu">
+                            <a href="#" data-action="settings" data-toggle="dropdown">
+                                <i class="ace-icon fa fa-bars"></i>
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-menu-right dropdown-light-blue dropdown-caret dropdown-closer">
+                                <li>
+                                    <a href="<?php echo Yii::app()->createUrl('/task/myhandletask') ?>">查看所有</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <a href="#" data-action="fullscreen" class="orange2">
+                            <i class="ace-icon fa fa-expand"></i>
+                        </a>
+
+                        <a href="#" data-action="collapse">
+                            <i class="ace-icon fa fa-chevron-up"></i>
+                        </a>
+                    </div>
                 </div>
 
                 <!-- /section:custom/widget-box.header.options -->
@@ -91,6 +120,31 @@ the lightweight, feature-rich and easy to use admin template.
                 <!-- #section:custom/widget-box.header.options -->
                 <div class="widget-header widget-header-large">
                     <h4 class="widget-title">系统待承接的任务</h4>
+                    <div class="widget-toolbar">
+                        <div class="widget-menu">
+                            <a href="#" data-action="settings" data-toggle="dropdown">
+                                <i class="ace-icon fa fa-bars"></i>
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-menu-right dropdown-light-blue dropdown-caret dropdown-closer">
+                                <li>
+                                    <a href="<?php echo Yii::app()->createUrl('/task/list',array('assignedId'=>0)) ?>">查看所有待接受任务</a>
+                                </li>
+
+                                <li>
+                                    <a href="<?php echo Yii::app()->createUrl('/task/list') ?>">查看所有任务</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <a href="#" data-action="fullscreen" class="orange2">
+                            <i class="ace-icon fa fa-expand"></i>
+                        </a>
+
+                        <a href="#" data-action="collapse">
+                            <i class="ace-icon fa fa-chevron-up"></i>
+                        </a>
+                    </div>
                 </div>
 
                 <!-- /section:custom/widget-box.header.options -->

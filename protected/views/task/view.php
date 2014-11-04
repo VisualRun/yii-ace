@@ -1,17 +1,24 @@
 <div class="col-xs-12">
     <!-- <div class="row"> -->
+        <?php if($model->assignedId == Yii::app()->user->id): ?>
+        <?php if($model->status < 2 && time()+86400 > strtotime($model->deadline)+86400 && time() < strtotime($model->deadline)+86400): ?>
+        <div class="alert alert-info bigger-110">
+            <i class="ace-icon fa fa-exclamation-triangle red"></i>
+            最后期限将近，请尽快处理
+        </div>
+        <?php elseif($model->status < 2 && time() > strtotime($model->deadline)+86400): ?>
+        <div class="alert alert-info bigger-110">
+            <i class="ace-icon fa fa-exclamation-triangle red"></i>
+            最后期限已过，请尽快处理
+        </div>
+        <?php endif; ?>
+        <?php endif; ?>
         <div id="recent-box" class="widget-box transparent">
             <div class="widget-header">
                 <h4 class="widget-title lighter smaller">
                     <i class="ace-icon fa fa-tasks blue"></i>&nbsp;&nbsp;
                     <strong><?php echO $model->name ?></strong>
                 </h4>
-                <?php if($model->status < 2 && time()+86400 > strtotime($model->deadline)): ?>
-                <div class="alert alert-info bigger-110">
-                    <i class="ace-icon fa fa-exclamation-triangle red"></i>
-                    还有不足一天，就到最后期限，请尽快处理
-                </div>    
-                <?php endif; ?>
                 <div class="widget-toolbar no-border">
                     <ul id="recent-tab" class="nav nav-tabs">
                         <li class="active">
@@ -71,7 +78,7 @@
                                     </div>
                                 </div>
                                 <div class="profile-info-row">
-                                    <div class="profile-info-name"> 积分值 </div>
+                                    <div class="profile-info-name"> 奖励积分 </div>
 
                                     <div class="profile-info-value">
                                         <?php echo $model->point ?>
@@ -85,7 +92,7 @@
                                     <div class="profile-info-value">
                                         <?php echo $model->deadline ?>
                                     </div>
-                                </div>                
+                                </div>
                             </div>
                             <div class="space-4"></div>
                             <div class="profile-user-info profile-user-info-striped">
@@ -202,7 +209,7 @@
                 </div>
             </div>
         </div>
-    
+
     <div class="space-4"></div>
     <div class="clearfix form-actions">
     <?php if(Yii::app()->user->id == $model->openedId): ?>
@@ -224,7 +231,7 @@
         <button id="dialog-closed-btn" class="btn btn-white btn-info btn-round">
             <i class="ace-icon glyphicon glyphicon-off blue "></i>
             关闭任务
-        </button> 
+        </button>
         <?php endif; ?>
     </p>
     <?php elseif(Yii::app()->user->id == $model->assignedId): ?>
@@ -242,7 +249,7 @@
         <button id="dialog-finished-btn" class="btn btn-white btn-info btn-round">
             <i class="ace-icon glyphicon glyphicon-ok blue "></i>
             完成任务
-        </button>    
+        </button>
         <?php endif; ?>
     </p>
     <?php endif; ?>
@@ -350,7 +357,7 @@
                             {
                                 $( "#dialog-assigned .error_info" ).removeClass('hide').html('请选择人员！');
                                 return false;
-                            }    
+                            }
                             $.ajax({
                                 type: "POST",
                                 url: "<?php echo Yii::app()->createUrl('/task/assigned') ?>",

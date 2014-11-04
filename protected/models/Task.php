@@ -159,11 +159,12 @@ class Task extends CActiveRecord
 	{
 		$column = array(
 			'id' => array('name'=>'id','type'=>'hidden'),
-			'typeId' => array('name'=>'主次类别','type'=>'select','data'=>Yii::app()->params['task_type']),
+			'code' => array('name'=>'任务编码','type'=>'text'),
+            'typeId' => array('name'=>'主次类别','type'=>'select','data'=>Yii::app()->params['task_type']),
 			'imtypeId' => array('name'=>'重要类别','type'=>'select','data'=>Yii::app()->params['task_important_type']),
 			'openedId' => array('name'=>'创建人','type'=>'select','data'=>CHtml::listData(User::model()->findAllByAttributes(array('status'=>1)), 'id', 'account')),
 			'status' => array('name'=>'状态','type'=>'select','data'=>Yii::app()->params['task_status']),
-			//'createdTime' => array('name'=>'选择时间','type'=>'daterange'),
+			'createdTime' => array('name'=>'选择时间','type'=>'daterange'),
 		);
 		return $column;
 	}
@@ -182,10 +183,17 @@ class Task extends CActiveRecord
         	$criteria->order .= 't.'.Yii::app()->request->getParam('sidx').' '.Yii::app()->request->getParam('sord').",";
         $criteria->order .= 't.createdTime DESC,t.id DESC';
 
+        $criteria->compare('t.code',$this->code);
         $criteria->compare('t.typeId',$this->typeId);
         $criteria->compare('t.imtypeId',$this->imtypeId);
         $criteria->compare('t.openedId',$this->openedId);
         $criteria->compare('t.status',$this->status);
+        $criteria->compare('t.assignedId',$this->assignedId);
+
+        if(isset($_GET['start'])&&!empty($_GET['start']))
+            $criteria->compare('UNIX_TIMESTAMP(t.openedDate) >',strtotime($_GET['start']));
+        if(isset($_GET['end'])&&!empty($_GET['end']))
+            $criteria->compare('UNIX_TIMESTAMP(t.openedDate) <',strtotime($_GET['end'])+86400);
 
         $count = $this->count($criteria);
         $pages = new CPagination($count);
@@ -209,13 +217,13 @@ class Task extends CActiveRecord
 				'code' => $value->code,
 				'typeId' => Yii::app()->params['task_type'][$value->typeId],
 				'imtypeId' => Yii::app()->params['task_important_type'][$value->imtypeId],
-				'name' => $value->name,
+				'name' => Helpers::substrUtf8($value->name,8),
 				'desc' => $value->desc,
 				'status' => Yii::app()->params['task_status'][$value->status],
 				'deadline' => $value->deadline,
 				'openedId' => isset($value->opened)?$value->opened->account:'无',
 				'openedDate' => $value->openedDate,
-				'assignedId' => isset($value->assigned)?$value->assigned->account:'无',
+				'assignedId' => isset($value->assigned)?$value->assigned->account:'还未指派',
 				'assignedDate' => $value->assignedDate,
 				'estStarted' => $value->estStarted,
 				'realStarted' => $value->realStarted,
@@ -245,20 +253,21 @@ class Task extends CActiveRecord
         return $data;
 	}
 
-	public function searchmyField()
+	public function searchmyhandleField()
 	{
 		$column = array(
 			'id' => array('name'=>'id','type'=>'hidden'),
+            'code' => array('name'=>'任务编码','type'=>'text'),
 			'typeId' => array('name'=>'主次类别','type'=>'select','data'=>Yii::app()->params['task_type']),
 			'imtypeId' => array('name'=>'重要类别','type'=>'select','data'=>Yii::app()->params['task_important_type']),
 			'openedId' => array('name'=>'创建人','type'=>'select','data'=>CHtml::listData(User::model()->findAllByAttributes(array('status'=>1)), 'id', 'account')),
 			'status' => array('name'=>'状态','type'=>'select','data'=>Yii::app()->params['task_status']),
-			//'createdTime' => array('name'=>'选择时间','type'=>'daterange'),
+			'createdTime' => array('name'=>'选择时间','type'=>'daterange'),
 		);
 		return $column;
 	}
 
-	public function myresult()
+	public function myhandleresult()
 	{
 		$criteria = new CDbCriteria();
 
@@ -272,11 +281,17 @@ class Task extends CActiveRecord
         	$criteria->order .= 't.'.Yii::app()->request->getParam('sidx').' '.Yii::app()->request->getParam('sord').",";
         $criteria->order .= 't.createdTime DESC,t.id DESC';
 
+        $criteria->compare('t.code',$this->code);
         $criteria->compare('t.typeId',$this->typeId);
         $criteria->compare('t.imtypeId',$this->imtypeId);
         $criteria->compare('t.openedId',$this->openedId);
         $criteria->compare('t.status',$this->status);
         $criteria->compare('t.assignedId',Yii::app()->user->id);
+
+        if(isset($_GET['start'])&&!empty($_GET['start']))
+            $criteria->compare('UNIX_TIMESTAMP(t.openedDate) >',strtotime($_GET['start']));
+        if(isset($_GET['end'])&&!empty($_GET['end']))
+            $criteria->compare('UNIX_TIMESTAMP(t.openedDate) <',strtotime($_GET['end'])+86400);
 
         $count = $this->count($criteria);
         $pages = new CPagination($count);
@@ -291,10 +306,10 @@ class Task extends CActiveRecord
         	$hand = "";
         	if(Yii::app()->user->id == $value->openedId && $value->status == 0)
         	{
-        		$hand .= '<a href="'.Yii::app()->createUrl('/task/create',array('id'=>$value->id)).'">编辑</a> | ';
+        		$hand .= '<a href="'.Yii::app()->createUrl('/task/add',array('id'=>$value->id)).'">编辑</a> | ';
         	}
         	$hand .= '<a href="'.Yii::app()->createUrl('/task/view',array('id'=>$value->id)).'">查看</a>';
-        	
+
             $row[] = array(
                 'id' => $value->id,
 				'code' => $value->code,
@@ -306,7 +321,7 @@ class Task extends CActiveRecord
 				'deadline' => $value->deadline,
 				'openedId' => isset($value->opened)?$value->opened->account:'无',
 				'openedDate' => $value->openedDate,
-				'assignedId' => isset($value->assigned)?$value->assigned->account:'无',
+				'assignedId' => isset($value->assigned)?$value->assigned->account:'还未指派',
 				'assignedDate' => $value->assignedDate,
 				'estStarted' => $value->estStarted,
 				'realStarted' => $value->realStarted,
@@ -337,6 +352,103 @@ class Task extends CActiveRecord
         return $data;
 	}
 
+    public function searchmypublishField()
+    {
+        $column = array(
+            'id' => array('name'=>'id','type'=>'hidden'),
+            'code' => array('name'=>'任务编码','type'=>'text'),
+            'typeId' => array('name'=>'主次类别','type'=>'select','data'=>Yii::app()->params['task_type']),
+            'imtypeId' => array('name'=>'重要类别','type'=>'select','data'=>Yii::app()->params['task_important_type']),
+            'status' => array('name'=>'状态','type'=>'select','data'=>Yii::app()->params['task_status']),
+            'createdTime' => array('name'=>'选择时间','type'=>'daterange'),
+        );
+        return $column;
+    }
+
+    public function mypublishresult()
+    {
+        $criteria = new CDbCriteria();
+
+        $criteria->select = '*';
+        $criteria->order = "";
+        $sidx = Yii::app()->request->getParam('sidx');
+        $page = Yii::app()->request->getParam('page');
+        $rows = Yii::app()->request->getParam('rows');
+
+        if(!empty($sidx))
+            $criteria->order .= 't.'.Yii::app()->request->getParam('sidx').' '.Yii::app()->request->getParam('sord').",";
+        $criteria->order .= 't.createdTime DESC,t.id DESC';
+
+        $criteria->compare('t.code',$this->code);
+        $criteria->compare('t.typeId',$this->typeId);
+        $criteria->compare('t.imtypeId',$this->imtypeId);
+        $criteria->compare('t.status',$this->status);
+        $criteria->compare('t.openedId',Yii::app()->user->id);
+
+        if(isset($_GET['start'])&&!empty($_GET['start']))
+            $criteria->compare('UNIX_TIMESTAMP(t.openedDate) >',strtotime($_GET['start']));
+        if(isset($_GET['end'])&&!empty($_GET['end']))
+            $criteria->compare('UNIX_TIMESTAMP(t.openedDate) <',strtotime($_GET['end'])+86400);
+
+        $count = $this->count($criteria);
+        $pages = new CPagination($count);
+        $pages->pageVar = 'page';
+        $pages->currentPage = !empty($page)?Yii::app()->request->getParam('page')-1:10;
+        $pages->pageSize = !empty($rows)?Yii::app()->request->getParam('rows'):10;
+        $pages->applyLimit($criteria);
+        $models = $this->findAll($criteria);
+
+        $row = array();
+        foreach ($models as $key => $value) {
+            $hand = "";
+            if(Yii::app()->user->id == $value->openedId && $value->status == 0)
+            {
+                $hand .= '<a href="'.Yii::app()->createUrl('/task/add',array('id'=>$value->id)).'">编辑</a> | ';
+            }
+            $hand .= '<a href="'.Yii::app()->createUrl('/task/view',array('id'=>$value->id)).'">查看</a>';
+
+            $row[] = array(
+                'id' => $value->id,
+                'code' => $value->code,
+                'typeId' => Yii::app()->params['task_type'][$value->typeId],
+                'imtypeId' => Yii::app()->params['task_important_type'][$value->imtypeId],
+                'name' => $value->name,
+                'desc' => $value->desc,
+                'status' => Yii::app()->params['task_status'][$value->status],
+                'deadline' => $value->deadline,
+                'openedId' => isset($value->opened)?$value->opened->account:'无',
+                'openedDate' => $value->openedDate,
+                'assignedId' => isset($value->assigned)?$value->assigned->account:'还未指派',
+                'assignedDate' => $value->assignedDate,
+                'estStarted' => $value->estStarted,
+                'realStarted' => $value->realStarted,
+                'finishedId' => $value->finishedId,
+                'finishedDate' => $value->finishedDate,
+                'canceledId' => $value->canceledId,
+                'canceledDate' => $value->canceledDate,
+                'closedId' => $value->closedId,
+                'closedDate' => $value->closedDate,
+                'closedReason' => $value->closedReason,
+                'lastEditedId' => isset($value->lastEdited)?$value->lastEdited->account:'无',
+                'lastEditedDate' => $value->lastEditedDate,
+                'deleted' => $value->deleted,
+                'remark' => $value->remark,
+                'opAdminId' => $value->opAdminId,
+                'createdTime' => $value->createdTime,
+                'point' => $value->point,
+                'finishedpoint' => $value->finishedpoint,
+                'hand' => $hand,
+            );
+        }
+        $data = array(
+                    "totalpages" => $pages->pageCount,
+                    "currpage" => $pages->currentPage+1,
+                    "totalrecords" =>$count,
+                    "griddata" => $row,
+                );
+        return $data;
+    }
+
 	/**
 	 * @return array customized attribute labels (name=>label)
 	 */
@@ -353,7 +465,7 @@ class Task extends CActiveRecord
 			'deadline' => '任务最后时限',
 			'openedId' => '创建人ID',
 			'openedDate' => '创建时间',
-			'assignedId' => '指派到人ID',
+			'assignedId' => '接受人',
 			'assignedDate' => '指派时间',
 			'estStarted' => '预计开始时间',
 			'realStarted' => '真实开始时间',
@@ -370,7 +482,8 @@ class Task extends CActiveRecord
 			'remark' => '备注',
 			'opAdminId' => '操作人ID',
 			'createdTime' => '生成时间',
-
+            'point' => '奖励积分',
+            'createdTime' => '完成任务积分',
 		);
 	}
 
