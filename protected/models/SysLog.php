@@ -35,7 +35,8 @@ class SysLog extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('typeId, linkId, linkId2, valid, opAdminId, userId', 'numerical', 'integerOnly'=>true),
-			array('code, content', 'length', 'max'=>32),
+			array('code', 'length', 'max'=>32),
+			array('content', 'length', 'max'=>250),
 			array('deleted', 'length', 'max'=>1),
 			array('createdTime', 'safe'),
 			array('code, typeId, linkId, linkId2, content, valid, deleted, opAdminId, createdTime, userId','filter','filter'=>array($obj=new CHtmlPurifier(),'purify')),
@@ -59,7 +60,9 @@ class SysLog extends CActiveRecord
 
 	public function beforeSave()
 	{
-		$this->createdTime = date('Y-m-d H:i:s');
+		if ($this->isNewRecord) {
+			$this->createdTime = date('Y-m-d H:i:s');
+		}
 		$this->opAdminId = Yii::app()->user->id;
 		return true;
 	}

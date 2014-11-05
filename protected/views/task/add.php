@@ -90,16 +90,16 @@
 			<?php elseif($value['type']=='date'):?>
 			<?php if($key == 'deadline'): ?>
 			<div class="form-group <?php if($model->scenario == 'new'): ?><?php else: ?><?php if($model->deadline_type == 2): ?>hide<?php endif; ?><?php endif; ?>" id="deadline1">
-				<?php echo $form->labelEx($model,$key,array('class'=>'col-sm-2 control-label no-padding-right')); ?>
+				<label for="Task_deadline" class="col-sm-2 control-label no-padding-right required">任务最后时限(按天) <span class="required">*</span></label>
 				<div class="col-sm-5">
 					<?php echo CHtml::textField('deadline_1',$model->{$key},array('class'=>'date-picker','data-date-format'=>'yyyy-mm-dd')) ?>
 				</div>
 				<?php echo $form->error($model,$key); ?>
 			</div>
 			<div class="form-group <?php if($model->scenario == 'new'): ?>hide<?php else: ?><?php if($model->deadline_type == 1): ?>hide<?php endif; ?><?php endif; ?>" id="deadline2">
-				<?php echo $form->labelEx($model,$key,array('class'=>'col-sm-2 control-label no-padding-right')); ?>
+				<label for="Task_deadline" class="col-sm-2 control-label no-padding-right required">任务最后时限(按小时) <span class="required">*</span></label>
 				<div class="col-sm-5">
-					<?php echo CHtml::textField('deadline_2',$model->{$key},array('class'=>'col-xs-2 col-sm-2')) ?>
+					<?php echo CHtml::textField('deadline_2',!empty($model->{$key})?$model->{$key}:'1',array('class'=>'spinner')) ?>
 				</div>
 				<?php echo $form->error($model,$key); ?>
 			</div>
@@ -116,7 +116,7 @@
 			<div class="form-group">
 				<label class="col-sm-2 control-label no-padding-right" for="attach">附件</label>
 				<div class="col-sm-5">
-					<input name="attach" id="attach" type="file" multiple="" />
+					<input name="attach" class="attach" id="attach" type="file" multiple="" />
 				</div>
 			</div>
 			<?php endif; ?>
@@ -156,13 +156,60 @@
 	            else title.text($title);
 	        }
 	    }));
+
+	    var spinner = $( ".spinner" ).spinner({
+			create: function( event, ui ) {
+				//add custom classes and icons
+				$(this)
+				.next().addClass('btn btn-success').html('<i class="ace-icon fa fa-plus"></i>')
+				.next().addClass('btn btn-danger').html('<i class="ace-icon fa fa-minus"></i>')
+				
+				//larger buttons on touch devices
+				if('touchstart' in document.documentElement) 
+					$(this).closest('.ui-spinner').addClass('ui-spinner-touch');
+			},
+			min:1
+		});
+
+		$("#Task_typeId").on('change', function(e) {
+			var tmptype = $(this).find('option:selected').val();
+			if(tmptype == 1)
+			{
+			 	$('#group_assignedId').removeClass('hide');
+			}else{
+			 	$('#group_assignedId').addClass('hide');
+			}
+		})
+
+		$("#Task_deadline_type").on('change', function(e) {
+			var tmptype = $(this).find('option:selected').val();
+			if(tmptype == 1)
+			{
+			 	$('#deadline1').removeClass('hide');
+			 	$('#deadline2').addClass('hide');
+			}else if(tmptype == 2){
+				$('#deadline1').addClass('hide');
+			 	$('#deadline2').removeClass('hide');
+			}else{
+			 	$('#deadline1').addClass('hide');
+			 	$('#deadline2').addClass('hide');
+			}
+		})
+
+		$('textarea[class*=autosize]').autosize({append: "\n"});
+		$('textarea.limited').inputlimiter({
+			remText: '%n 字符剩余...',
+			limitText: '最多允许 : %n.'
+		});
 	})
 
+	
 	function dialog_notice(str){
 		$( "#dialog-notice .alert span" ).html(str);
 		$( "#dialog-notice" ).removeClass('hide').dialog({
 			resizable: false,
             modal: true,
+            width: 500,
             title: "<div class='widget-header'><h4 class='smaller'><i class='ace-icon fa fa-exclamation-triangle red'></i> 提醒</h4></div>",
             title_html: true,
             buttons: [
@@ -220,11 +267,11 @@
 			dialog_notice('请选择最后时限类别！');
 			return false;
 		}
-
-		var deadline = $('#deadline_'.deadline_type).val();
+		
+		var deadline = $('#deadline_'+deadline_type).val();
 		if(deadline == '')
 		{
-			dialog_notice('任务最后时限不能为空！');
+			dialog_notice('按小时的任务最后时限不能为空！');
 			return false;
 		}
 
@@ -247,46 +294,4 @@
 			}
 		}
     }
-
-	$(function(){
-		$.widget("ui.dialog", $.extend({}, $.ui.dialog.prototype, {
-	        _title: function(title) {
-	            var $title = this.options.title || '&nbsp;'
-	            if( ("title_html" in this.options) && this.options.title_html == true )
-	                title.html($title);
-	            else title.text($title);
-	        }
-	    }));
-
-		$("#Task_typeId").on('change', function(e) {
-			var tmptype = $(this).find('option:selected').val();
-			if(tmptype == 1)
-			{
-			 	$('#group_assignedId').removeClass('hide');
-			}else{
-			 	$('#group_assignedId').addClass('hide');
-			}
-		})
-
-		$("#Task_deadline_type").on('change', function(e) {
-			var tmptype = $(this).find('option:selected').val();
-			if(tmptype == 1)
-			{
-			 	$('#deadline1').removeClass('hide');
-			 	$('#deadline2').addClass('hide');
-			}else if(tmptype == 2){
-				$('#deadline1').addClass('hide');
-			 	$('#deadline2').removeClass('hide');
-			}else{
-			 	$('#deadline1').addClass('hide');
-			 	$('#deadline2').addClass('hide');
-			}
-		})
-
-		$('textarea[class*=autosize]').autosize({append: "\n"});
-		$('textarea.limited').inputlimiter({
-			remText: '%n 字符剩余...',
-			limitText: '最多允许 : %n.'
-		});
-	})
 </script>

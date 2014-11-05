@@ -185,19 +185,35 @@ class Helpers
     public static function taskpointlog($ob){
         $log = new PointLog();
 
+        if($ob->deadline_type == 1){
+            if($ob->deadline >= date('Y-m-d',strtotime($ob->finishedDate)))
+            {
+                $point = $ob->point;
+            }else{
+                $daynum = (strtotime($ob->deadline) - strtotime($ob->estStarted))/86400;
+                $average = round($ob->point/$daynum,2);
 
-        if($ob->deadline >= date('Y-m-d',strtotime($ob->finishedDate)))
-        {
-            $point = $ob->point;
-        }else{
-            $daynum = (strtotime($ob->deadline) - strtotime($ob->estStarted))/86400;
-            $average = round($ob->point/$daynum,2);
+                $overdaynum = ceil((strtotime(date('Y-m-d',strtotime($ob->finishedDate))) - strtotime($ob->deadline))/86400);
 
-            $overdaynum = (strtotime(date('Y-m-d',strtotime($ob->finishedDate))) - strtotime($ob->deadline))/86400;
+                $point = $ob->point - ($average*$overdaynum);
+                $point = round($point,2);
+            }
+        }elseif($ob->deadline_type == 2){
+            $realdeadline = $this->realdeadline($ob);
 
-            $point = $ob->point - ($average*$overdaynum);
-            $point = round($point,2);
+            if($realdeadline >= date('Y-m-d H:i:s',time()))
+            {
+                $point = $ob->point;
+            }else{
+                $average = round($ob->point/$ob->deadline,2);
+                //用ceil将除出来的结果往上进一位
+                $overhournum = ceil((strtotime($ob->finishedDate) - strtotime($realdeadline))/86400);
+
+                $point = $ob->point - ($average*$overhournum);
+                $point = round($point,2);
+            }
         }
+        
 
         $user = User::model()->findByPk($ob->finishedId);
         $user->point = $user->point+$point;
@@ -260,7 +276,7 @@ class Helpers
 
     }
 
-
+    //utf8 截取字符
     public static function substrUtf8($str, $cutLength, $etc = '...') {
         $result = '';
         $i = 0;
@@ -335,6 +351,16 @@ class Helpers
         }
 
         return $result;
+    }
+
+    //获取任务的正式deadline $obj 为task 任务对象
+    public static function realdeadline($obj){
+        if($obj->deadline_type == 1)
+        {
+            return date('Y-m-d H:i:s',strtotime($obj->deadline)+86399);
+        }elseif($obj->deadline_type == 2){
+            return date('Y-m-d H:i:s',strtotime($obj->openedDate)+3600*$obj->deadline);
+        }
     }
 
 }

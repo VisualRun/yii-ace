@@ -213,18 +213,36 @@ class Task extends CActiveRecord
         	}
         	$hand .= '<a href="'.Yii::app()->createUrl('/task/view',array('id'=>$value->id)).'">查看</a>';
 
+        	$tmp_deadline = Helpers::realdeadline($value);
+        	if($value->deadline_type == 1){
+        		$deadline = date('y/m/d',strtotime($tmp_deadline));
+        	}else{
+        		$deadline = date('y/m/d H点',strtotime($tmp_deadline));
+        	}
+
+        	$tmp_imtype = "";
+        	if($value->imtypeId == 3){
+        		$tmp_imtype = '<span class="label label-danger arrowed-in">'.Yii::app()->params['task_important_type'][$value->imtypeId].'</span>';
+        	}elseif($value->imtypeId == 2){
+        		$tmp_imtype = '<span class="label label-warning arrowed-in">'.Yii::app()->params['task_important_type'][$value->imtypeId].'</span>';
+        	}elseif($value->imtypeId == 1){
+        		$tmp_imtype = '<span class="label label-grey arrowed-in">'.Yii::app()->params['task_important_type'][$value->imtypeId].'</span>';
+        	}elseif($value->imtypeId == 0){
+        		$tmp_imtype = '<span class="label label-light arrowed-in">'.Yii::app()->params['task_important_type'][$value->imtypeId].'</span>';
+        	}
+
             $row[] = array(
                 'id' => $value->id,
 				'code' => $value->code,
 				'typeId' => Yii::app()->params['task_type'][$value->typeId],
-				'imtypeId' => Yii::app()->params['task_important_type'][$value->imtypeId],
+				'imtypeId' => $tmp_imtype,
 				'name' => Helpers::substrUtf8($value->name,8),
 				'desc' => $value->desc,
 				'status' => Yii::app()->params['task_status'][$value->status],
-				'deadline' => $value->deadline,
+				'deadline' => $deadline,
 				'openedId' => isset($value->opened)?$value->opened->account:'无',
 				'openedDate' => $value->openedDate,
-				'assignedId' => isset($value->assigned)?$value->assigned->account:'还未指派',
+				'assignedId' => isset($value->assigned)?$value->assigned->account:'<button class="btn btn-minier btn-danger">还未指派</button>',
 				'assignedDate' => $value->assignedDate,
 				'estStarted' => $value->estStarted,
 				'realStarted' => $value->realStarted,
@@ -312,18 +330,36 @@ class Task extends CActiveRecord
         	}
         	$hand .= '<a href="'.Yii::app()->createUrl('/task/view',array('id'=>$value->id)).'">查看</a>';
 
+        	$tmp_deadline = Helpers::realdeadline($value);
+        	if($value->deadline_type == 1){
+        		$deadline = date('y/m/d',strtotime($tmp_deadline));
+        	}else{
+        		$deadline = date('y/m/d H点',strtotime($tmp_deadline));
+        	}
+
+        	$tmp_imtype = "";
+        	if($value->imtypeId == 3){
+        		$tmp_imtype = '<span class="label label-danger arrowed-in">'.Yii::app()->params['task_important_type'][$value->imtypeId].'</span>';
+        	}elseif($value->imtypeId == 2){
+        		$tmp_imtype = '<span class="label label-warning arrowed-in">'.Yii::app()->params['task_important_type'][$value->imtypeId].'</span>';
+        	}elseif($value->imtypeId == 1){
+        		$tmp_imtype = '<span class="label label-grey arrowed-in">'.Yii::app()->params['task_important_type'][$value->imtypeId].'</span>';
+        	}elseif($value->imtypeId == 0){
+        		$tmp_imtype = '<span class="label label-light arrowed-in">'.Yii::app()->params['task_important_type'][$value->imtypeId].'</span>';
+        	}
+        	
             $row[] = array(
                 'id' => $value->id,
 				'code' => $value->code,
 				'typeId' => Yii::app()->params['task_type'][$value->typeId],
-				'imtypeId' => Yii::app()->params['task_important_type'][$value->imtypeId],
+				'imtypeId' => $tmp_imtype,
 				'name' => $value->name,
 				'desc' => $value->desc,
 				'status' => Yii::app()->params['task_status'][$value->status],
-				'deadline' => $value->deadline,
+				'deadline' => $deadline,
 				'openedId' => isset($value->opened)?$value->opened->account:'无',
 				'openedDate' => $value->openedDate,
-				'assignedId' => isset($value->assigned)?$value->assigned->account:'还未指派',
+				'assignedId' => isset($value->assigned)?$value->assigned->account:'<button class="btn btn-minier btn-danger">还未指派</button>',
 				'assignedDate' => $value->assignedDate,
 				'estStarted' => $value->estStarted,
 				'realStarted' => $value->realStarted,
@@ -410,18 +446,36 @@ class Task extends CActiveRecord
             }
             $hand .= '<a href="'.Yii::app()->createUrl('/task/view',array('id'=>$value->id)).'">查看</a>';
 
+            $tmp_deadline = Helpers::realdeadline($value);
+        	if($value->deadline_type == 1){
+        		$deadline = date('y/m/d',strtotime($tmp_deadline));
+        	}else{
+        		$deadline = date('y/m/d H点',strtotime($tmp_deadline));
+        	}
+
+        	$tmp_imtype = "";
+        	if($value->imtypeId == 3){
+        		$tmp_imtype = '<span class="label label-danger arrowed-in">'.Yii::app()->params['task_important_type'][$value->imtypeId].'</span>';
+        	}elseif($value->imtypeId == 2){
+        		$tmp_imtype = '<span class="label label-warning arrowed-in">'.Yii::app()->params['task_important_type'][$value->imtypeId].'</span>';
+        	}elseif($value->imtypeId == 1){
+        		$tmp_imtype = '<span class="label label-grey arrowed-in">'.Yii::app()->params['task_important_type'][$value->imtypeId].'</span>';
+        	}elseif($value->imtypeId == 0){
+        		$tmp_imtype = '<span class="label label-light arrowed-in">'.Yii::app()->params['task_important_type'][$value->imtypeId].'</span>';
+        	}
+
             $row[] = array(
                 'id' => $value->id,
                 'code' => $value->code,
                 'typeId' => Yii::app()->params['task_type'][$value->typeId],
-                'imtypeId' => Yii::app()->params['task_important_type'][$value->imtypeId],
+                'imtypeId' => $tmp_imtype,
                 'name' => $value->name,
                 'desc' => $value->desc,
                 'status' => Yii::app()->params['task_status'][$value->status],
-                'deadline' => $value->deadline,
+                'deadline' => $deadline,
                 'openedId' => isset($value->opened)?$value->opened->account:'无',
                 'openedDate' => $value->openedDate,
-                'assignedId' => isset($value->assigned)?$value->assigned->account:'还未指派',
+                'assignedId' => isset($value->assigned)?$value->assigned->account:'<button class="btn btn-minier btn-danger">还未指派</button>',
                 'assignedDate' => $value->assignedDate,
                 'estStarted' => $value->estStarted,
                 'realStarted' => $value->realStarted,

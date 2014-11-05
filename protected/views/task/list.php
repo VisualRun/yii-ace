@@ -13,7 +13,7 @@
         'model' => 'task',
         'gridSettings' => [
             'caption' => '任务列表',
-            'colNames' => ['任务编码', '任务名称', '主次类别', '重要类别', '创建人', '接受人', '状态','最后操作', '最后操作时间', '操作'],
+            'colNames' => ['任务编码', '任务名称', '主次', '重要', '创建人', '接受人', '状态','创建时间', '最后期限', '操作'],
             'colModel' => [
                 ['name' => 'code', 'index' => 'code', 'width' => '130', 'editable' => false],
                 ['name' => 'name', 'index' => 'name', 'editable' => false],
@@ -22,8 +22,8 @@
                 ['name' => 'openedId', 'index' => 'openedId', 'editable' => false],
                 ['name' => 'assignedId', 'index' => 'assignedId', 'editable' => false],
                 ['name' => 'status', 'index' => 'status', 'width' => '60', 'editable' => false, 'edittype' => 'select','editoptions' => ['value' => Yii::app()->params['task_status']]],
-                ['name' => 'lastEditedId', 'index' => 'lastEditedId', 'editable' => false],
-                ['name' => 'lastEditedDate', 'index' => 'lastEditedDate', 'editable' => false, 'formatter'=> "date", 'formatoptions' => ['srcformat'=>'Y-m-d H:i:s','newformat'=>'H:i y/m/d']],
+                ['name' => 'openedDate', 'index' => 'openedDate', 'editable' => false, 'formatter'=> "date", 'formatoptions' => ['srcformat'=>'Y-m-d H:i:s','newformat'=>'y/m/d H:i']],
+                ['name' => 'deadline', 'index' => 'deadline', 'editable' => false],
                 ['name' => 'hand', 'index' => 'hand', 'editable' => false]
             ],
             'rowNum' => 10,

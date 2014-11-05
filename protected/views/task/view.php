@@ -1,18 +1,32 @@
 <div class="col-xs-12">
     <!-- <div class="row"> -->
+        <?php $realdeadline = Helpers::realdeadline($model);  ?>
         <?php if($model->assignedId == Yii::app()->user->id): ?>
-        <?php if($model->status < 2 && time()+86400 > strtotime($model->deadline)+86400 && time() < strtotime($model->deadline)+86400): ?>
+        <?php if($model->status < 2 && time()+86400 > strtotime($realdeadline) && time() < strtotime($realdeadline)): ?>
         <div class="alert alert-info bigger-110">
+            <button data-dismiss="alert" class="close" type="button">
+                <i class="ace-icon fa fa-times"></i>
+            </button>
             <i class="ace-icon fa fa-exclamation-triangle red"></i>
             最后期限将近，请尽快处理
         </div>
-        <?php elseif($model->status < 2 && time() > strtotime($model->deadline)+86400): ?>
+        <?php elseif($model->status < 2 && time() > strtotime($realdeadline)): ?>
         <div class="alert alert-info bigger-110">
+            <button data-dismiss="alert" class="close" type="button">
+                <i class="ace-icon fa fa-times"></i>
+            </button>
             <i class="ace-icon fa fa-exclamation-triangle red"></i>
             最后期限已过，请尽快处理
         </div>
         <?php endif; ?>
         <?php endif; ?>
+        <div class="alert alert-info bigger-110">
+            <button data-dismiss="alert" class="close" type="button">
+                <i class="ace-icon fa fa-times"></i>
+            </button>
+            <i class="ace-icon fa fa-exclamation-triangle red"></i>
+            超时没有完成，得到积分会减少，甚至为负数
+        </div>
         <div id="recent-box" class="widget-box transparent">
             <div class="widget-header">
                 <h4 class="widget-title lighter smaller">
@@ -82,15 +96,16 @@
 
                                     <div class="profile-info-value">
                                         <?php echo $model->point ?>
-                                        <div class="alert alert-info bigger-110">
-                                            <i class="ace-icon fa fa-exclamation-triangle red"></i>
-                                            超时没有完成，得到积分会减少，甚至为负数
-                                        </div>
+                                        
                                     </div>
                                     <div class="profile-info-name"> 最后期限 </div>
 
                                     <div class="profile-info-value">
-                                        <?php echo $model->deadline ?>
+                                        <?php if($model->deadline_type == 1): ?>
+                                        <?php echo $model->deadline; ?>&nbsp;(按天)
+                                        <?php elseif($model->deadline_type == 2): ?>
+                                        <?php echo $realdeadline; ?>&nbsp;(按小时)
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                             </div>
@@ -139,7 +154,7 @@
                                     <div class="profile-info-value">
                                         <?php echo $model->finishedDate ?>
                                     </div>
-                                    <div class="profile-info-name"> 关闭时间 </div>
+                                    <div class="profile-info-name"> 确认完成时间 </div>
 
                                     <div class="profile-info-value">
                                         <?php echo $model->canceledDate ?>
@@ -243,14 +258,18 @@
             <i class="ace-icon  fa fa-pencil-square-o orange"></i>
             添加备注
         </button>
-        <button id="dialog-cacel-btn" class="btn btn-white btn-default btn-round">
+        <button id="dialog-cacel-btn" class="btn btn-white btn-warning btn-round">
             <i class="ace-icon fa fa-times red2"></i>
             取消任务
         </button>
         <?php elseif($model->status == 2): ?>
         <button id="dialog-closed-btn" class="btn btn-white btn-info btn-round">
             <i class="ace-icon glyphicon glyphicon-off blue "></i>
-            关闭任务
+            确认完成任务
+        </button>
+        <button id="dialog-return-btn" class="btn btn-white btn-warning btn-round">
+            <i class="ace-icon fa fa-reply red"></i>
+            退回处理人
         </button>
         <?php endif; ?>
     </p>
@@ -341,7 +360,39 @@
     <div id="dialog-closed" class="hide">
         <div class="alert alert-info bigger-110">
             <i class="ace-icon fa fa-exclamation-triangle red"></i>
-            关闭任务后会按照任务完成情况给完成人发放积分！
+            确认完成任务后会按照任务完成情况给完成人发放积分！
+        </div>
+        <div class="space-4"></div>
+        <div class="error_info ui-state-error hide"></div>
+    </div>
+
+    <div id="dialog-return" class="hide">
+        <div class="alert alert-info bigger-110">
+            <i class="ace-icon fa fa-exclamation-triangle red"></i>
+            确定将任务退回处理人吗？
+        </div>
+        <div class="radio">
+            <?php echo CHtml::textField('task_reason','',array('placeholder'=>'退回原因','class'=>'col-xs-12','maxlength'=>'60'))?>
+        </div>
+        <div class="hr hr-double hr-dotted"></div>
+        <div class="radio">
+            是否延长最后期限：
+            <label>
+                <input type="radio" value="day" class="ace" name="delay">
+                <span class="lbl"> 延长天数 </span>
+            </label>
+            <label>
+                <input type="radio" value="hour" class="ace" name="delay">
+                <span class="lbl"> 延长小时 </span>
+            </label>
+            <label>
+                <input type="radio" value="no" class="ace" name="delay">
+                <span class="lbl"> 不延长 </span>
+            </label>
+        </div>
+        <div class="radio hide" id="delay_div" >
+            <?php echo CHtml::textField('delay_value',1,array('class'=>'spinner')) ?>
+            <span class="delay_text"></span>
         </div>
         <div class="space-4"></div>
         <div class="error_info ui-state-error hide"></div>
@@ -359,12 +410,42 @@
             }
         }));
 
+        var spinner = $( ".spinner" ).spinner({
+            create: function( event, ui ) {
+                //add custom classes and icons
+                $(this)
+                .next().addClass('btn btn-success').html('<i class="ace-icon fa fa-plus"></i>')
+                .next().addClass('btn btn-danger').html('<i class="ace-icon fa fa-minus"></i>')
+                
+                //larger buttons on touch devices
+                if('touchstart' in document.documentElement) 
+                    $(this).closest('.ui-spinner').addClass('ui-spinner-touch');
+            },
+            min:1
+        });
+
+        $( "input[name=delay]" ).on('change', function(e) {
+            var tmp_delay = $(this).val();
+            if(tmp_delay == 'day'){
+                var tmp_text = "天";
+                $( "#delay_div" ).removeClass('hide').find('.delay_text').html(tmp_text);
+            }else if(tmp_delay == 'hour'){
+                var tmp_text = "小时";
+                $( "#delay_div" ).removeClass('hide').find('.delay_text').html(tmp_text);
+            }else if(tmp_delay == 'no'){
+                $( "#delay_div" ).addClass('hide').find('.delay_text').html('');
+            }
+
+            
+        })
+
         $( "#dialog-assigned-btn" ).on('click', function(e) {
             e.preventDefault();
 
             $( "#dialog-assigned" ).removeClass('hide').dialog({
                 resizable: false,
                 modal: true,
+                width: 500,
                 title: "<div class='widget-header'><h4 class='smaller'><i class='ace-icon fa fa-hand-o-right blue'></i> 指派任务</h4></div>",
                 title_html: true,
                 buttons: [
@@ -413,6 +494,7 @@
             $( "#dialog-cacel" ).removeClass('hide').dialog({
                 resizable: true,
                 modal: true,
+                width: 500,
                 title: "<div class='widget-header'><h4 class='smaller'><i class='ace-icon fa fa-exclamation-triangle red'></i> 取消任务</h4></div>",
                 title_html: true,
                 buttons: [
@@ -455,6 +537,7 @@
             $( "#dialog-start" ).removeClass('hide').dialog({
                 resizable: true,
                 modal: true,
+                width: 500,
                 title: "<div class='widget-header'><h4 class='smaller'><i class='ace-icon glyphicon glyphicon-check green'></i> 开始任务</h4></div>",
                 title_html: true,
                 buttons: [
@@ -497,6 +580,7 @@
             $( "#dialog-remark" ).removeClass('hide').dialog({
                 resizable: true,
                 modal: true,
+                width: 500,
                 title: "<div class='widget-header'><h4 class='smaller'><i class='ace-icon fa fa-pencil-square-o orange'></i> 添加备注</h4></div>",
                 title_html: true,
                 buttons: [
@@ -545,6 +629,7 @@
             $( "#dialog-finished" ).removeClass('hide').dialog({
                 resizable: true,
                 modal: true,
+                width: 500,
                 title: "<div class='widget-header'><h4 class='smaller'><i class='ace-icon glyphicon glyphicon-ok blue'></i> 完成任务</h4></div>",
                 title_html: true,
                 buttons: [
@@ -587,11 +672,12 @@
             $( "#dialog-closed" ).removeClass('hide').dialog({
                 resizable: true,
                 modal: true,
-                title: "<div class='widget-header'><h4 class='smaller'><i class='ace-icon glyphicon glyphicon-off blue'></i> 关闭任务</h4></div>",
+                width: 500,
+                title: "<div class='widget-header'><h4 class='smaller'><i class='ace-icon glyphicon glyphicon-off blue'></i> 确认完成任务</h4></div>",
                 title_html: true,
                 buttons: [
                     {
-                        html: "<i class='ace-icon fa fa-check bigger-110'></i>&nbsp; 确认关闭？",
+                        html: "<i class='ace-icon fa fa-check bigger-110'></i>&nbsp; 确认确认完成？",
                         "class" : "btn btn-danger btn-xs",
                         click: function() {
                             $.ajax({
@@ -629,6 +715,7 @@
             $( "#dialog-undertake" ).removeClass('hide').dialog({
                 resizable: true,
                 modal: true,
+                width: 500,
                 title: "<div class='widget-header'><h4 class='smaller'><i class='ace-icon glyphicon glyphicon-off blue'></i> 承接任务</h4></div>",
                 title_html: true,
                 buttons: [
@@ -640,6 +727,62 @@
                                 type: "POST",
                                 url: "<?php echo Yii::app()->createUrl('/task/undertake') ?>",
                                 data: "id=<?php echo $model->id ?>",
+                                dataType : 'json',
+                                success: function(msg){
+                                    if(msg.type == 'success')
+                                    {
+                                        window.location.reload();
+                                    }else{
+                                        $( "#dialog-finished .error_info" ).removeClass('hide').html(msg.info);
+                                        return false;
+                                    }
+                                }
+                            });
+                        }
+                    }
+                    ,
+                    {
+                        html: "<i class='ace-icon fa fa-times bigger-110'></i>&nbsp; 取消",
+                        "class" : "btn btn-xs",
+                        click: function() {
+                            $( this ).dialog( "close" );
+                        }
+                    }
+                ]
+            });
+        });
+
+        $( "#dialog-return-btn" ).on('click', function(e) {
+            e.preventDefault();
+
+            $( "#dialog-return" ).removeClass('hide').dialog({
+                resizable: true,
+                modal: true,
+                width: 500,
+                title: "<div class='widget-header'><h4 class='smaller'><i class='ace-icon fa fa-reply red'></i> 退回任务</h4></div>",
+                title_html: true,
+                buttons: [
+                    {
+                        html: "<i class='ace-icon fa fa-check bigger-110'></i>&nbsp; 确认退回？",
+                        "class" : "btn btn-danger btn-xs",
+                        click: function() {
+                            var reason = $("input[name=task_reason]").val();
+                            if(reason == '')
+                            {
+                                $( "#dialog-return .error_info" ).removeClass('hide').html('退回处理人必须填写原因！');
+                                return false;
+                            }
+                            var delay = $('input[name=delay]:checked').val();
+                            var delay_value = $("#delay_value").val();
+                            if(delay == undefined){
+                                delay = 'no';
+                                delay_value = 0;
+                            }
+
+                            $.ajax({
+                                type: "POST",
+                                url: "<?php echo Yii::app()->createUrl('/task/return') ?>",
+                                data: "id=<?php echo $model->id ?>&reason="+reason+"&delay="+delay+"&delay_value="+delay_value,
                                 dataType : 'json',
                                 success: function(msg){
                                     if(msg.type == 'success')

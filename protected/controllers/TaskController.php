@@ -68,6 +68,11 @@ EOD;
             $old_assignedId = $model->assignedId;
             $model->attributes=$_POST['Task'];
 
+            if($model->deadline_type == 1)
+                $model->deadline = Yii::app()->request->getParam('deadline_1');
+            elseif($model->deadline_type == 2)
+                $model->deadline = Yii::app()->request->getParam('deadline_2');
+
             //如果文件上传
             $uploaded = CUploadedFile::getInstanceByName('attach');
             //print_r($uploaded);exit;
@@ -112,10 +117,10 @@ EOD;
                 $model->assignedDate = date('Y-m-d H:i:s');
             }
 
-	    if($model->scenario == 'new')
+            if($model->scenario == 'new')
                 $model->status = 0;
 
-			$model->deadline = date('Y-m-d',strtotime($model->deadline));
+			//$model->deadline = date('Y-m-d',strtotime($model->deadline));
 
             if($model->save())
             {
@@ -196,11 +201,26 @@ EOD;
 		{
 			$assigned_arr[$value->id] = $value->account;
 		}
-	$file = File::model()->findAll("taskId = $pk");
+	   
+        $file = File::model()->findAll("taskId = $pk");
 
-        $remark = TaskRemark::model()->with(array('user'))->findAll("taskId = $pk && valid = 1");
+        $criteria=new CDbCriteria;
+        $criteria->select = '*';
+        $criteria->addCondition("t.taskId = :taskId");
+        $criteria->params[':taskId']=$pk;
+        $criteria->addCondition("t.valid = :valid");
+        $criteria->params[':valid'] = 1;
+        $criteria->order = "t.id ASC";
+        $remark = TaskRemark::model()->with(array('user'))->findAll($criteria);
 
-        $log = SysLog::model()->with(array('user'))->findAll("linkId = $pk && valid = 1");
+        $criteria=new CDbCriteria;
+        $criteria->select = '*';
+        $criteria->addCondition("t.linkId = :linkId");
+        $criteria->params[':linkId']=$pk;
+        $criteria->addCondition("t.valid = :valid");
+        $criteria->params[':valid'] = 1;
+        $criteria->order = "t.id ASC";
+        $log = SysLog::model()->with(array('user'))->findAll($criteria);
 
 		$this->render('view',array('model'=>$model,'assigned_arr'=>$assigned_arr,'remark'=>$remark,'log'=>$log,'file'=>$file));
 	}
@@ -406,7 +426,7 @@ EOD;
         }
 	}
 
-	//任务关闭并评分
+	//任务确认完成并评分
 	public function actionClosed(){
 		if (Yii::app()->request->isAjaxRequest)
         {
@@ -442,4 +462,97 @@ EOD;
 
         }
 	}
+
+    //任务确认完成并评分
+    public function actionReturn(){
+        if (Yii::app()->request->isAjaxRequest)
+        {
+            $pk = Yii::app()->request->getParam('id');
+            $model = Task::model()->findByPk($pk);
+            if(empty($model))
+            {
+                echo json_encode(array('type'=>'error','info'=>'没有这个任务！'));
+                Yii::app()->end();
+            }
+
+            if($model->openedId == Yii::app()->user->id && $model->status == 2)
+            {
+                $model->status = 1;
+                $model->finishedId = '';
+                $model->finishedDate = '0000-00-00 00:00:00';
+
+                $reason = trim(Yii::app()->request->getParam('reason'));
+                if($reason == '')
+                {
+                    echo json_encode(array('type'=>'error','info'=>'请填写退回处理人原因！'));
+                    Yii::app()->end();
+                }
+
+                $delay = Yii::app()->request->getParam('delay');
+                $delay_value = Yii::app()->request->getParam('delay_value');
+
+
+                $old_deadline_type = $model->deadline_type;
+                $old_deadline = $model->deadline;
+                $old_realdeadline = Helpers::realdeadline($model);
+
+                if($delay == 'day')
+                {   
+                    if($old_deadline_type == 1)
+                    {
+                        $model->deadline = date('Y-m-d',strtotime($old_deadline)+86400*$delay_value);
+                    }elseif($old_deadline_type == 2){
+                        $model->deadline = $old_deadline+$delay_value*24;
+                    }
+                }elseif($delay == 'hour'){
+                    //如果延期的时间是小于24个小时，而之前的时限类别是按天的话，换算比较麻烦，直接将时限类型换成按小时
+
+                    if($old_deadline_type == 1)
+                    {
+                        $model->deadline = ceil(((strtotime($old_deadline)+86400 + $delay_value*3600)-strtotime($model->openedDate))/3600);
+                    }elseif($old_deadline_type == 2){
+                        $model->deadline = $old_deadline+$delay_value;
+                    }
+
+                    $model->deadline_type = 2;
+                }
+
+                if($model->save())
+                {
+                    $new_realdeadline = Helpers::realdeadline($model);
+
+                    $assigned = User::model()->findByPk($model->assignedId);
+
+                    Helpers::syslog(2,Yii::app()->user->getState('account')." 将任务 [".$model->name."] 退回给了 ".$assigned->account,Yii::app()->user->id,$pk);
+                    //通知处理人
+                    $content = Yii::app()->user->getState('account')." 将任务 [".$model->name."] 退回给了你，原因是 [<span style='color:red'>".$reason."</span>] ;";
+                    if($delay == 'day')
+                    {
+                        
+                        $content .= " 同时将最后期限延长了 ".$delay_value."天;";
+
+                        Helpers::syslog(2,Yii::app()->user->getState('account')." 将任务最后期限从 [".$old_realdeadline."] 延长到 [".$new_realdeadline."]",Yii::app()->user->id,$pk);
+                    
+                    }elseif($delay == 'hour'){
+                        
+                        $content .= " 同时将最后期限延长了 ".$delay_value."小时;";
+
+                        Helpers::syslog(2,Yii::app()->user->getState('account')." 将任务最后期限从 [".$old_realdeadline."] 延长到 [".$new_realdeadline."]",Yii::app()->user->id,$pk);
+                    
+                    }
+                    Helpers::sendmessage($model->assignedId,$content,2,0,$model->id);
+
+                    
+
+                }
+
+                echo json_encode(array('type'=>'success'));
+                Yii::app()->end();
+            }else{
+                echo json_encode(array('type'=>'error','info'=>'数据错误！'));
+                Yii::app()->end();
+            }
+
+        }
+    }
 }

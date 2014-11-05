@@ -71,6 +71,7 @@
                     $( "#dialog-check" ).removeClass('hide').dialog({
                         resizable: true,
                         modal: true,
+                        width: 500,
                         title: "<div class='widget-header'><h4 class='smaller'><i class='ace-icon fa fa-check green'></i> 查看内容</h4></div>",
                         title_html: true,
                         buttons: [
