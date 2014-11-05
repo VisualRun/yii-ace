@@ -28,6 +28,15 @@ class JqGridlist extends CPortlet
             'jqGrid/jquery.jqGrid.min.js',
             'jqGrid/i18n/grid.locale-cn.js',
             );
+        $this->getController()->page_script = <<<EOD
+<script type="text/javascript">
+    $('.date-picker').datepicker({
+        autoclose: true,
+        todayHighlight: true,
+        language: 'zh-CN'
+    })
+</script>
+EOD;
 
 		$jsonGridSettings = $this->processingGridSettings($this->gridSettings);
 		$jsonPagerSettings = $this->processingPagerSettings($this->pagerSettings);

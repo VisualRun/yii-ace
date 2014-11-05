@@ -13,4 +13,5 @@ return array(
 	'message_type'=>array(1=>'系统消息',2=>'任务消息'),
 	'checkout'=>array('未看','已看'),
 	'subtraction'=>array(1=>'增加',2=>'减少'),
+	'deadline_type'=>array(1=>'按天','按小时')
 );

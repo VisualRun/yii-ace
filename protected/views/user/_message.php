@@ -62,12 +62,3 @@
     </div>
     <?php $this->endWidget(); ?>
     <?php endif;?>
-    <script>
-        jQuery(function($) {
-            $('.date-picker').datepicker({
-                autoclose: true,
-                todayHighlight: true,
-                language: 'zh-CN'
-            });
-        })
-    </script>

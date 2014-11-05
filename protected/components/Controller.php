@@ -32,6 +32,8 @@ class Controller extends CController
 	//每个页面自有的js
 	public $page_js=array();
 
+    public $page_script=array();
+
 	public function beforeAction($action){
 		//查询权限表
 		$purview = Purview::model()->findByAttributes(array('controller'=>strtoupper($this->getId()),'action'=>strtoupper($this->action->id),'valid'=>1));

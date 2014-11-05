@@ -88,6 +88,22 @@
 				<?php echo $form->error($model,$key); ?>
 			</div>
 			<?php elseif($value['type']=='date'):?>
+			<?php if($key == 'deadline'): ?>
+			<div class="form-group <?php if($model->scenario == 'new'): ?><?php else: ?><?php if($model->deadline_type == 2): ?>hide<?php endif; ?><?php endif; ?>" id="deadline1">
+				<?php echo $form->labelEx($model,$key,array('class'=>'col-sm-2 control-label no-padding-right')); ?>
+				<div class="col-sm-5">
+					<?php echo CHtml::textField('deadline_1',$model->{$key},array('class'=>'date-picker','data-date-format'=>'yyyy-mm-dd')) ?>
+				</div>
+				<?php echo $form->error($model,$key); ?>
+			</div>
+			<div class="form-group <?php if($model->scenario == 'new'): ?>hide<?php else: ?><?php if($model->deadline_type == 1): ?>hide<?php endif; ?><?php endif; ?>" id="deadline2">
+				<?php echo $form->labelEx($model,$key,array('class'=>'col-sm-2 control-label no-padding-right')); ?>
+				<div class="col-sm-5">
+					<?php echo CHtml::textField('deadline_2',$model->{$key},array('class'=>'col-xs-2 col-sm-2')) ?>
+				</div>
+				<?php echo $form->error($model,$key); ?>
+			</div>
+			<?php else: ?>
 			<div class="form-group">
 				<?php echo $form->labelEx($model,$key,array('class'=>'col-sm-2 control-label no-padding-right')); ?>
 				<div class="col-sm-5">
@@ -95,6 +111,7 @@
 				</div>
 				<?php echo $form->error($model,$key); ?>
 			</div>
+			<?php endif; ?>
 			<?php elseif($value['type'] == 'file' && $key == 'attach'):?>
 			<div class="form-group">
 				<label class="col-sm-2 control-label no-padding-right" for="attach">附件</label>
@@ -196,12 +213,30 @@
 			dialog_notice('请填写正确的奖励积分！');
 			return false;
 		}
-		var deadline = $('#Task_deadline').val();
-		if(deadline == '')
+
+		var deadline_type = $('#Task_deadline_type option:selected').val();
+		if(deadline_type == '')
 		{
-			dialog_notice('请选择任务最后时限！');
+			dialog_notice('请选择最后时限类别！');
 			return false;
 		}
+
+		var deadline = $('#deadline_'.deadline_type).val();
+		if(deadline == '')
+		{
+			dialog_notice('任务最后时限不能为空！');
+			return false;
+		}
+
+		if(deadline_type == 2)
+		{
+			if(isNaN(deadline))
+			{
+				dialog_notice('小时数必须是数字！');
+				return false;
+			}
+		}
+
 		if(typeId == 1)
 		{
 			var assignedId = $('#Task_assignedId option:selected').val();
@@ -233,97 +268,25 @@
 			}
 		})
 
-		// $('.id-input-file').ace_file_input({
-		// 	no_file:'没有文件 ...',
-		// 	btn_choose:'选择本地文件',
-		// 	btn_change:'修改',
-		// 	droppable:false,
-		// 	onchange:null,
-		// 	thumbnail:false //| true | large
-		// 	//whitelist:'gif|png|jpg|jpeg'
-		// 	//blacklist:'exe|php'
-		// 	//onchange:''
-		// 	//
-		// });
-
-		// Dropzone.autoDiscover = false;
-		// try {
-		//   var myDropzone = new Dropzone("#new-form" , {
-		//     paramName: "attach", // The name that will be used to transfer the file
-		//     maxFilesize: 0.5, // MB
-
-		// 	addRemoveLinks : true,
-		// 	dictDefaultMessage :
-		// 	'<span class="bigger-150 bolder"><i class="ace-icon fa fa-caret-right red"></i> Drop files</span> to upload \
-		// 	<span class="smaller-80 grey">(or click)</span> <br /> \
-		// 	<i class="upload-icon ace-icon fa fa-cloud-upload blue fa-3x"></i>'
-		// ,
-		// 	dictResponseError: 'Error while uploading file!',
-
-		// 	//change the previewTemplate to use Bootstrap progress bars
-		// 	previewTemplate: "<div class=\"dz-preview dz-file-preview\">\n  <div class=\"dz-details\">\n    <div class=\"dz-filename\"><span data-dz-name></span></div>\n    <div class=\"dz-size\" data-dz-size></div>\n    <img data-dz-thumbnail />\n  </div>\n  <div class=\"progress progress-small progress-striped active\"><div class=\"progress-bar progress-bar-success\" data-dz-uploadprogress></div></div>\n  <div class=\"dz-success-mark\"><span></span></div>\n  <div class=\"dz-error-mark\"><span></span></div>\n  <div class=\"dz-error-message\"><span data-dz-errormessage></span></div>\n</div>"
-		//   });
-		// } catch(e) {
-		//   alert('Dropzone.js does not support older browsers!');
-		// }
-
-		$('.date-picker').datepicker({
-			autoclose: true,
-			todayHighlight: true,
-			language: 'zh-CN'
-		});
+		$("#Task_deadline_type").on('change', function(e) {
+			var tmptype = $(this).find('option:selected').val();
+			if(tmptype == 1)
+			{
+			 	$('#deadline1').removeClass('hide');
+			 	$('#deadline2').addClass('hide');
+			}else if(tmptype == 2){
+				$('#deadline1').addClass('hide');
+			 	$('#deadline2').removeClass('hide');
+			}else{
+			 	$('#deadline1').addClass('hide');
+			 	$('#deadline2').addClass('hide');
+			}
+		})
 
 		$('textarea[class*=autosize]').autosize({append: "\n"});
 		$('textarea.limited').inputlimiter({
 			remText: '%n 字符剩余...',
 			limitText: '最多允许 : %n.'
 		});
-
-		function showErrorAlert (reason, detail) {
-			var msg='';
-			if (reason==='unsupported-file-type') { msg = "Unsupported format " +detail; }
-			else {
-				//console.log("error uploading file", reason, detail);
-			}
-			$('<div class="alert"> <button type="button" class="close" data-dismiss="alert">&times;</button>'+
-			 '<strong>File upload error</strong> '+msg+' </div>').prependTo('#alerts');
-		}
-
-		$('.wysiwyg-editor').ace_wysiwyg({
-			toolbar:
-			[
-				'font',
-				null,
-				'fontSize',
-				null,
-				{name:'bold', className:'btn-info'},
-				{name:'italic', className:'btn-info'},
-				{name:'strikethrough', className:'btn-info'},
-				{name:'underline', className:'btn-info'},
-				null,
-				{name:'insertunorderedlist', className:'btn-success'},
-				{name:'insertorderedlist', className:'btn-success'},
-				{name:'outdent', className:'btn-purple'},
-				{name:'indent', className:'btn-purple'},
-				null,
-				{name:'justifyleft', className:'btn-primary'},
-				{name:'justifycenter', className:'btn-primary'},
-				{name:'justifyright', className:'btn-primary'},
-				{name:'justifyfull', className:'btn-inverse'},
-				null,
-				{name:'createLink', className:'btn-pink'},
-				{name:'unlink', className:'btn-pink'},
-				null,
-				{name:'insertImage', className:'btn-success'},
-				null,
-				'foreColor',
-				null,
-				{name:'undo', className:'btn-grey'},
-				{name:'redo', className:'btn-grey'}
-			],
-			'wysiwyg': {
-				fileUploadError: showErrorAlert
-			}
-		}).prev().addClass('wysiwyg-style2');
 	})
 </script>

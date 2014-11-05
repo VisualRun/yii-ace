@@ -50,18 +50,18 @@ class Task extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('typeId, imtypeId, name, desc, deadline, point', 'required'),
-			array('typeId, imtypeId, status, openedId, assignedId, finishedId, canceledId, closedId, lastEditedId, opAdminId, point', 'numerical', 'integerOnly'=>true),
+			array('typeId, imtypeId, name, desc, deadline, point, deadline_type', 'required'),
+			array('typeId, imtypeId, status, openedId, assignedId, finishedId, canceledId, closedId, lastEditedId, opAdminId, point, deadline_type', 'numerical', 'integerOnly'=>true),
 			array('code, name', 'length', 'max'=>32),
 			array('closedReason', 'length', 'max'=>30),
 			array('deleted', 'length', 'max'=>1),
 			array('finishedpoint', 'length', 'max'=>8),
 			array('remark', 'length', 'max'=>128),
 			array('openedDate, assignedDate, estStarted, realStarted, finishedDate, canceledDate, closedDate, lastEditedDate, createdTime', 'safe'),
-			array('code, typeId, imtypeId, name, desc, status, deadline, openedId, openedDate, assignedId, assignedDate, estStarted, realStarted, finishedId, finishedDate, canceledId, canceledDate, closedId, closedDate, closedReason, lastEditedId, lastEditedDate, deleted, remark, opAdminId, createdTime, point, finishedpoint','filter','filter'=>array($obj=new CHtmlPurifier(),'purify')),
+			array('code, typeId, imtypeId, name, desc, status, deadline, openedId, openedDate, assignedId, assignedDate, estStarted, realStarted, finishedId, finishedDate, canceledId, canceledDate, closedId, closedDate, closedReason, lastEditedId, lastEditedDate, deleted, remark, opAdminId, createdTime, point, finishedpoint, deadline_type','filter','filter'=>array($obj=new CHtmlPurifier(),'purify')),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, code, typeId, imtypeId, name, desc, status, deadline, openedId, openedDate, assignedId, assignedDate, estStarted, realStarted, finishedId, finishedDate, canceledId, canceledDate, closedId, closedDate, closedReason, lastEditedId, lastEditedDate, deleted, remark, opAdminId, createdTime, point, finishedpoint', 'safe', 'on'=>'search'),
+			array('id, code, typeId, imtypeId, name, desc, status, deadline, openedId, openedDate, assignedId, assignedDate, estStarted, realStarted, finishedId, finishedDate, canceledId, canceledDate, closedId, closedDate, closedReason, lastEditedId, lastEditedDate, deleted, remark, opAdminId, createdTime, point, finishedpointl, deadline_type', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -119,6 +119,7 @@ class Task extends CActiveRecord
 			//'desc' => array('type'=>'editor'),
 			'desc' => array('type'=>'textarea'),
 			'point' => array('type'=>'text'),
+            'deadline_type' => array('type'=>'checkbox','data'=>Yii::app()->params['deadline_type']),
 			'deadline' => array('type'=>'date'),
 			'assignedId' => array('type'=>'checkbox','data'=>CHtml::listData(User::model()->findAll('status = 1 && id != '.Yii::app()->user->id), 'id', 'account')),
 			'attach' => array('type'=>'file'),
@@ -240,6 +241,7 @@ class Task extends CActiveRecord
 				'remark' => $value->remark,
 				'opAdminId' => $value->opAdminId,
 				'createdTime' => $value->createdTime,
+                'deadline_type' => $value->deadline_type,
 				'hand' => $hand,
 			);
         }
@@ -341,6 +343,7 @@ class Task extends CActiveRecord
 				'point' => $value->point,
 				'finishedpoint' => $value->finishedpoint,
 				'hand' => $hand,
+                'deadline_type' => $value->deadline_type,
 			);
         }
         $data = array(
@@ -438,6 +441,7 @@ class Task extends CActiveRecord
                 'point' => $value->point,
                 'finishedpoint' => $value->finishedpoint,
                 'hand' => $hand,
+                'deadline_type' => $value->deadline_type,
             );
         }
         $data = array(
@@ -484,6 +488,7 @@ class Task extends CActiveRecord
 			'createdTime' => '生成时间',
             'point' => '奖励积分',
             'createdTime' => '完成任务积分',
+            'deadline_type' => '最后时限类别',
 		);
 	}
 

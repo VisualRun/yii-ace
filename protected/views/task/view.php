@@ -117,7 +117,7 @@
                                     </div>
                                 </div>
                             </div>
-			    <?php endif; ?>	
+			    <?php endif; ?>
                             <div class="space-4"></div>
                             <?php if($model->assignedId != 0 && $model->status != 4): ?>
                             <div class="profile-user-info profile-user-info-striped">
@@ -186,7 +186,10 @@
                                 </div>
                                 <?php endforeach; ?>
                                 <?php else: ?>
-                                    <p>没有备注内容</p>
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name">&nbsp;&nbsp;</div>
+                                    <div class="profile-info-value">没有备注内容</div>
+                                </div>
                                 <?php endif; ?>
                             </div>
                         </div>
@@ -215,7 +218,10 @@
                                 </div>
                                 <?php endforeach; ?>
                                 <?php else: ?>
-                                    <p>没有操作日志</p>
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name">&nbsp;&nbsp;</div>
+                                    <div class="profile-info-value">没有操作日志</div>
+                                </div>
                                 <?php endif; ?>
                             </div>
                         </div>

@@ -43,8 +43,11 @@ the lightweight, feature-rich and easy to use admin template.
                                 <div class="col-xs-2">
                                 <span class="label arrowed-in"><?php echo Yii::app()->params['log_type'][$v->typeId] ?></span>
                                 </div>
-                                <div class="col-xs-10">
+                                <div class="col-xs-7">
                                     <?php echo $v->content ?>
+                                </div>
+                                <div class="col-xs-3">
+                                    <?php echo date('m月d日 H:i',strtotime($v->createdTime)) ?>
                                 </div>
                             </div>
                             <div class="space-8"></div>

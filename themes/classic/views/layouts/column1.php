@@ -75,6 +75,8 @@
 <script src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/<?php echo $value ?>"></script>
 <?php endforeach; endif; ?>
 
+<?php if(!empty(Yii::app()->controller->page_script)) echo Yii::app()->controller->page_script;  ?>
+
 <!-- 弹出框 -->
 <script src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/jquery-ui.min.js"></script>
 <script src="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/jquery.ui.touch-punch.min.js"></script>

@@ -111,20 +111,28 @@ class Message extends CActiveRecord
 
         $row = array();
         foreach ($models as $key => $value) {
-            $row[] = array(
+
+            $tmp = array(
                 'id' => $value->id,
-				'typeId' => Yii::app()->params['message_type'][$value->typeId],
-				'userId' => isset($value->user)?$value->user->account:'系统',
-				'touserId' => Yii::app()->user->getState('account'),
-				'linkId' => $value->linkId,
-				'linkId2' => $value->linkId2,
-				'content' => Helpers::substrUtf8($value->content,20),
-				'checkout' => Yii::app()->params['checkout'][$value->checkout],
-				'deleted' => Yii::app()->params['is_ync'][$value->deleted],
-				'opAdminId' => $value->opAdminId,
-				'createdTime' => $value->createdTime,
-				'hand'=> '<button onclick="checkmessage(this)" class="checkmessage btn btn-warning btn-xs" data-id="'.$value->id.'"><i class="ace-icon fa fa-search-plus "></i> 查看</button>',
+                'typeId' => Yii::app()->params['message_type'][$value->typeId],
+                'userId' => isset($value->user)?$value->user->account:'系统',
+                'touserId' => Yii::app()->user->getState('account'),
+                'linkId' => $value->linkId,
+                'linkId2' => $value->linkId2,
+                'content' => Helpers::substrUtf8($value->content,20),
+                'checkout' => Yii::app()->params['checkout'][$value->checkout],
+                'deleted' => Yii::app()->params['is_ync'][$value->deleted],
+                'opAdminId' => $value->opAdminId,
+                'createdTime' => $value->createdTime,
+                'hand'=> '<button onclick=\'checkmessage("'.$value->id.'","1","")\' class="checkmessage btn btn-warning btn-xs" ><i class="ace-icon fa fa-search-plus "></i> 查看</button>',
                 );
+            if($value->typeId == 2)
+            {
+                $tmp['linkstr'] = '<a onclick=\'checkmessage("'.$value->id.'","2","'.Yii::app()->createUrl('task/view',array('id'=>$value->linkId)).'")\' href="javascript:;">关联任务</a>';
+            }else{
+                $tmp['linkstr'] = '暂无';
+            }
+            $row[] = $tmp;
         }
 
         $data = array(

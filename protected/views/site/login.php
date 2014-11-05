@@ -11,7 +11,7 @@
                                 <span class="red">后台</span>
                                 <span class="white" id="id-text2">管理系统</span>
                             </h1>
-                            <h4 class="blue" id="id-company-text">&copy; 公司名称</h4>
+                            <h4 class="blue" id="id-company-text">&copy; 凡事网络</h4>
                         </div>
 
                         <div class="space-6"></div>

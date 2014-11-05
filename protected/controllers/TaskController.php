@@ -38,6 +38,15 @@ class TaskController extends Controller
             'bootstrap-wysiwyg.min.js',
             'dropzone.min.js',
             );
+        $this->page_script = <<<EOD
+<script type="text/javascript">
+    $('.date-picker').datepicker({
+        autoclose: true,
+        todayHighlight: true,
+        language: 'zh-CN'
+    })
+</script>
+EOD;
 
         //$saveType = Yii::app()->request->getParam('saveType');
         $pk = Yii::app()->request->getParam('id');
@@ -95,9 +104,9 @@ class TaskController extends Controller
 
             }
             if($model->hasErrors()){
-		print_r($model->getErrors());
+                print_r($model->getErrors());
                 Yii::app()->end();
-	    }
+	        }
 
             if($model->assignedId != 0){
                 $model->assignedDate = date('Y-m-d H:i:s');
@@ -105,9 +114,9 @@ class TaskController extends Controller
 
 	    if($model->scenario == 'new')
                 $model->status = 0;
-				
-			$model->deadline = date('Y-m-d',strtotime($model->deadline));	
-			
+
+			$model->deadline = date('Y-m-d',strtotime($model->deadline));
+
             if($model->save())
             {
                 $id = $model->primarykey;
@@ -344,7 +353,7 @@ class TaskController extends Controller
 
         	if($model->status < 2)
         	{
-        	   echo $remark = trim(Yii::app()->request->getParam('remark'));
+                $remark = trim(Yii::app()->request->getParam('remark'));
 
         		$task_remark = new TaskRemark();
         		$task_remark->remark = $remark;
