@@ -60,7 +60,10 @@ class Message extends CActiveRecord
 
 	public function beforeSave()
 	{
-		$this->createdTime = date('Y-m-d H:i:s');
+        if ($this->isNewRecord) {
+            $this->createdTime = date('Y-m-d H:i:s');
+        }
+
 		$this->opAdminId = Yii::app()->user->id;
 		return true;
 	}

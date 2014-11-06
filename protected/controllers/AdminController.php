@@ -43,4 +43,88 @@ class AdminController extends Controller
             $model->attributes=$_GET;
 		$this->render('user',array('model'=>$model));
 	}
+
+    public function actionPoint(){
+        $this->page_css = array(
+            'jquery-ui.custom.min.css',
+            'datepicker.css',
+            );
+
+        $this->page_js = array(
+            'jquery-ui.custom.min.js',
+            'jquery.ui.touch-punch.min.js',
+            'date-time/bootstrap-datepicker.min.js',
+            'date-time/locales/bootstrap-datepicker.zh-CN.js',
+            );
+        $this->page_script = <<<EOD
+<script type="text/javascript">
+    $('.date-picker').datepicker({
+        autoclose: true,
+        todayHighlight: true,
+        language: 'zh-CN'
+    })
+</script>
+EOD;
+        $this->pageTitle = '积分统计';
+
+        $getmonth = Yii::app()->request->getParam('month');
+        $type = Yii::app()->request->getParam('type');
+        $monthYear = !empty($getmonth)?$getmonth:date('Y-m');
+
+        $criteria=new CDbCriteria;
+        $criteria->select = '*';
+        $criteria->addCondition("t.log_type = :log_type");
+        $criteria->params[':log_type'] = 1;
+        $criteria->addCondition("t.valid = :valid");
+        $criteria->params[':valid'] = 1;
+        $criteria->addCondition("FROM_UNIXTIME(UNIX_TIMESTAMP(t.createdTime),'%Y-%m') = :date");
+        $criteria->params[':date'] = $monthYear;
+        $model = PointLog::model()->with(array('user'))->findAll($criteria);
+
+        $point_tmp = array();
+        foreach($model as $key => $value)
+        {
+            $point_tmp[$value->user->code][] = $value;
+        }
+
+        $point_arr = array();
+        foreach($point_tmp as $key => $value)
+        {
+            $tmp_value = 0;
+            $tmp_account = '';
+            foreach($value as $key1 => $value1)
+            {
+                $tmp_value += $value1->log_point;
+                $tmp_account = $value1->user->account;
+            }
+            $point_arr[$key]['account'] = $tmp_account;
+            $point_arr[$key]['point'] = $tmp_value;
+        }
+
+        if($type == 'excel')
+        {
+            $objectPHPExcel = new PHPExcel();
+            $objectPHPExcel->setActiveSheetIndex(0);
+            $objectPHPExcel->getActiveSheet()->mergeCells('A1:B1');
+            $objectPHPExcel->getActiveSheet()->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            $objectPHPExcel->getActiveSheet()->setCellValue('A1','统计月份：'.$monthYear);
+            $objectPHPExcel->getActiveSheet()->setCellValue('A2','账户');
+            $objectPHPExcel->getActiveSheet()->setCellValue('B2','积分值');
+            $i=3;
+            foreach($point_arr as $key => $value)
+            {
+                $objectPHPExcel->getActiveSheet()->setCellValue('A'.$i,$value['account']);
+                $objectPHPExcel->getActiveSheet()->setCellValue('B'.$i,$value['point']);
+            }
+            ob_end_clean();
+            ob_start();
+            header('Content-Type : application/vnd.ms-excel');
+            header('Content-Disposition:attachment;filename="积分统计'.$monthYear.'.xls"');
+            $objWriter= PHPExcel_IOFactory::createWriter($objectPHPExcel,'Excel5');
+            $objWriter->save('php://output');
+
+        }
+
+        $this->render('point',array('point_arr'=>$point_arr,'monthYear'=>$monthYear));
+    }
 }

@@ -16,7 +16,7 @@ class UpdatejqgridAction extends CAction{
                         throw new CHttpException(404);
                     $model = CActiveRecord::model($this->modelClass)->findByPk($pk);
                     $model->attributes = $data;
-                    if(isset($data['password']))
+                    if(isset($data['password']) && !empty($data['password']))
                         $model->password = md5($model->password);
                     if($model->save()){
                         if($this->modelClass == 'Deptment'){

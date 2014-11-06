@@ -155,7 +155,7 @@ class User extends CActiveRecord
                 'id' => $value->id,
 				'code' => $value->code,
 				'account' => $value->account,
-				'password' => $value->password,
+				'password' => '',
 				'typeId' => Yii::app()->params['user_type'][$value->typeId],
 				'type'=> Yii::app()->params['user_type'][$value->typeId],
 				'realname' => $value->realname,

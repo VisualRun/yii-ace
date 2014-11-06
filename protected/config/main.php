@@ -24,6 +24,7 @@ return array(
 		'application.extensions.*',
 		'application.actions.*',
 		'application.widgets.*',
+		'application.vendors.phpexcel.PHPExcel',
 	),
 
 	'modules'=>array(
@@ -82,6 +83,16 @@ return array(
 					'class'=>'CWebLogRoute',
 				),
 				*/
+				/******需要调试sql打开以下2数组******/
+                // array(
+                //     'class' => 'CWebLogRoute',
+                //     'levels' => 'profile,trace',
+                // ),
+                // array(
+                //     'class' => 'CProfileLogRoute',
+                //     'levels' => 'profile',
+                // ),
+                /**********************************/
 			),
 		),
 

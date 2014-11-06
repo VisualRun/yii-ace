@@ -163,9 +163,9 @@
 				$(this)
 				.next().addClass('btn btn-success').html('<i class="ace-icon fa fa-plus"></i>')
 				.next().addClass('btn btn-danger').html('<i class="ace-icon fa fa-minus"></i>')
-				
+
 				//larger buttons on touch devices
-				if('touchstart' in document.documentElement) 
+				if('touchstart' in document.documentElement)
 					$(this).closest('.ui-spinner').addClass('ui-spinner-touch');
 			},
 			min:1
@@ -203,7 +203,7 @@
 		});
 	})
 
-	
+
 	function dialog_notice(str){
 		$( "#dialog-notice .alert span" ).html(str);
 		$( "#dialog-notice" ).removeClass('hide').dialog({
@@ -267,7 +267,7 @@
 			dialog_notice('请选择最后时限类别！');
 			return false;
 		}
-		
+
 		var deadline = $('#deadline_'+deadline_type).val();
 		if(deadline == '')
 		{

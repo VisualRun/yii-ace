@@ -52,6 +52,7 @@ class Helpers
                 			array('text'=>'部门管理','href'=>Yii::app()->createUrl('/admin/deptment'),'action'=>array('deptment')),
                 			array('text'=>'岗位管理','href'=>Yii::app()->createUrl('/admin/workplace'),'action'=>array('workplace')),
                             array('text'=>'员工管理','href'=>Yii::app()->createUrl('/admin/user'),'action'=>array('user')),
+                            array('text'=>'积分统计','href'=>Yii::app()->createUrl('/admin/point'),'action'=>array('point')),
                 		),
                 	),
                     'purviewadmin'=>array(
@@ -183,14 +184,12 @@ class Helpers
      * @return [] 积分值
      */
     public static function taskpointlog($ob){
-        $log = new PointLog();
-
         if($ob->deadline_type == 1){
             if($ob->deadline >= date('Y-m-d',strtotime($ob->finishedDate)))
             {
                 $point = $ob->point;
             }else{
-                $daynum = (strtotime($ob->deadline) - strtotime($ob->estStarted))/86400;
+                $daynum = (strtotime($ob->deadline)+86400 - strtotime($ob->estStarted))/86400;
                 $average = round($ob->point/$daynum,2);
 
                 $overdaynum = ceil((strtotime(date('Y-m-d',strtotime($ob->finishedDate))) - strtotime($ob->deadline))/86400);
@@ -199,7 +198,7 @@ class Helpers
                 $point = round($point,2);
             }
         }elseif($ob->deadline_type == 2){
-            $realdeadline = $this->realdeadline($ob);
+            $realdeadline = self::realdeadline($ob);
 
             if($realdeadline >= date('Y-m-d H:i:s',time()))
             {
@@ -213,12 +212,13 @@ class Helpers
                 $point = round($point,2);
             }
         }
-        
+
 
         $user = User::model()->findByPk($ob->finishedId);
         $user->point = $user->point+$point;
         $user->save();
 
+        $log = new PointLog();
         $log->userId = $ob->finishedId;
         $log->log_type = 1;
         $log->log_point = $point;

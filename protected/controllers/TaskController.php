@@ -201,7 +201,7 @@ EOD;
 		{
 			$assigned_arr[$value->id] = $value->account;
 		}
-	   
+
         $file = File::model()->findAll("taskId = $pk");
 
         $criteria=new CDbCriteria;
@@ -445,11 +445,11 @@ EOD;
         		$model->closedDate = date('Y-m-d H:i:s');
         		if($model->save())
         		{
-        			Helpers::syslog(2,Yii::app()->user->getState('account')." 关闭任务 [".$model->name."]",Yii::app()->user->id,$pk);
+        			Helpers::syslog(2,Yii::app()->user->getState('account')." 确认了任务 [".$model->name."] 的完成",Yii::app()->user->id,$pk);
                     //根据任务完成时间 发送积分
                     $point = Helpers::taskpointlog($model);
                     //并通知完成人
-                    $content = "任务 [".$model->name."] 已由".Yii::app()->user->getState('account')."关闭，你将得到 ".$point." 的积分";
+                    $content = "任务 [".$model->name."] 已由".Yii::app()->user->getState('account')."确认完成，你将得到 ".$point." 的积分";
                     Helpers::sendmessage($model->finishedId,$content,2,0,$model->id);
                 }
 
@@ -497,7 +497,7 @@ EOD;
                 $old_realdeadline = Helpers::realdeadline($model);
 
                 if($delay == 'day')
-                {   
+                {
                     if($old_deadline_type == 1)
                     {
                         $model->deadline = date('Y-m-d',strtotime($old_deadline)+86400*$delay_value);
@@ -528,21 +528,21 @@ EOD;
                     $content = Yii::app()->user->getState('account')." 将任务 [".$model->name."] 退回给了你，原因是 [<span style='color:red'>".$reason."</span>] ;";
                     if($delay == 'day')
                     {
-                        
+
                         $content .= " 同时将最后期限延长了 ".$delay_value."天;";
 
                         Helpers::syslog(2,Yii::app()->user->getState('account')." 将任务最后期限从 [".$old_realdeadline."] 延长到 [".$new_realdeadline."]",Yii::app()->user->id,$pk);
-                    
+
                     }elseif($delay == 'hour'){
-                        
+
                         $content .= " 同时将最后期限延长了 ".$delay_value."小时;";
 
                         Helpers::syslog(2,Yii::app()->user->getState('account')." 将任务最后期限从 [".$old_realdeadline."] 延长到 [".$new_realdeadline."]",Yii::app()->user->id,$pk);
-                    
+
                     }
                     Helpers::sendmessage($model->assignedId,$content,2,0,$model->id);
 
-                    
+
 
                 }
 

@@ -33,9 +33,10 @@ class PointLog extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('userId, log_type, log_point, linkId, valid, opAdminId', 'numerical', 'integerOnly'=>true),
+			array('userId, log_type, linkId, valid, opAdminId', 'numerical', 'integerOnly'=>true),
 			array('log_desc', 'length', 'max'=>128),
-			array('deleted', 'length', 'max'=>1),
+			array('log_point', 'length', 'max'=>10),
+            array('deleted', 'length', 'max'=>1),
 			array('createdTime', 'safe'),
 			array('userId, log_type, log_point, log_desc, linkId, valid, deleted, opAdminId, createdTime','filter','filter'=>array($obj=new CHtmlPurifier(),'purify')),
 			// The following rule is used by search().
@@ -52,12 +53,15 @@ class PointLog extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+            'user'=>array(self::BELONGS_TO,'User','userId'),
 		);
 	}
 
 	public function beforeSave()
 	{
-		$this->createdTime = date('Y-m-d H:i:s');
+		if ($this->isNewRecord) {
+            $this->createdTime = date('Y-m-d H:i:s');
+        }
 		$this->opAdminId = Yii::app()->user->id;
 		return true;
 	}
