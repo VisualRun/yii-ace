@@ -36,7 +36,7 @@
         <div class="navbar-buttons navbar-header pull-right" role="navigation">
             <ul class="nav ace-nav">
                 <li class="purple">
-                    <a class="dropdown-toggle" href="<?php echo Yii::app()->createUrl('task/myhandletask') ?>">
+                    <a class="dropdown-toggle" href="<?php echo Yii::app()->createUrl('task/mystatus0') ?>">
                         <i class="ace-icon fa fa-tasks "></i>
                         <span id="navbar_task" class="badge badge-grey hide"></span>
                     </a>
@@ -62,9 +62,9 @@
 
                     <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
                         <li>
-                            <a href="<?php echo $this->createUrl('/user/setting');?>">
-                                <i class="ace-icon fa fa-cog"></i>
-                               	设置
+                            <a href="<?php echo $this->createUrl('/user/message');?>">
+                                <i class="ace-icon fa fa-envelope"></i>
+                               	个人消息
                             </a>
                         </li>
 

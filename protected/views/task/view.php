@@ -140,7 +140,7 @@
                                     <div class="profile-info-name"> 指派给 </div>
 
                                     <div class="profile-info-value">
-                                        <?php echo $model->assigned->account ?>
+                                        <?php echo $assigned_str ?>
                                     </div>
                                     <div class="profile-info-name"> 指派时间 </div>
 
@@ -250,9 +250,13 @@
     <?php if(Yii::app()->user->id == $model->openedId): ?>
     <p>
         <?php if($model->status == 0): ?>
-        <button id="dialog-assigned-btn" class="btn btn-white btn-info btn-round">
+        <!-- <button id="dialog-assigned-btn" class="btn btn-white btn-info btn-round">
             <i class="ace-icon fa fa-hand-o-right blue "></i>
             <?php if($model->assignedId): ?>修改指派<?php else:?>指派任务<?php endif; ?>
+        </button> -->
+        <button id="dialog-edit-btn" class="btn btn-white btn-info btn-round" onclick='location.href="<?php echo Yii::app()->createUrl('/task/add',array('id'=>$model->id)) ?>"'>
+            <i class="ace-icon fa fa-hand-o-right blue "></i>
+            编辑任务
         </button>
         <button id="dialog-remark-btn" class="btn btn-white btn-info btn-round">
             <i class="ace-icon  fa fa-pencil-square-o orange"></i>
@@ -273,12 +277,12 @@
         </button>
         <?php endif; ?>
     </p>
-    <?php elseif(Yii::app()->user->id == $model->assignedId): ?>
+    <?php elseif(in_array(Yii::app()->user->id,$assignedIdGroup)): ?>
     <p>
         <?php if($model->status == 0): ?>
         <button id="dialog-start-btn" class="btn btn-white btn-info btn-round">
             <i class="ace-icon glyphicon glyphicon-check green "></i>
-            开始任务
+            激活任务
         </button>
         <?php elseif($model->status == 1): ?>
         <button id="dialog-remark-btn" class="btn btn-white btn-info btn-round">
@@ -331,7 +335,7 @@
     <div id="dialog-start" class="hide">
         <div class="alert alert-info bigger-110">
             <i class="ace-icon fa fa-exclamation-triangle red"></i>
-            开始任务后，需要在规定的时限内完成！
+            激活任务后，需要在规定的时限内完成！
         </div>
         <div class="space-4"></div>
         <div class="error_info ui-state-error hide"></div>
@@ -538,11 +542,11 @@
                 resizable: true,
                 modal: true,
                 width: 500,
-                title: "<div class='widget-header'><h4 class='smaller'><i class='ace-icon glyphicon glyphicon-check green'></i> 开始任务</h4></div>",
+                title: "<div class='widget-header'><h4 class='smaller'><i class='ace-icon glyphicon glyphicon-check green'></i> 激活任务</h4></div>",
                 title_html: true,
                 buttons: [
                     {
-                        html: "<i class='ace-icon fa fa-check bigger-110'></i>&nbsp; 确认开始？",
+                        html: "<i class='ace-icon fa fa-check bigger-110'></i>&nbsp; 确认激活？",
                         "class" : "btn btn-danger btn-xs",
                         click: function() {
                             $.ajax({
@@ -555,7 +559,7 @@
                                     {
                                         window.location.reload();
                                     }else{
-                                        $( "#dialog-cacel .error_info" ).removeClass('hide').html(msg.info);
+                                        $( "#dialog-start .error_info" ).removeClass('hide').html(msg.info);
                                         return false;
                                     }
                                 }
@@ -604,7 +608,7 @@
                                     {
                                         window.location.reload();
                                     }else{
-                                        $( "#dialog-finished .error_info" ).removeClass('hide').html(msg.info);
+                                        $( "#dialog-remark .error_info" ).removeClass('hide').html(msg.info);
                                         return false;
                                     }
                                 }
@@ -690,7 +694,7 @@
                                     {
                                         window.location.reload();
                                     }else{
-                                        $( "#dialog-finished .error_info" ).removeClass('hide').html(msg.info);
+                                        $( "#dialog-closed .error_info" ).removeClass('hide').html(msg.info);
                                         return false;
                                     }
                                 }
@@ -733,7 +737,7 @@
                                     {
                                         window.location.reload();
                                     }else{
-                                        $( "#dialog-finished .error_info" ).removeClass('hide').html(msg.info);
+                                        $( "#dialog-undertake .error_info" ).removeClass('hide').html(msg.info);
                                         return false;
                                     }
                                 }
@@ -789,7 +793,7 @@
                                     {
                                         window.location.reload();
                                     }else{
-                                        $( "#dialog-finished .error_info" ).removeClass('hide').html(msg.info);
+                                        $( "#dialog-return .error_info" ).removeClass('hide').html(msg.info);
                                         return false;
                                     }
                                 }

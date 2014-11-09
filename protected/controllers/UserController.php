@@ -94,13 +94,14 @@ class UserController extends Controller
     {
       $userid = Yii::app()->user->id;
 
-      //查询有几个没有完成的任务
+      $code = User::model()->findByPk($userid);
+
+      //查询待激活的任务
       $criteria=new CDbCriteria;
       $criteria->select = 'id';
-      $criteria->addCondition("assignedId = :assignedId");
-      $criteria->params[':assignedId']=$userid;
       $criteria->addCondition("status = :status");
-      $criteria->params[':status'] = 1;
+      $criteria->params[':status'] = 0;
+      $criteria->compare('assignedIdGroup',$code->code,true);
       $task = Task::model()->count($criteria);
 
       //查询有几个未读的message

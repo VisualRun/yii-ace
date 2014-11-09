@@ -51,17 +51,18 @@ class Task extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('typeId, imtypeId, name, desc, deadline, point, deadline_type', 'required'),
-			array('typeId, imtypeId, status, openedId, assignedId, finishedId, canceledId, closedId, lastEditedId, opAdminId, point, deadline_type', 'numerical', 'integerOnly'=>true),
+			array('typeId, imtypeId, status, openedId, finishedId, canceledId, closedId, lastEditedId, opAdminId, point, deadline_type', 'numerical', 'integerOnly'=>true),
 			array('code, name', 'length', 'max'=>32),
 			array('closedReason', 'length', 'max'=>30),
+			array('assignedId, assignedIdGroup', 'length', 'max'=>100),
 			array('deleted', 'length', 'max'=>1),
 			array('finishedpoint', 'length', 'max'=>8),
 			array('remark', 'length', 'max'=>128),
 			array('openedDate, assignedDate, estStarted, realStarted, finishedDate, canceledDate, closedDate, lastEditedDate, createdTime', 'safe'),
-			array('code, typeId, imtypeId, name, desc, status, deadline, openedId, openedDate, assignedId, assignedDate, estStarted, realStarted, finishedId, finishedDate, canceledId, canceledDate, closedId, closedDate, closedReason, lastEditedId, lastEditedDate, deleted, remark, opAdminId, createdTime, point, finishedpoint, deadline_type','filter','filter'=>array($obj=new CHtmlPurifier(),'purify')),
+			array('code, typeId, imtypeId, name, desc, status, deadline, openedId, openedDate, assignedId, assignedDate, estStarted, realStarted, finishedId, finishedDate, canceledId, canceledDate, closedId, closedDate, closedReason, lastEditedId, lastEditedDate, deleted, remark, opAdminId, createdTime, point, finishedpoint, deadline_type, assignedIdGroup','filter','filter'=>array($obj=new CHtmlPurifier(),'purify')),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, code, typeId, imtypeId, name, desc, status, deadline, openedId, openedDate, assignedId, assignedDate, estStarted, realStarted, finishedId, finishedDate, canceledId, canceledDate, closedId, closedDate, closedReason, lastEditedId, lastEditedDate, deleted, remark, opAdminId, createdTime, point, finishedpointl, deadline_type', 'safe', 'on'=>'search'),
+			array('id, code, typeId, imtypeId, name, desc, status, deadline, openedId, openedDate, assignedId, assignedDate, estStarted, realStarted, finishedId, finishedDate, canceledId, canceledDate, closedId, closedDate, closedReason, lastEditedId, lastEditedDate, deleted, remark, opAdminId, createdTime, point, finishedpointl, deadline_type, assignedIdGroup', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -74,7 +75,7 @@ class Task extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'opened'=>array(self::BELONGS_TO,'User','openedId'),
-			'assigned'=>array(self::BELONGS_TO,'User','assignedId'),
+			//'assigned'=>array(self::BELONGS_TO,'User','assignedId'),
 			'lastEdited'=>array(self::BELONGS_TO,'User','lastEditedId'),
 			'remarklist'=>array(self::HAS_MANY,'TaskRemark','','on'=>'remarklist.taskId=t.id'),
 		);
@@ -113,15 +114,15 @@ class Task extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'typeId' => array('type'=>'checkbox','data'=>Yii::app()->params['task_type']),
-			'imtypeId' => array('type'=>'checkbox','data'=>Yii::app()->params['task_important_type']),
+			'typeId' => array('type'=>'select','data'=>Yii::app()->params['task_type']),
+			'imtypeId' => array('type'=>'select','data'=>Yii::app()->params['task_important_type']),
 			'name' => '任务名称',
 			//'desc' => array('type'=>'editor'),
 			'desc' => array('type'=>'textarea'),
 			'point' => array('type'=>'text'),
-            'deadline_type' => array('type'=>'checkbox','data'=>Yii::app()->params['deadline_type']),
+            'deadline_type' => array('type'=>'select','data'=>Yii::app()->params['deadline_type']),
 			'deadline' => array('type'=>'date'),
-			'assignedId' => array('type'=>'checkbox','data'=>CHtml::listData(User::model()->findAll('status = 1 && id != '.Yii::app()->user->id), 'id', 'account')),
+			'assignedIdGroup' => array('type'=>'checkbox','data'=>CHtml::listData(User::model()->findAll('status = 1 && id != '.Yii::app()->user->id), 'id', 'account')),
 			'attach' => array('type'=>'file'),
 		);
 	}
@@ -231,6 +232,21 @@ class Task extends CActiveRecord
         		$tmp_imtype = '<span class="label label-light arrowed-in">'.Yii::app()->params['task_important_type'][$value->imtypeId].'</span>';
         	}
 
+        	//获取指派人员名单
+	        $assigned_str = "";
+	        if($value->assignedId != 0){
+	            $assignedIdGroup = explode(',',$value->assignedId);
+	            foreach($assignedIdGroup as $k => $v)
+	            {
+	            	$assignedinfo = User::model()->findByPk($v);
+	            	$assigned_str .= $assignedinfo->account.","; 
+	            }
+	            $assigned_str = substr($assigned_str,0,strlen($assigned_str)-1); 
+	        }else{
+	            $assignedIdGroup = array();
+	            $assigned_str .= '<button class="btn btn-minier btn-danger">还未指派</button>';
+	        }
+
             $row[] = array(
                 'id' => $value->id,
 				'code' => $value->code,
@@ -242,7 +258,7 @@ class Task extends CActiveRecord
 				'deadline' => $deadline,
 				'openedId' => isset($value->opened)?$value->opened->account:'无',
 				'openedDate' => $value->openedDate,
-				'assignedId' => isset($value->assigned)?$value->assigned->account:'<button class="btn btn-minier btn-danger">还未指派</button>',
+				'assignedId' => $assigned_str,
 				'assignedDate' => $value->assignedDate,
 				'estStarted' => $value->estStarted,
 				'realStarted' => $value->realStarted,
@@ -347,6 +363,22 @@ class Task extends CActiveRecord
         	}elseif($value->imtypeId == 0){
         		$tmp_imtype = '<span class="label label-light arrowed-in">'.Yii::app()->params['task_important_type'][$value->imtypeId].'</span>';
         	}
+
+        	//获取指派人员名单
+	        $assigned_str = "";
+	        if($value->assignedId != 0){
+	            $assignedIdGroup = explode(',',$value->assignedId);
+	            
+	            foreach($assignedIdGroup as $k => $v)
+	            {
+	            	$assignedinfo = User::model()->findByPk($v);
+	            	$assigned_str .= $assignedinfo->account.","; 
+	            }
+	            $assigned_str = substr($assigned_str,0,strlen($assigned_str)-1); 
+	        }else{
+	            $assignedIdGroup = array();
+	            $assigned_str .= '<button class="btn btn-minier btn-danger">还未指派</button>';
+	        }
         	
             $row[] = array(
                 'id' => $value->id,
@@ -359,7 +391,143 @@ class Task extends CActiveRecord
 				'deadline' => $deadline,
 				'openedId' => isset($value->opened)?$value->opened->account:'无',
 				'openedDate' => $value->openedDate,
-				'assignedId' => isset($value->assigned)?$value->assigned->account:'<button class="btn btn-minier btn-danger">还未指派</button>',
+				'assignedId' => $assigned_str,
+				'assignedDate' => $value->assignedDate,
+				'estStarted' => $value->estStarted,
+				'realStarted' => $value->realStarted,
+				'finishedId' => $value->finishedId,
+				'finishedDate' => $value->finishedDate,
+				'canceledId' => $value->canceledId,
+				'canceledDate' => $value->canceledDate,
+				'closedId' => $value->closedId,
+				'closedDate' => $value->closedDate,
+				'closedReason' => $value->closedReason,
+				'lastEditedId' => isset($value->lastEdited)?$value->lastEdited->account:'无',
+				'lastEditedDate' => $value->lastEditedDate,
+				'deleted' => $value->deleted,
+				'remark' => $value->remark,
+				'opAdminId' => $value->opAdminId,
+				'createdTime' => $value->createdTime,
+				'point' => $value->point,
+				'finishedpoint' => $value->finishedpoint,
+				'hand' => $hand,
+                'deadline_type' => $value->deadline_type,
+			);
+        }
+        $data = array(
+                    "totalpages" => $pages->pageCount,
+                    "currpage" => $pages->currentPage+1,
+                    "totalrecords" =>$count,
+                    "griddata" => $row,
+                );
+        return $data;
+	}
+
+
+	public function searchmystatus0Field()
+	{
+		$column = array(
+			'id' => array('name'=>'id','type'=>'hidden'),
+            'code' => array('name'=>'任务编码','type'=>'text'),
+			'typeId' => array('name'=>'主次类别','type'=>'select','data'=>Yii::app()->params['task_type']),
+			'imtypeId' => array('name'=>'重要类别','type'=>'select','data'=>Yii::app()->params['task_important_type']),
+			'openedId' => array('name'=>'创建人','type'=>'select','data'=>CHtml::listData(User::model()->findAllByAttributes(array('status'=>1)), 'id', 'account')),
+			'createdTime' => array('name'=>'选择时间','type'=>'daterange'),
+		);
+		return $column;
+	}
+
+	public function mystatus0result()
+	{
+		$criteria = new CDbCriteria();
+
+        $criteria->select = '*';
+        $criteria->order = "";
+        $sidx = Yii::app()->request->getParam('sidx');
+        $page = Yii::app()->request->getParam('page');
+        $rows = Yii::app()->request->getParam('rows');
+
+        if(!empty($sidx))
+        	$criteria->order .= 't.'.Yii::app()->request->getParam('sidx').' '.Yii::app()->request->getParam('sord').",";
+        $criteria->order .= 't.createdTime DESC,t.id DESC';
+
+        $code = User::model()->findByPk(Yii::app()->user->id);
+
+        $criteria->compare('t.code',$this->code);
+        $criteria->compare('t.typeId',$this->typeId);
+        $criteria->compare('t.imtypeId',$this->imtypeId);
+        $criteria->compare('t.openedId',$this->openedId);
+        $criteria->compare('t.status',0);
+        $criteria->compare('t.assignedIdGroup',$code->code,true);
+
+        if(isset($_GET['start'])&&!empty($_GET['start']))
+            $criteria->compare('UNIX_TIMESTAMP(t.openedDate) >',strtotime($_GET['start']));
+        if(isset($_GET['end'])&&!empty($_GET['end']))
+            $criteria->compare('UNIX_TIMESTAMP(t.openedDate) <',strtotime($_GET['end'])+86400);
+
+        $count = $this->count($criteria);
+        $pages = new CPagination($count);
+        $pages->pageVar = 'page';
+        $pages->currentPage = !empty($page)?Yii::app()->request->getParam('page')-1:10;
+        $pages->pageSize = !empty($rows)?Yii::app()->request->getParam('rows'):10;
+        $pages->applyLimit($criteria);
+        $models = $this->findAll($criteria);
+
+        $row = array();
+        foreach ($models as $key => $value) {
+        	$hand = "";
+        	if(Yii::app()->user->id == $value->openedId && $value->status == 0)
+        	{
+        		$hand .= '<a href="'.Yii::app()->createUrl('/task/add',array('id'=>$value->id)).'">编辑</a> | ';
+        	}
+        	$hand .= '<a href="'.Yii::app()->createUrl('/task/view',array('id'=>$value->id)).'">查看</a>';
+
+        	$tmp_deadline = Helpers::realdeadline($value);
+        	if($value->deadline_type == 1){
+        		$deadline = date('y/m/d',strtotime($tmp_deadline));
+        	}else{
+        		$deadline = date('y/m/d H点',strtotime($tmp_deadline));
+        	}
+
+        	$tmp_imtype = "";
+        	if($value->imtypeId == 3){
+        		$tmp_imtype = '<span class="label label-danger arrowed-in">'.Yii::app()->params['task_important_type'][$value->imtypeId].'</span>';
+        	}elseif($value->imtypeId == 2){
+        		$tmp_imtype = '<span class="label label-warning arrowed-in">'.Yii::app()->params['task_important_type'][$value->imtypeId].'</span>';
+        	}elseif($value->imtypeId == 1){
+        		$tmp_imtype = '<span class="label label-grey arrowed-in">'.Yii::app()->params['task_important_type'][$value->imtypeId].'</span>';
+        	}elseif($value->imtypeId == 0){
+        		$tmp_imtype = '<span class="label label-light arrowed-in">'.Yii::app()->params['task_important_type'][$value->imtypeId].'</span>';
+        	}
+
+        	//获取指派人员名单
+	        $assigned_str = "";
+	        if($value->assignedId != 0){
+	            $assignedIdGroup = explode(',',$value->assignedId);
+	            
+	            foreach($assignedIdGroup as $k => $v)
+	            {
+	            	$assignedinfo = User::model()->findByPk($v);
+	            	$assigned_str .= $assignedinfo->account.","; 
+	            }
+	            $assigned_str = substr($assigned_str,0,strlen($assigned_str)-1); 
+	        }else{
+	            $assignedIdGroup = array();
+	            $assigned_str .= '<button class="btn btn-minier btn-danger">还未指派</button>';
+	        }
+        	
+            $row[] = array(
+                'id' => $value->id,
+				'code' => $value->code,
+				'typeId' => Yii::app()->params['task_type'][$value->typeId],
+				'imtypeId' => $tmp_imtype,
+				'name' => $value->name,
+				'desc' => $value->desc,
+				'status' => Yii::app()->params['task_status'][$value->status],
+				'deadline' => $deadline,
+				'openedId' => isset($value->opened)?$value->opened->account:'无',
+				'openedDate' => $value->openedDate,
+				'assignedId' => $assigned_str,
 				'assignedDate' => $value->assignedDate,
 				'estStarted' => $value->estStarted,
 				'realStarted' => $value->realStarted,
@@ -464,6 +632,24 @@ class Task extends CActiveRecord
         		$tmp_imtype = '<span class="label label-light arrowed-in">'.Yii::app()->params['task_important_type'][$value->imtypeId].'</span>';
         	}
 
+        	//获取指派人员名单
+	        $assigned_str = "";
+	        if($value->assignedId != 0){
+	            $assignedIdGroup = explode(',',$value->assignedId);
+	            
+	            foreach($assignedIdGroup as $k => $v)
+	            {
+	            	$assignedinfo = User::model()->findByPk($v);
+	            	$assigned_str .= $assignedinfo->account.","; 
+	            }
+	            $assigned_str = substr($assigned_str,0,strlen($assigned_str)-1); 
+	        }else{
+	            $assignedIdGroup = array();
+	            $assigned_str .= '<button class="btn btn-minier btn-danger">还未指派</button>';
+	        }
+
+
+
             $row[] = array(
                 'id' => $value->id,
                 'code' => $value->code,
@@ -475,7 +661,7 @@ class Task extends CActiveRecord
                 'deadline' => $deadline,
                 'openedId' => isset($value->opened)?$value->opened->account:'无',
                 'openedDate' => $value->openedDate,
-                'assignedId' => isset($value->assigned)?$value->assigned->account:'<button class="btn btn-minier btn-danger">还未指派</button>',
+                'assignedId' => $assigned_str,
                 'assignedDate' => $value->assignedDate,
                 'estStarted' => $value->estStarted,
                 'realStarted' => $value->realStarted,
@@ -524,6 +710,7 @@ class Task extends CActiveRecord
 			'openedId' => '创建人ID',
 			'openedDate' => '创建时间',
 			'assignedId' => '接受人',
+			'assignedIdGroup' => '接受人',
 			'assignedDate' => '指派时间',
 			'estStarted' => '预计开始时间',
 			'realStarted' => '真实开始时间',

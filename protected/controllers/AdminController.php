@@ -65,11 +65,15 @@ class AdminController extends Controller
     })
 </script>
 EOD;
+
+
+
         $this->pageTitle = '积分统计';
 
-        $getmonth = Yii::app()->request->getParam('month');
+        $start = Yii::app()->request->getParam('start');
+        $end = Yii::app()->request->getParam('end');
         $type = Yii::app()->request->getParam('type');
-        $monthYear = !empty($getmonth)?$getmonth:date('Y-m');
+        //$monthYear = !empty($getmonth)?$getmonth:date('Y-m');
 
         $criteria=new CDbCriteria;
         $criteria->select = '*';
@@ -77,9 +81,15 @@ EOD;
         $criteria->params[':log_type'] = 1;
         $criteria->addCondition("t.valid = :valid");
         $criteria->params[':valid'] = 1;
-        $criteria->addCondition("FROM_UNIXTIME(UNIX_TIMESTAMP(t.createdTime),'%Y-%m') = :date");
-        $criteria->params[':date'] = $monthYear;
+        //$criteria->addCondition("FROM_UNIXTIME(UNIX_TIMESTAMP(t.createdTime),'%Y-%m') = :date");
+        if(!empty($start) && !empty($end))
+        {
+            $criteria->compare('UNIX_TIMESTAMP(t.createdTime) >',strtotime($_GET['start']));
+            $criteria->compare('UNIX_TIMESTAMP(t.createdTime) <',strtotime($_GET['end'])+86400);
+        }
+        
         $model = PointLog::model()->with(array('user'))->findAll($criteria);
+
 
         $point_tmp = array();
         foreach($model as $key => $value)
@@ -107,7 +117,7 @@ EOD;
             $objectPHPExcel->setActiveSheetIndex(0);
             $objectPHPExcel->getActiveSheet()->mergeCells('A1:B1');
             $objectPHPExcel->getActiveSheet()->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-            $objectPHPExcel->getActiveSheet()->setCellValue('A1','统计月份：'.$monthYear);
+            $objectPHPExcel->getActiveSheet()->setCellValue('A1','统计时间：'.$start.'至'.$end);
             $objectPHPExcel->getActiveSheet()->setCellValue('A2','账户');
             $objectPHPExcel->getActiveSheet()->setCellValue('B2','积分值');
             $i=3;
@@ -119,12 +129,12 @@ EOD;
             ob_end_clean();
             ob_start();
             header('Content-Type : application/vnd.ms-excel');
-            header('Content-Disposition:attachment;filename="积分统计'.$monthYear.'.xls"');
+            header('Content-Disposition:attachment;filename="积分统计.xls"');
             $objWriter= PHPExcel_IOFactory::createWriter($objectPHPExcel,'Excel5');
             $objWriter->save('php://output');
 
         }
 
-        $this->render('point',array('point_arr'=>$point_arr,'monthYear'=>$monthYear));
+        $this->render('point',array('point_arr'=>$point_arr,'start'=>$start,'end'=>$end));
     }
 }

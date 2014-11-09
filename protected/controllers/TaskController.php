@@ -66,7 +66,22 @@ EOD;
         if(isset($_POST['Task']))
         {
             $old_assignedId = $model->assignedId;
+            //print_r($_POST['Task']);exit;
             $model->attributes=$_POST['Task'];
+            if (is_array($_POST['Task']['assignedIdGroup'])) {
+                $tmp_str = "";
+                foreach($_POST['Task']['assignedIdGroup'] as $key => $value)
+                {
+                    $tmp_user = User::model()->findByPk($value);
+                    $tmp_str .= $tmp_user->code.",";
+                }
+                $tmp_str = substr($tmp_str,0,strlen($tmp_str)-1); 
+
+                $model->assignedIdGroup = $tmp_str;
+                //$model->assignedIdGroup = implode(',', $_POST['Task']['assignedIdGroup']);
+                $model->assignedId = implode(',', $_POST['Task']['assignedIdGroup']);
+                $model->assignedDate = date('Y-m-d H:i:s');
+            }
 
             if($model->deadline_type == 1)
                 $model->deadline = Yii::app()->request->getParam('deadline_1');
@@ -113,9 +128,9 @@ EOD;
                 Yii::app()->end();
 	        }
 
-            if($model->assignedId != 0){
-                $model->assignedDate = date('Y-m-d H:i:s');
-            }
+            // if($model->assignedId != 0){
+            //     $model->assignedDate = date('Y-m-d H:i:s');
+            // }
 
             if($model->scenario == 'new')
                 $model->status = 0;
@@ -129,19 +144,26 @@ EOD;
                     $file->taskID = $id;
                     $file->save();
                 }
-                if($model->scenario == 'new')
+                if($model->isNewRecord)
                 {
                     Helpers::syslog(2,Yii::app()->user->getState('account')." 发布了任务 [".$model->name."]",Yii::app()->user->id,$id);
                     if($model->assignedId != 0){
-                        $content = Yii::app()->user->getState('account')." 创建并指派了任务 [".$model->name."] 给你，请在规定的时限内完成！";
-                        Helpers::sendmessage($model->assignedId,$content,2,0,$id);
+                        foreach($_POST['Task']['assignedIdGroup'] as $key => $value){
+                            $content = Yii::app()->user->getState('account')." 创建并指派了任务 [".$model->name."] 给你，请在规定的时限内完成！";
+                            Helpers::sendmessage($value,$content,2,0,$id);
+                        }
                     }
-                }elseif($model->scenario == 'update'){
+                }else{
 
                     Helpers::syslog(2,Yii::app()->user->getState('account')." 编辑了任务 [".$model->name."]",Yii::app()->user->id,$id);
                     if($model->assignedId != 0 && $model->assignedId != $old_assignedId ){
-                        $content = Yii::app()->user->getState('account')." 编辑并指派了任务 [".$model->name."] 给你，请在规定的时限内完成！";
-                        Helpers::sendmessage($model->assignedId,$content,2,0,$id);
+                        //$content = Yii::app()->user->getState('account')." 编辑并指派了任务 [".$model->name."] 给你，请在规定的时限内完成！";
+                        //Helpers::sendmessage($model->assignedId,$content,2,0,$id);
+
+                        foreach($_POST['Task']['assignedIdGroup'] as $key => $value){
+                            $content = Yii::app()->user->getState('account')." 编辑并指派了任务 [".$model->name."] 给你，请在规定的时限内完成！";
+                            Helpers::sendmessage($value,$content,2,0,$id);
+                        }
                     }
                 }
 
@@ -176,6 +198,16 @@ EOD;
                     $model->attributes=$_GET;
 		$this->render('myhandletask',array('model'=>$model));
 	}
+
+    public function actionMystatus0(){
+        $user_id = Yii::app()->user->id;
+        $this->pageTitle = '待激活的任务';
+                $model = new Task();
+                $model->unsetAttributes();
+                if(isset($_GET)&&!empty($_GET))
+                    $model->attributes=$_GET;
+        $this->render('mystatus0',array('model'=>$model));
+    }
 
     public function actionMypublishtask(){
         $user_id = Yii::app()->user->id;
@@ -222,7 +254,22 @@ EOD;
         $criteria->order = "t.id ASC";
         $log = SysLog::model()->with(array('user'))->findAll($criteria);
 
-		$this->render('view',array('model'=>$model,'assigned_arr'=>$assigned_arr,'remark'=>$remark,'log'=>$log,'file'=>$file));
+        //获取指派人员名单
+        $assigned_str = "";
+        if($model->assignedId != 0){
+            $assignedIdGroup = explode(',',$model->assignedId);
+            foreach($assignedIdGroup as $k => $v)
+            {
+                $assignedinfo = User::model()->findByPk($v);
+                $assigned_str .= $assignedinfo->account.","; 
+            }
+            $assigned_str = substr($assigned_str,0,strlen($assigned_str)-1); 
+        }else{
+            $assignedIdGroup = array();
+            $assigned_str .= '<button class="btn btn-minier btn-danger">还未指派</button>';
+        }
+
+		$this->render('view',array('model'=>$model,'assignedIdGroup'=>$assignedIdGroup,'assigned_str'=>$assigned_str,'assigned_arr'=>$assigned_arr,'remark'=>$remark,'log'=>$log,'file'=>$file));
 	}
 
 	//任务指派
@@ -257,7 +304,7 @@ EOD;
         		echo json_encode(array('type'=>'success'));
         		Yii::app()->end();
         	}else{
-        		echo json_encode(array('type'=>'error','info'=>'数据错误！'));
+        		echo json_encode(array('type'=>'error','info'=>'数据错误，请刷新页面！'));
         		Yii::app()->end();
         	}
 
@@ -286,7 +333,7 @@ EOD;
         		echo json_encode(array('type'=>'success'));
         		Yii::app()->end();
         	}else{
-        		echo json_encode(array('type'=>'error','info'=>'数据错误！'));
+        		echo json_encode(array('type'=>'error','info'=>'数据错误，请刷新页面！'));
         		Yii::app()->end();
         	}
 
@@ -320,7 +367,7 @@ EOD;
         		echo json_encode(array('type'=>'success'));
         		Yii::app()->end();
         	}else{
-        		echo json_encode(array('type'=>'error','info'=>'数据错误！'));
+        		echo json_encode(array('type'=>'error','info'=>'数据错误，请刷新页面！'));
         		Yii::app()->end();
         	}
 
@@ -339,9 +386,13 @@ EOD;
         		Yii::app()->end();
         	}
 
-        	if($model->assignedId == Yii::app()->user->id && $model->status == 0)
+            $assignedIdGroup = explode(',',$model->assignedId);
+
+
+        	if(in_array(Yii::app()->user->id,$assignedIdGroup) && $model->status == 0)
         	{
         		$model->status = 1;
+                $model->assignedId = Yii::app()->user->id;
         		$model->realStarted = date('Y-m-d H:i:s');
         		if($model->save())
         		{
@@ -352,7 +403,7 @@ EOD;
         		echo json_encode(array('type'=>'success'));
         		Yii::app()->end();
         	}else{
-        		echo json_encode(array('type'=>'error','info'=>'数据错误！'));
+        		echo json_encode(array('type'=>'error','info'=>'数据错误，请刷新页面！'));
         		Yii::app()->end();
         	}
 
@@ -385,7 +436,7 @@ EOD;
         		echo json_encode(array('type'=>'success'));
         		Yii::app()->end();
         	}else{
-        		echo json_encode(array('type'=>'error','info'=>'数据错误！'));
+        		echo json_encode(array('type'=>'error','info'=>'数据错误，请刷新页面！'));
         		Yii::app()->end();
         	}
         }
@@ -419,7 +470,7 @@ EOD;
         		echo json_encode(array('type'=>'success'));
         		Yii::app()->end();
         	}else{
-        		echo json_encode(array('type'=>'error','info'=>'数据错误！'));
+        		echo json_encode(array('type'=>'error','info'=>'数据错误，请刷新页面！'));
         		Yii::app()->end();
         	}
 
@@ -456,7 +507,7 @@ EOD;
                 echo json_encode(array('type'=>'success'));
         		Yii::app()->end();
         	}else{
-        		echo json_encode(array('type'=>'error','info'=>'数据错误！'));
+        		echo json_encode(array('type'=>'error','info'=>'数据错误，请刷新页面！'));
         		Yii::app()->end();
         	}
 
@@ -549,7 +600,7 @@ EOD;
                 echo json_encode(array('type'=>'success'));
                 Yii::app()->end();
             }else{
-                echo json_encode(array('type'=>'error','info'=>'数据错误！'));
+                echo json_encode(array('type'=>'error','info'=>'数据错误，请刷新页面！'));
                 Yii::app()->end();
             }
 

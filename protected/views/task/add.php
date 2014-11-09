@@ -35,25 +35,7 @@
 				</div>
 				<?php echo $form->error($model,$key); ?>
 			</div>
-			<?php elseif($value['type']=='checkbox'):?>
-			<?php if($key == 'assignedId'): ?>
-			<div id="group_assignedId" class="form-group <?php if($model->scenario == 'new' || $model->typeId == 2): ?>hide<?php endif;?>">
-				<?php echo $form->labelEx($model,$key,array('class'=>'col-sm-2 control-label no-padding-right')); ?>
-				<div class="col-sm-10">
-
-					<select id="Task_<?php echo $key;?>" name="Task[<?php echo $key;?>]" value='<?php echo $model->{$key};?>' >
-		                <option value=""> 请选择 </option>
-		                <?php foreach ($value['data'] as $k =>$v):?>
-		                <option <?php if(isset($model->{$key}) && is_numeric($model->{$key}) && $model->{$key} == $k): ?>selected="selected"<?php endif; ?> value="<?php echo $k;?>">
-		                    <?php echo $v;?>
-		                </option>
-		                <?php endforeach;?>
-		            </select>
-
-				</div>
-				<?php echo $form->error($model,$key); ?>
-			</div>
-			<?php else: ?>
+			<?php elseif($value['type']=='select'):?>
 			<div class="form-group">
 				<?php echo $form->labelEx($model,$key,array('class'=>'col-sm-2 control-label no-padding-right')); ?>
 				<div class="col-sm-10">
@@ -70,6 +52,34 @@
 				</div>
 				<?php echo $form->error($model,$key); ?>
 			</div>
+			<?php elseif($value['type']=='checkbox'):?>
+			<?php if($key == 'assignedIdGroup'): ?>
+			<div id="group_assignedId" class="form-group <?php if($model->scenario == 'new' || $model->typeId == 2): ?>hide<?php endif;?>">
+				<?php echo $form->labelEx($model,$key,array('class'=>'col-sm-2 control-label no-padding-right')); ?>
+				<div class="col-sm-10" style="margin-top:5px;">
+					<!-- <select id="Task_<?php echo $key;?>" name="Task[<?php echo $key;?>]" value='<?php echo $model->{$key};?>' >
+		                <option value=""> 请选择 </option>
+		                <?php foreach ($value['data'] as $k =>$v):?>
+		                <option <?php if(isset($model->{$key}) && is_numeric($model->{$key}) && $model->{$key} == $k): ?>selected="selected"<?php endif; ?> value="<?php echo $k;?>">
+		                    <?php echo $v;?>
+		                </option>
+		                <?php endforeach;?>
+		            </select> -->
+		            <?php if($model->scenario == 'update'): ?>
+		            <?php $assignedIdGroup = explode(',',$model->assignedId); ?>
+		        	<?php else: ?>
+		            <?php $assignedIdGroup = array(); ?>
+		            <?php endif; ?>
+		            <?php foreach ($value['data'] as $k =>$v):?>
+		            <label>
+		                <input type="checkbox" <?php if(in_array($k,$assignedIdGroup)): ?>checked="checked"<?php endif; ?> value="<?php echo $k; ?>" class="ace assignedIdGroup" name="Task[<?php echo $key;?>][]">
+		                <span class="lbl"> <?php echo $v; ?> &nbsp;&nbsp;&nbsp;&nbsp;</span>
+		            </label>
+		            <?php endforeach;?>
+
+				</div>
+				<?php echo $form->error($model,$key); ?>
+			</div>	
 			<?php endif; ?>
 			<?php elseif($value['type']=='textarea'):?>
 			<div class="form-group">
@@ -286,8 +296,13 @@
 
 		if(typeId == 1)
 		{
-			var assignedId = $('#Task_assignedId option:selected').val();
-			if(assignedId == '')
+
+			var assignedIdGroup =[];  
+			$('.assignedIdGroup:checked').each(function(){    
+   				assignedIdGroup.push($(this).val());    
+  			});
+			//var assignedId = $('#Task_assignedId option:selected').val();
+			if(assignedIdGroup.length == 0)
 			{
 				dialog_notice('请选择任务接受人！');
 				return false;

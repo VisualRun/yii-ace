@@ -31,6 +31,7 @@ class Helpers
                             array('text'=>'发布任务','href'=>Yii::app()->createUrl('/task/add'),'action'=>array('add')),
                             array('text'=>'我发布的任务','href'=>Yii::app()->createUrl('/task/mypublishtask'),'action'=>array('mypublishtask')),
                 			array('text'=>'我处理的任务','href'=>Yii::app()->createUrl('/task/myhandletask'),'action'=>array('myhandletask')),
+                            array('text'=>'待激活的任务','href'=>Yii::app()->createUrl('/task/mystatus0'),'action'=>array('mystatus0')),
                 			array('text'=>'所有任务','href'=>Yii::app()->createUrl('/task/list'),'action'=>array('list')),
                 		),
                 	),
@@ -84,6 +85,7 @@ class Helpers
                 			array('text'=>'发布任务','href'=>Yii::app()->createUrl('/task/add'),'action'=>array('add')),
                             array('text'=>'我发布的任务','href'=>Yii::app()->createUrl('/task/mypublishtask'),'action'=>array('mypublishtask')),
                             array('text'=>'我处理的任务','href'=>Yii::app()->createUrl('/task/myhandletask'),'action'=>array('myhandletask')),
+                            array('text'=>'待激活的任务','href'=>Yii::app()->createUrl('/task/mystatus0'),'action'=>array('mystatus0')),
                             array('text'=>'所有任务','href'=>Yii::app()->createUrl('/task/list'),'action'=>array('list')),
                 		),
                 	),
@@ -115,6 +117,7 @@ class Helpers
                 		'class'=>'fa fa-tasks',
                 		'item'=>array(
                 			array('text'=>'我处理的任务','href'=>Yii::app()->createUrl('/task/myhandletask'),'action'=>array('myhandletask')),
+                            array('text'=>'待激活的任务','href'=>Yii::app()->createUrl('/task/mystatus0'),'action'=>array('mystatus0')),
                             array('text'=>'所有任务','href'=>Yii::app()->createUrl('/task/list'),'action'=>array('list')),
                 		),
                 	),
