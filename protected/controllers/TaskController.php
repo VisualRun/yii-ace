@@ -103,7 +103,7 @@ EOD;
                     $file->pathname = Yii::app()->request->baseUrl.'/data/file/'.$ymd."/". $filename . '.' . $ext;
                     $file->title = $old_name;
                     $file->extension = $ext;
-                    $file->extension = $uploaded->size;
+                    $file->size = $uploaded->size;
                     $file->save();
                 }
                 else
@@ -128,14 +128,16 @@ EOD;
                 foreach($_POST['Task']['assignedId'] as $key => $value)
                 {
                     $model->assignedId = $value;
-                    $new_model = new Task;
+                    $new_model = new Task();
                     $new_model->attributes = $model->attributes;
                     if($new_model->save())
                     {
                         $id = $new_model->primarykey;
                         if(isset($file)){
-                            $file->taskID = $id;
-                            $file->save();
+                            $new_file = new File();
+                            $new_file->attributes = $file->attributes;
+                            $new_file->taskID = $id;
+                            $new_file->save();
                         }
                         //if($model->scenario == 'new')
                         //{
@@ -157,6 +159,7 @@ EOD;
                         return false;
                     }
                 }
+                //$file->delete();
                 $this->redirect(array('list'));
             }else{
                 if($model->save())
