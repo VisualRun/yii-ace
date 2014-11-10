@@ -67,7 +67,7 @@
             success: function(msg){
                 if(type == 1)
                 {
-                     $( "#dialog-check .alert" ).find('span').html(msg.content)
+                    $( "#dialog-check .alert" ).find('span').html(msg.content)
                     $( "#dialog-check" ).removeClass('hide').dialog({
                         resizable: true,
                         modal: true,
@@ -79,7 +79,13 @@
                                 html: "<i class='ace-icon fa fa-check bigger-110'></i>&nbsp; 确认",
                                 "class" : "btn btn-danger btn-xs",
                                 click: function() {
-                                    window.location.reload();
+                                    $( this ).dialog( "close" );
+                                    //var page_str = $('.ui-pg-input').val();
+                                    var page_str = $('#grid-table').getGridParam('page');
+                                    $("#grid-table").jqGrid('setGridParam',{
+                                        datatype:'json',
+                                        page:page_str
+                                    }).trigger("reloadGrid");
                                 }
                             }
                         ]
