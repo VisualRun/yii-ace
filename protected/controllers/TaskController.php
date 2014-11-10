@@ -68,6 +68,8 @@ EOD;
             $old_assignedId = $model->assignedId;
             $model->attributes=$_POST['Task'];
 
+
+
             if($model->deadline_type == 1)
                 $model->deadline = Yii::app()->request->getParam('deadline_1');
             elseif($model->deadline_type == 2)
@@ -121,35 +123,72 @@ EOD;
                 $model->status = 0;
 
 			//$model->deadline = date('Y-m-d',strtotime($model->deadline));
-
-            if($model->save())
+            if(is_array($_POST['Task']['assignedId']))
             {
-                $id = $model->primarykey;
-                if(isset($file)){
-                    $file->taskID = $id;
-                    $file->save();
-                }
-                if($model->scenario == 'new')
+                foreach($_POST['Task']['assignedId'] as $key => $value)
                 {
-                    Helpers::syslog(2,Yii::app()->user->getState('account')." 发布了任务 [".$model->name."]",Yii::app()->user->id,$id);
-                    if($model->assignedId != 0){
-                        $content = Yii::app()->user->getState('account')." 创建并指派了任务 [".$model->name."] 给你，请在规定的时限内完成！";
-                        Helpers::sendmessage($model->assignedId,$content,2,0,$id);
-                    }
-                }elseif($model->scenario == 'update'){
+                    $model->assignedId = $value;
+                    $new_model = new Task;
+                    $new_model->attributes = $model->attributes;
+                    if($new_model->save())
+                    {
+                        $id = $new_model->primarykey;
+                        if(isset($file)){
+                            $file->taskID = $id;
+                            $file->save();
+                        }
+                        //if($model->scenario == 'new')
+                        //{
+                        Helpers::syslog(2,Yii::app()->user->getState('account')." 发布了任务 [".$new_model->name."]",Yii::app()->user->id,$id);
+                        if($new_model->assignedId != 0){
+                            $content = Yii::app()->user->getState('account')." 创建并指派了任务 [".$new_model->name."] 给你，请在规定的时限内完成！";
+                            Helpers::sendmessage($new_model->assignedId,$content,2,0,$id);
+                        }
+                        // }elseif($model->scenario == 'update'){
 
-                    Helpers::syslog(2,Yii::app()->user->getState('account')." 编辑了任务 [".$model->name."]",Yii::app()->user->id,$id);
-                    if($model->assignedId != 0 && $model->assignedId != $old_assignedId ){
-                        $content = Yii::app()->user->getState('account')." 编辑并指派了任务 [".$model->name."] 给你，请在规定的时限内完成！";
-                        Helpers::sendmessage($model->assignedId,$content,2,0,$id);
+                        //     Helpers::syslog(2,Yii::app()->user->getState('account')." 编辑了任务 [".$model->name."]",Yii::app()->user->id,$id);
+                        //     if($model->assignedId != 0 && $model->assignedId != $old_assignedId ){
+                        //         $content = Yii::app()->user->getState('account')." 编辑并指派了任务 [".$model->name."] 给你，请在规定的时限内完成！";
+                        //         Helpers::sendmessage($model->assignedId,$content,2,0,$id);
+                        //     }
+                        // }
+                    }else{
+                        $arr = array('hasError'=>true,'msg'=>'数据提交失败','error'=>$new_model->getErrors(),'model'=>$new_model->attributes);
+                        return false;
                     }
                 }
-
-                $this->redirect(array('view','id'=>$id));
+                $this->redirect(array('list'));
             }else{
-                $arr = array('hasError'=>true,'msg'=>'数据提交失败','error'=>$model->getErrors(),'model'=>$model->attributes);
-                return false;
+                if($model->save())
+                {
+                    $id = $model->primarykey;
+                    if(isset($file)){
+                        $file->taskID = $id;
+                        $file->save();
+                    }
+                    if($model->scenario == 'new')
+                    {
+                        Helpers::syslog(2,Yii::app()->user->getState('account')." 发布了任务 [".$model->name."]",Yii::app()->user->id,$id);
+                        if($model->assignedId != 0){
+                            $content = Yii::app()->user->getState('account')." 创建并指派了任务 [".$model->name."] 给你，请在规定的时限内完成！";
+                            Helpers::sendmessage($model->assignedId,$content,2,0,$id);
+                        }
+                    }elseif($model->scenario == 'update'){
+
+                        Helpers::syslog(2,Yii::app()->user->getState('account')." 编辑了任务 [".$model->name."]",Yii::app()->user->id,$id);
+                        if($model->assignedId != 0 && $model->assignedId != $old_assignedId ){
+                            $content = Yii::app()->user->getState('account')." 编辑并指派了任务 [".$model->name."] 给你，请在规定的时限内完成！";
+                            Helpers::sendmessage($model->assignedId,$content,2,0,$id);
+                        }
+                    }
+
+                    $this->redirect(array('view','id'=>$id));
+                }else{
+                    $arr = array('hasError'=>true,'msg'=>'数据提交失败','error'=>$model->getErrors(),'model'=>$model->attributes);
+                    return false;
+                }
             }
+
         }else{
             $this->render('add',array('model'=>$model));
         }

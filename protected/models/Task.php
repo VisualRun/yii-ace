@@ -209,7 +209,7 @@ class Task extends CActiveRecord
         	$hand = "";
         	if(Yii::app()->user->id == $value->openedId && $value->status == 0)
         	{
-        		$hand .= '<a href="'.Yii::app()->createUrl('/task/create',array('id'=>$value->id)).'">编辑</a> | ';
+        		$hand .= '<a href="'.Yii::app()->createUrl('/task/add',array('id'=>$value->id)).'">编辑</a> | ';
         	}
         	$hand .= '<a href="'.Yii::app()->createUrl('/task/view',array('id'=>$value->id)).'">查看</a>';
 
@@ -347,7 +347,7 @@ class Task extends CActiveRecord
         	}elseif($value->imtypeId == 0){
         		$tmp_imtype = '<span class="label label-light arrowed-in">'.Yii::app()->params['task_important_type'][$value->imtypeId].'</span>';
         	}
-        	
+
             $row[] = array(
                 'id' => $value->id,
 				'code' => $value->code,

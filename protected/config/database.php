@@ -7,7 +7,7 @@ return array(
 	'connectionString' => 'mysql:host=localhost;dbname=ace_oa',
 	'emulatePrepare' => true,
 	'username' => 'root',
-	'password' => '123456',
+	'password' => 'wangjian',
 	'charset' => 'utf8',
 	'enableProfiling' => true,
 	'tablePrefix' => 'ao_',

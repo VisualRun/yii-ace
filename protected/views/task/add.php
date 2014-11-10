@@ -40,7 +40,15 @@
 			<div id="group_assignedId" class="form-group <?php if($model->scenario == 'new' || $model->typeId == 2): ?>hide<?php endif;?>">
 				<?php echo $form->labelEx($model,$key,array('class'=>'col-sm-2 control-label no-padding-right')); ?>
 				<div class="col-sm-10">
-
+					<?php if($model->scenario == 'new'): ?>
+					<p style="height:5px;margin:0px;">&nbsp;</p>
+					<?php foreach ($value['data'] as $k =>$v):?>
+		            <label>
+		                <input type="checkbox" value="<?php echo $k; ?>" class="ace assignedIdGroup" name="Task[<?php echo $key;?>][]">
+		                <span class="lbl"> <?php echo $v; ?> &nbsp;&nbsp;&nbsp;&nbsp;</span>
+		            </label>
+		            <?php endforeach;?>
+					<?php else: ?>
 					<select id="Task_<?php echo $key;?>" name="Task[<?php echo $key;?>]" value='<?php echo $model->{$key};?>' >
 		                <option value=""> 请选择 </option>
 		                <?php foreach ($value['data'] as $k =>$v):?>
@@ -49,7 +57,7 @@
 		                </option>
 		                <?php endforeach;?>
 		            </select>
-
+					<?php endif; ?>
 				</div>
 				<?php echo $form->error($model,$key); ?>
 			</div>
@@ -286,12 +294,24 @@
 
 		if(typeId == 1)
 		{
+			<?php if($model->scenario == 'new'): ?>
+			var chk_value =[];
+            $('.assignedIdGroup:checked').each(function(){
+            	chk_value.push($(this).val());
+            });
+            if(chk_value.length == 0)
+            {
+            	dialog_notice('请选择任务接受人！');
+				return false;
+            }
+			<?php else: ?>
 			var assignedId = $('#Task_assignedId option:selected').val();
 			if(assignedId == '')
 			{
 				dialog_notice('请选择任务接受人！');
 				return false;
 			}
+			<?php endif; ?>
 		}
     }
 </script>
