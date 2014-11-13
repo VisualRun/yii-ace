@@ -54,8 +54,8 @@ class HomeController extends Controller
 		$criteria->select = '*';
 		$criteria->addCondition("openedId != :openedId");
 		$criteria->params[':openedId'] = Yii::app()->user->id;
-		$criteria->addCondition("assignedId = :assignedId");
-		$criteria->params[':assignedId'] = 0;
+		$criteria->addCondition("typeId = :typeId");
+		$criteria->params[':typeId'] = 2;
 		$criteria->addCondition("status = :status");
 		$criteria->params[':status'] = 0;
 		$criteria->order = 'imtypeId DESC,createdTime DESC,id DESC' ;

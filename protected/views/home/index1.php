@@ -131,7 +131,7 @@ the lightweight, feature-rich and easy to use admin template.
 
                             <ul class="dropdown-menu dropdown-menu-right dropdown-light-blue dropdown-caret dropdown-closer">
                                 <li>
-                                    <a href="<?php echo Yii::app()->createUrl('/task/list',array('assignedId'=>0)) ?>">查看所有待接受任务</a>
+                                    <a href="<?php echo Yii::app()->createUrl('/task/list',array('typeId'=>2,'status'=>0)) ?>">查看所有待接受任务</a>
                                 </li>
 
                                 <li>

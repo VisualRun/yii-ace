@@ -123,7 +123,8 @@ EOD;
                 $model->status = 0;
 
 			//$model->deadline = date('Y-m-d',strtotime($model->deadline));
-            if(is_array($_POST['Task']['assignedId']))
+
+            if(isset($_POST['Task']['assignedId']) && is_array($_POST['Task']['assignedId']))
             {
                 foreach($_POST['Task']['assignedId'] as $key => $value)
                 {
