@@ -96,7 +96,7 @@
 
                                     <div class="profile-info-value">
                                         <?php echo $model->point ?>
-                                        
+
                                     </div>
                                     <div class="profile-info-name"> 最后期限 </div>
 
@@ -157,7 +157,7 @@
                                     <div class="profile-info-name"> 确认完成时间 </div>
 
                                     <div class="profile-info-value">
-                                        <?php echo $model->canceledDate ?>
+                                        <?php echo $model->closedDate ?>
                                     </div>
                                 </div>
                                 <?php if($model->status == 5): ?>
@@ -416,9 +416,9 @@
                 $(this)
                 .next().addClass('btn btn-success').html('<i class="ace-icon fa fa-plus"></i>')
                 .next().addClass('btn btn-danger').html('<i class="ace-icon fa fa-minus"></i>')
-                
+
                 //larger buttons on touch devices
-                if('touchstart' in document.documentElement) 
+                if('touchstart' in document.documentElement)
                     $(this).closest('.ui-spinner').addClass('ui-spinner-touch');
             },
             min:1
@@ -436,7 +436,7 @@
                 $( "#delay_div" ).addClass('hide').find('.delay_text').html('');
             }
 
-            
+
         })
 
         $( "#dialog-assigned-btn" ).on('click', function(e) {
