@@ -68,7 +68,7 @@
                                     </div>
                                 </div>
                                 <div class="profile-info-row">
-                                    <div class="profile-info-name"> 主次类别 </div>
+                                    <div class="profile-info-name"> 任务类别 </div>
 
                                     <div class="profile-info-value">
                                         <?php echo Yii::app()->params['task_type'][$model->typeId] ?>

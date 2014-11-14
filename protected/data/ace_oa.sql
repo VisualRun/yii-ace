@@ -166,7 +166,7 @@ DROP TABLE IF EXISTS `ao_task`;
 CREATE TABLE `ao_task` (
   `id` int(8) NOT NULL AUTO_INCREMENT,
   `code` varchar(32) DEFAULT NULL COMMENT '任务编码',
-  `typeId` tinyint(1) NOT NULL DEFAULT '1' COMMENT '主次类别',
+  `typeId` tinyint(1) NOT NULL DEFAULT '1' COMMENT '任务类别',
   `imtypeId` tinyint(1) NOT NULL DEFAULT '0' COMMENT '重要类别',
   `name` varchar(32) DEFAULT NULL COMMENT '任务名称',
   `desc` text NOT NULL COMMENT '任务说明',

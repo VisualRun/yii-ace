@@ -132,7 +132,7 @@ class Task extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'code' => '任务编码',
-			'typeId' => '主次类别',
+			'typeId' => '任务类别',
 			'imtypeId' => '重要类别',
 			'name' => '任务名称',
 			'desc' => '任务说明',
@@ -161,7 +161,7 @@ class Task extends CActiveRecord
 		$column = array(
 			'id' => array('name'=>'id','type'=>'hidden'),
 			'code' => array('name'=>'任务编码','type'=>'text'),
-            'typeId' => array('name'=>'主次类别','type'=>'select','data'=>Yii::app()->params['task_type']),
+            'typeId' => array('name'=>'任务类别','type'=>'select','data'=>Yii::app()->params['task_type']),
 			'imtypeId' => array('name'=>'重要类别','type'=>'select','data'=>Yii::app()->params['task_important_type']),
 			'openedId' => array('name'=>'创建人','type'=>'select','data'=>CHtml::listData(User::model()->findAllByAttributes(array('status'=>1)), 'id', 'account')),
 			'status' => array('name'=>'状态','type'=>'select','data'=>Yii::app()->params['task_status']),
@@ -278,7 +278,7 @@ class Task extends CActiveRecord
 		$column = array(
 			'id' => array('name'=>'id','type'=>'hidden'),
             'code' => array('name'=>'任务编码','type'=>'text'),
-			'typeId' => array('name'=>'主次类别','type'=>'select','data'=>Yii::app()->params['task_type']),
+			'typeId' => array('name'=>'任务类别','type'=>'select','data'=>Yii::app()->params['task_type']),
 			'imtypeId' => array('name'=>'重要类别','type'=>'select','data'=>Yii::app()->params['task_important_type']),
 			'openedId' => array('name'=>'创建人','type'=>'select','data'=>CHtml::listData(User::model()->findAllByAttributes(array('status'=>1)), 'id', 'account')),
 			'status' => array('name'=>'状态','type'=>'select','data'=>Yii::app()->params['task_status']),
@@ -396,7 +396,7 @@ class Task extends CActiveRecord
         $column = array(
             'id' => array('name'=>'id','type'=>'hidden'),
             'code' => array('name'=>'任务编码','type'=>'text'),
-            'typeId' => array('name'=>'主次类别','type'=>'select','data'=>Yii::app()->params['task_type']),
+            'typeId' => array('name'=>'任务类别','type'=>'select','data'=>Yii::app()->params['task_type']),
             'imtypeId' => array('name'=>'重要类别','type'=>'select','data'=>Yii::app()->params['task_important_type']),
             'status' => array('name'=>'状态','type'=>'select','data'=>Yii::app()->params['task_status']),
             'createdTime' => array('name'=>'选择时间','type'=>'daterange'),
@@ -515,7 +515,7 @@ class Task extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'code' => '任务编码',
-			'typeId' => '主次类别',
+			'typeId' => '任务类别',
 			'imtypeId' => '重要类别',
 			'name' => '任务名称',
 			'desc' => '任务说明',

@@ -236,7 +236,7 @@
 		var typeId = $('#Task_typeId option:selected').val();
 		if(typeId == '')
 		{
-			dialog_notice('请选择主次类别！');
+			dialog_notice('请选择任务类别！');
 			return false;
 		}
 		var imtypeId = $('#Task_imtypeId option:selected').val();
