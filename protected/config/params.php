@@ -8,10 +8,11 @@ return array(
 	'task_status'=>array(0=>'等待',1=>'进行中',2=>'完成',3=>'暂停',4=>'取消',5=>'确认完成'),
 	'is_ync' => array("否","是"),
 	'valid'=>array(0=>'无效', 1=>'有效'),
-	'log_type'=>array(1=>'系统', 2=>'任务', 3=>'积分', 4=>'个人', 5=>'部门', 6=>'岗位'),
-	'point_type'=>array(1=>'任务积分'),
-	'message_type'=>array(1=>'系统消息',2=>'任务消息'),
+	'log_type'=>array(1=>'系统', 2=>'任务', 3=>'积分', 4=>'个人', 5=>'部门', 6=>'岗位', 7=>'兑换'),
+	'point_type'=>array(1=>'任务积分','兑换积分'),
+	'message_type'=>array(1=>'系统消息',2=>'任务消息',3=>'兑换消息'),
 	'checkout'=>array('未看','已看'),
 	'subtraction'=>array(1=>'增加',2=>'减少'),
-	'deadline_type'=>array(1=>'按天','按小时')
+	'deadline_type'=>array(1=>'按天','按小时'),
+	'exchange_status'=>array(-1=>'审核不过',0=>'新申请',1=>'兑换成功')
 );

@@ -137,4 +137,16 @@ EOD;
 
         $this->render('point',array('point_arr'=>$point_arr,'start'=>$start,'end'=>$end));
     }
+
+    public function actionSyslog()
+    {
+        $this->pageTitle = '最新动态';
+        $model = new SysLog();
+        $model->unsetAttributes();
+        if(isset($_GET)&&!empty($_GET))
+            $model->attributes=$_GET;
+        $this->render('syslog',array('model'=>$model));
+    }
+
+    
 }

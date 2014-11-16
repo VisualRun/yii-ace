@@ -77,6 +77,48 @@ class SysLog extends CActiveRecord
         return true;
     }
 
+    public function result()
+	{
+		$criteria = new CDbCriteria();
+
+        $criteria->select = '*';
+        $criteria->order = "";
+        $sidx = Yii::app()->request->getParam('sidx');
+        $page = Yii::app()->request->getParam('page');
+        $rows = Yii::app()->request->getParam('rows');
+
+        if(!empty($sidx))
+        	$criteria->order .= 't.'.Yii::app()->request->getParam('sidx').' '.Yii::app()->request->getParam('sord').",";
+        $criteria->order .= 't.createdTime DESC,t.id DESC';
+
+        $count = $this->count($criteria);
+        $pages = new CPagination($count);
+        $pages->pageVar = 'page';
+        $pages->currentPage = !empty($page)?Yii::app()->request->getParam('page')-1:10;
+        $pages->pageSize = !empty($rows)?Yii::app()->request->getParam('rows'):10;
+        $pages->applyLimit($criteria);
+        $models = $this->findAll($criteria);
+
+        $row = array();
+        foreach ($models as $key => $value) {
+            $row[] = array(
+                'id' => $value->id,
+				'code' => $value->code,
+				'typeId' => '<span class="label arrowed-in">'.Yii::app()->params['log_type'][$value->typeId].'</span>',
+				'content' => $value->content,
+				'opAdminId' => $value->opAdminId,
+				'createdTime' => $value->createdTime,
+                );
+        }
+        $data = array(
+                    "totalpages" => $pages->pageCount,
+                    "currpage" => $pages->currentPage+1,
+                    "totalrecords" =>$count,
+                    "griddata" => $row,
+                );
+        return $data;
+	}
+
 	/**
 	 * @return array customized attribute labels (name=>label)
 	 */

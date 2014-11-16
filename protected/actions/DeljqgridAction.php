@@ -26,6 +26,8 @@ class DeljqgridAction extends CAction{
                             Helpers::syslog(6,Yii::app()->user->getState('account')."删除了岗位 [".$model->name."]",Yii::app()->user->id,$model->id);
                         }elseif($this->modelClass == 'User'){
                             Helpers::syslog(4,Yii::app()->user->getState('account')."删除了员工 [".$model->account."]",Yii::app()->user->id,$model->id);
+                        }elseif($this->modelClass == 'Gift'){
+                            Helpers::syslog(7,Yii::app()->user->getState('account')."删除了兑换物品 [".$model->name."]",Yii::app()->user->id,$model->id);
                         }
                         echo true;
                     }else

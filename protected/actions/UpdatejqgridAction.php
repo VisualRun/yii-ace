@@ -34,6 +34,8 @@ class UpdatejqgridAction extends CAction{
                             Helpers::syslog(6,Yii::app()->user->getState('account')."更新了岗位 [".$model->name."] 信息",Yii::app()->user->id,$model->id);
                         }elseif($this->modelClass == 'User'){
                             Helpers::syslog(4,Yii::app()->user->getState('account')."更新了员工 [".$model->account."] 信息",Yii::app()->user->id,$model->id);
+                        }elseif($this->modelClass == 'Gift'){
+                            Helpers::syslog(7,Yii::app()->user->getState('account')."更新兑换物品 [".$model->name."] 信息",Yii::app()->user->id,$model->id);
                         }
                         echo true;
                     }else

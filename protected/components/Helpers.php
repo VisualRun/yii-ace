@@ -44,8 +44,19 @@ class Helpers
                 			array('text'=>'修改密码','href'=>Yii::app()->createUrl('/user/passwdedit'),'action'=>array('passwdedit')),
                 		),
                 	),
+                    'gift'=>array(
+                        'text'=>'兑换中心',
+                        'href'=>'#',
+                        'class'=>'fa fa-exchange',
+                        'item'=>array(
+                            array('text'=>'兑换物品管理','href'=>Yii::app()->createUrl('/gift/giftlist'),'action'=>array('giftlist')),
+                            array('text'=>'兑换记录审核','href'=>Yii::app()->createUrl('/gift/exchangecheck',array('status'=>0)),'action'=>array('exchangecheck')),
+                            array('text'=>'兑换操作','href'=>Yii::app()->createUrl('/gift/gift'),'action'=>array('gift')),
+                            array('text'=>'个人兑换记录','href'=>Yii::app()->createUrl('/gift/exchange'),'action'=>array('exchange')),
+                        ),
+                    ),
                 	'admin'=>array(
-                		'text'=>'组织中心',
+                		'text'=>'管理中心',
                 		'href'=>'#',
                 		'class'=>'fa fa-users',
                 		'item'=>array(
@@ -53,6 +64,7 @@ class Helpers
                 			array('text'=>'岗位管理','href'=>Yii::app()->createUrl('/admin/workplace'),'action'=>array('workplace')),
                             array('text'=>'员工管理','href'=>Yii::app()->createUrl('/admin/user'),'action'=>array('user')),
                             array('text'=>'积分统计','href'=>Yii::app()->createUrl('/admin/point'),'action'=>array('point')),
+                            array('text'=>'最新动态','href'=>Yii::app()->createUrl('/admin/syslog'),'action'=>array('syslog')),
                 		),
                 	),
                     'purviewadmin'=>array(
@@ -75,7 +87,6 @@ class Helpers
                 		'item'=>array(
                 		),
                 	),
-
                 	'task'=>array(
                 		'text'=>'任务中心',
                 		'href'=>'#',
@@ -97,6 +108,15 @@ class Helpers
                 			array('text'=>'修改密码','href'=>Yii::app()->createUrl('/user/passwdedit'),'action'=>array('passwdedit')),
                 		),
                 	),
+                    'gift'=>array(
+                        'text'=>'兑换中心',
+                        'href'=>'#',
+                        'class'=>'fa fa-exchange',
+                        'item'=>array(
+                            array('text'=>'兑换操作','href'=>Yii::app()->createUrl('/gift/gift'),'action'=>array('gift')),
+                            array('text'=>'个人兑换记录','href'=>Yii::app()->createUrl('/gift/exchange'),'action'=>array('exchange')),
+                        ),
+                    ),
                 );
                 break;
             case '普通用户':
@@ -123,12 +143,21 @@ class Helpers
                 		'href'=>'#',
                 		'class'=>'glyphicon glyphicon-user',
                 		'item'=>array(
-					array('text'=>'个人提醒','href'=>Yii::app()->createUrl('/user/message'),'action'=>array('message')),
+                            array('text'=>'个人提醒','href'=>Yii::app()->createUrl('/user/message'),'action'=>array('message')),
                 			array('text'=>'个人消息','href'=>Yii::app()->createUrl('/user/profile'),'action'=>array('profile')),
                             array('text'=>'个人积分','href'=>Yii::app()->createUrl('/user/point'),'action'=>array('point')),
                 			array('text'=>'修改密码','href'=>Yii::app()->createUrl('/user/passwdedit'),'action'=>array('passwdedit')),
                 		),
                 	),
+                    'gift'=>array(
+                        'text'=>'兑换中心',
+                        'href'=>'#',
+                        'class'=>'fa fa-exchange',
+                        'item'=>array(
+                            array('text'=>'兑换操作','href'=>Yii::app()->createUrl('/gift/gift'),'action'=>array('gift')),
+                            array('text'=>'个人兑换记录','href'=>Yii::app()->createUrl('/gift/exchange'),'action'=>array('exchange')),
+                        ),
+                    ),
                 );
                 break;
             default:
