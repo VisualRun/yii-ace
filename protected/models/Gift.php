@@ -158,6 +158,19 @@ class Gift extends CActiveRecord
 	{
 		$userinfo = User::model()->findByPk(Yii::app()->user->id);
 
+        $exchanging = GiftExchange::model()->findAllByAttributes(array('status'=>0,'applyId'=>Yii::app()->user->id));
+        $exchanging_score = 0;
+        $exchanging_code = '';
+        if(!empty($exchanging)){
+            foreach($exchanging as $key => $value)
+            {
+                $exchanging_score += $value->score;
+                $exchanging_code .= $value->code."&nbsp;&nbsp;";
+            }
+        }
+
+        $use_point = $userinfo->point - $exchanging_score;
+
 		$criteria = new CDbCriteria();
 
         $criteria->select = '*';
@@ -173,7 +186,7 @@ class Gift extends CActiveRecord
         $criteria->compare('t.name',$this->name);
         $criteria->compare('t.status',1);
         $criteria->compare('t.num',' > 0');
-        $criteria->compare('t.score',' < '.$userinfo->point);
+        #$criteria->compare('t.score',' < '.$userinfo->point);
 
         $count = $this->count($criteria);
         $pages = new CPagination($count);
@@ -185,6 +198,14 @@ class Gift extends CActiveRecord
 
         $row = array();
         foreach ($models as $key => $value) {
+            $handle = "";
+            if($use_point >= $value->score)
+            {
+                $handle = '<button onclick=\'apply("'.$value->id.'","'.$value->name.'")\' class="apply btn btn-warning btn-xs" ><i class="ace-icon fa fa-search-plus "></i> 申请兑换</button>';
+            }else{
+                $handle = '<button class="btn btn-danger btn-xs" ><i class="ace-icon fa fa-exclamation-triangle"></i> 积分不足</button>';
+            }
+
             $row[] = array(
                 'id' => $value->id,
 				'code' => $value->code,
@@ -198,7 +219,7 @@ class Gift extends CActiveRecord
 				'remark' => $value->remark,
 				'opAdminId' => $value->opAdminId,
 				'createdTime' => $value->createdTime,
-				'handle'=> '<button onclick=\'apply("'.$value->id.'","'.$value->name.'")\' class="apply btn btn-warning btn-xs" ><i class="ace-icon fa fa-search-plus "></i> 申请兑换</button>',
+				'handle'=> $handle,
                 );
         }
         $data = array(
