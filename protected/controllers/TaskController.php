@@ -203,10 +203,10 @@ EOD;
 	public function actionList()
 	{
 		$this->pageTitle = '任务列表';
-                $model = new Task();
-                $model->unsetAttributes();
-                if(isset($_GET)&&!empty($_GET))
-                    $model->attributes=$_GET;
+        $model = new Task();
+        $model->unsetAttributes();
+        if(isset($_GET)&&!empty($_GET))
+            $model->attributes=$_GET;
 		$this->render('list',array('model'=>$model));
 	}
 

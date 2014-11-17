@@ -20,7 +20,7 @@ class GiftController extends Controller
 				$exchanging_code .= $value->code."&nbsp;&nbsp;";
 			}
 		}
-		
+
 
 		$this->pageTitle = '兑换操作';
 		$model = new Gift();
@@ -109,7 +109,7 @@ class GiftController extends Controller
 		      		echo json_encode(array('type'=>'error','info'=>'兑换物品状态有误！'));
 		      		Yii::app()->end();
 		    	}
-		    
+
 		  	}else{
 		    	echo json_encode(array('type'=>'error','info'=>'你预计剩余的积分不够！'));
 		    	Yii::app()->end();
@@ -152,40 +152,59 @@ class GiftController extends Controller
 		{
 			$pk = Yii::app()->request->getParam('id');
 			$exchange = GiftExchange::model()->with(array('gift'))->findByPk($pk);
-
+			$gift = Gift::model()->findByPk($exchange->giftId);
 			$user = User::model()->findByPk($exchange->applyId);
 
 			if($exchange->status == 0)
 			{
 				if($user->point >= $exchange->score){
-					$exchange->status = 1;
-					$exchange->checkId = Yii::app()->user->id;
-					$exchange->checkDate = date('Y-m-d H:i:s');
-					$exchange->save();
+					if($gift->status == 1 && $gift->num > 0){
 
-		    		$user->point = $user->point-$exchange->score;
-		    		$user->save();
+						$transaction= Yii::app()->db->beginTransaction();
+						try{
+							$gift->num = $gift->num - $exchange->num;
+							$gift->save();
 
-		    		$log = new PointLog();
-		    		$log->userId = $user->id;
-		    		$log->log_type = 2;
-		    		$log->log_point = "-".$exchange->score;
-		    		$log->log_desc = "兑换物品减去积分";
-		    		$log->linkId = $exchange->id;
-		    		$log->save();
+							$exchange->status = 1;
+							$exchange->checkId = Yii::app()->user->id;
+							$exchange->checkDate = date('Y-m-d H:i:s');
+							$exchange->save();
 
-					Helpers::syslog(7,Yii::app()->user->getState('account')." 通过了 [".$exchange->code."] 中 [".$exchange->gift->name."] 的兑换申请",Yii::app()->user->id,$exchange->id);
+				    		$user->point = $user->point-$exchange->score;
+				    		$user->save();
 
-		       		//通知申请人
-		       		$content = "你的兑换申请 [".$exchange->code."] 中的 [".$exchange->gift->name."] 审核通过！";
-		       		Helpers::sendmessage($exchange->applyId,$content,3,0,$exchange->id);
+				    		$log = new PointLog();
+				    		$log->userId = $user->id;
+				    		$log->log_type = 2;
+				    		$log->log_point = "-".$exchange->score;
+				    		$log->log_desc = "兑换物品减去积分";
+				    		$log->linkId = $exchange->id;
+				    		$log->save();
 
-		       		echo json_encode(array('type'=>'success'));
-		       		Yii::app()->end();
+							Helpers::syslog(7,Yii::app()->user->getState('account')." 通过了 [".$exchange->code."] 中 [".$exchange->gift->name."] 的兑换申请",Yii::app()->user->id,$exchange->id);
+
+				       		//通知申请人
+				       		$content = "你的兑换申请 [".$exchange->code."] 中的 [".$exchange->gift->name."] 审核通过！";
+				       		Helpers::sendmessage($exchange->applyId,$content,3,0,$exchange->id);
+
+				       		$transaction->commit();
+
+				       		echo json_encode(array('type'=>'success'));
+				       		Yii::app()->end();
+			       		}
+			       		catch (Exception $e) {
+                			$transaction->rollback();
+                			echo json_encode(array('type'=>'error','info'=>'系统繁忙，请稍后再试！','errorinfo'=>$e));
+               				Yii::app()->end();
+                		}
+					}else{
+						echo json_encode(array('type'=>'error','info'=>'兑换的物品状态有问题！'));
+		    			Yii::app()->end();
+					}
 		       	}else{
 		       		echo json_encode(array('type'=>'error','info'=>'申请人的积分不够，不能确认审核！'));
 		    		Yii::app()->end();
-		       	}	
+		       	}
 			}else{
 				echo json_encode(array('type'=>'error','info'=>'兑换申请单的状态有误！'));
 		    	Yii::app()->end();

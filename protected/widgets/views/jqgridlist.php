@@ -1,5 +1,5 @@
-<table id="grid-table"></table>
-<div id="grid-pager"></div>
+<table id="grid-table<?php echo $gridType?>"></table>
+<div id="grid-pager<?php echo $gridType?>"></div>
 
     <script type="text/javascript">
       var $path_base = "..";//this will be used for editurl parameter
@@ -8,8 +8,8 @@
     <!-- inline scripts related to this page -->
     <script type="text/javascript">
       jQuery(function($) {
-        var grid_selector = "#grid-table";
-        var pager_selector = "#grid-pager";
+        var grid_selector = "#grid-table<?php echo $gridType?>";
+        var pager_selector = "#grid-pager<?php echo $gridType?>";
 
         //resize to fit page size
         $(window).on('resize.jqGrid', function () {

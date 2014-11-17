@@ -114,6 +114,10 @@ class GiftExchange extends CActiveRecord
         	$criteria->compare('gift.name',$this->giftId);
         }
 
+        if($_GET['id']){
+            $criteria->compare('t.id',$_GET['id']);
+        }
+
         $criteria->compare('t.applyId',Yii::app()->user->id);
 
 

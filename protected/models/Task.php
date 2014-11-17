@@ -507,6 +507,195 @@ class Task extends CActiveRecord
         return $data;
     }
 
+
+    public function homeindex1()
+    {
+        $criteria = new CDbCriteria();
+
+        $criteria->select = '*';
+        $criteria->order = "";
+        $sidx = Yii::app()->request->getParam('sidx');
+        $page = Yii::app()->request->getParam('page');
+        $rows = Yii::app()->request->getParam('rows');
+
+        if(!empty($sidx))
+            $criteria->order .= 't.'.Yii::app()->request->getParam('sidx').' '.Yii::app()->request->getParam('sord').",";
+        $criteria->order .= 't.createdTime DESC,t.id DESC';
+
+        $criteria->compare('t.typeId',1);
+
+        $count = $this->count($criteria);
+        $pages = new CPagination($count);
+        $pages->pageVar = 'page';
+        $pages->currentPage = !empty($page)?Yii::app()->request->getParam('page')-1:10;
+        $pages->pageSize = !empty($rows)?Yii::app()->request->getParam('rows'):10;
+        $pages->applyLimit($criteria);
+        $models = $this->findAll($criteria);
+
+        $row = array();
+        foreach ($models as $key => $value) {
+            $hand = "";
+            if(Yii::app()->user->id == $value->openedId && $value->status == 0)
+            {
+                $hand .= '<a href="'.Yii::app()->createUrl('/task/add',array('id'=>$value->id)).'">编辑</a> | ';
+            }
+            $hand .= '<a href="'.Yii::app()->createUrl('/task/view',array('id'=>$value->id)).'">查看</a>';
+
+            $tmp_deadline = Helpers::realdeadline($value);
+            if($value->deadline_type == 1){
+                $deadline = date('y/m/d',strtotime($tmp_deadline));
+            }else{
+                $deadline = date('y/m/d H点',strtotime($tmp_deadline));
+            }
+
+            $tmp_imtype = "";
+            if($value->imtypeId == 3){
+                $tmp_imtype = '<span class="label label-danger arrowed-in">'.Yii::app()->params['task_important_type'][$value->imtypeId].'</span>';
+            }elseif($value->imtypeId == 2){
+                $tmp_imtype = '<span class="label label-warning arrowed-in">'.Yii::app()->params['task_important_type'][$value->imtypeId].'</span>';
+            }elseif($value->imtypeId == 1){
+                $tmp_imtype = '<span class="label label-grey arrowed-in">'.Yii::app()->params['task_important_type'][$value->imtypeId].'</span>';
+            }elseif($value->imtypeId == 0){
+                $tmp_imtype = '<span class="label label-light arrowed-in">'.Yii::app()->params['task_important_type'][$value->imtypeId].'</span>';
+            }
+
+            $row[] = array(
+                'id' => $value->id,
+                'code' => $value->code,
+                'typeId' => Yii::app()->params['task_type'][$value->typeId],
+                'imtypeId' => $tmp_imtype,
+                'name' => "<a href='".Yii::app()->createUrl('task/view',array('id'=>$value->id))."' >".Helpers::substrUtf8($value->name,8)."</a>",
+                'desc' => $value->desc,
+                'status' => Yii::app()->params['task_status'][$value->status],
+                'deadline' => $deadline,
+                'openedId' => isset($value->opened)?$value->opened->account:'无',
+                'openedDate' => $value->openedDate,
+                'assignedId' => isset($value->assigned)?$value->assigned->account:'<button class="btn btn-minier btn-danger">还未指派</button>',
+                'assignedDate' => $value->assignedDate,
+                'estStarted' => $value->estStarted,
+                'realStarted' => $value->realStarted,
+                'finishedId' => $value->finishedId,
+                'finishedDate' => $value->finishedDate,
+                'canceledId' => $value->canceledId,
+                'canceledDate' => $value->canceledDate,
+                'closedId' => $value->closedId,
+                'closedDate' => $value->closedDate,
+                'closedReason' => $value->closedReason,
+                'lastEditedId' => isset($value->lastEdited)?$value->lastEdited->account:'无',
+                'lastEditedDate' => $value->lastEditedDate,
+                'deleted' => $value->deleted,
+                'remark' => $value->remark,
+                'opAdminId' => $value->opAdminId,
+                'createdTime' => $value->createdTime,
+                'deadline_type' => $value->deadline_type,
+                'hand' => $hand,
+            );
+        }
+
+        $data = array(
+                    "totalpages" => $pages->pageCount,
+                    "currpage" => $pages->currentPage+1,
+                    "totalrecords" =>$count,
+                    "griddata" => $row,
+                );
+        return $data;
+    }
+
+    public function homeindex2()
+    {
+        $criteria = new CDbCriteria();
+
+        $criteria->select = '*';
+        $criteria->order = "";
+        $sidx = Yii::app()->request->getParam('sidx');
+        $page = Yii::app()->request->getParam('page');
+        $rows = Yii::app()->request->getParam('rows');
+
+        if(!empty($sidx))
+            $criteria->order .= 't.'.Yii::app()->request->getParam('sidx').' '.Yii::app()->request->getParam('sord').",";
+        $criteria->order .= 't.createdTime DESC,t.id DESC';
+
+        $criteria->compare('t.typeId',2);
+
+        $count = $this->count($criteria);
+        $pages = new CPagination($count);
+        $pages->pageVar = 'page';
+        $pages->currentPage = !empty($page)?Yii::app()->request->getParam('page')-1:10;
+        $pages->pageSize = !empty($rows)?Yii::app()->request->getParam('rows'):10;
+        $pages->applyLimit($criteria);
+        $models = $this->findAll($criteria);
+
+        $row = array();
+        foreach ($models as $key => $value) {
+            $hand = "";
+            if(Yii::app()->user->id != $value->openedId && $value->status == 0)
+            {
+                $hand .= '<button onclick="undertake('.$value->id.')" class="btn btn-minier btn-danger ">承接</button>';
+            }else{
+                $hand = "等待";
+            }
+
+
+            $tmp_deadline = Helpers::realdeadline($value);
+            if($value->deadline_type == 1){
+                $deadline = date('y/m/d',strtotime($tmp_deadline));
+            }else{
+                $deadline = date('y/m/d H点',strtotime($tmp_deadline));
+            }
+
+            $tmp_imtype = "";
+            if($value->imtypeId == 3){
+                $tmp_imtype = '<span class="label label-danger arrowed-in">'.Yii::app()->params['task_important_type'][$value->imtypeId].'</span>';
+            }elseif($value->imtypeId == 2){
+                $tmp_imtype = '<span class="label label-warning arrowed-in">'.Yii::app()->params['task_important_type'][$value->imtypeId].'</span>';
+            }elseif($value->imtypeId == 1){
+                $tmp_imtype = '<span class="label label-grey arrowed-in">'.Yii::app()->params['task_important_type'][$value->imtypeId].'</span>';
+            }elseif($value->imtypeId == 0){
+                $tmp_imtype = '<span class="label label-light arrowed-in">'.Yii::app()->params['task_important_type'][$value->imtypeId].'</span>';
+            }
+
+            $row[] = array(
+                'id' => $value->id,
+                'code' => $value->code,
+                'typeId' => Yii::app()->params['task_type'][$value->typeId],
+                'imtypeId' => $tmp_imtype,
+                'name' => "<a href='".Yii::app()->createUrl('task/view',array('id'=>$value->id))."' >".Helpers::substrUtf8($value->name,8)."</a>",
+                'desc' => $value->desc,
+                'status' => ($value->status == 0)?$hand:Yii::app()->params['task_status'][$value->status],
+                'deadline' => $deadline,
+                'openedId' => isset($value->opened)?$value->opened->account:'无',
+                'openedDate' => $value->openedDate,
+                'assignedId' => isset($value->assigned)?$value->assigned->account:'<button class="btn btn-minier btn-danger">还未指派</button>',
+                'assignedDate' => $value->assignedDate,
+                'estStarted' => $value->estStarted,
+                'realStarted' => $value->realStarted,
+                'finishedId' => $value->finishedId,
+                'finishedDate' => $value->finishedDate,
+                'canceledId' => $value->canceledId,
+                'canceledDate' => $value->canceledDate,
+                'closedId' => $value->closedId,
+                'closedDate' => $value->closedDate,
+                'closedReason' => $value->closedReason,
+                'lastEditedId' => isset($value->lastEdited)?$value->lastEdited->account:'无',
+                'lastEditedDate' => $value->lastEditedDate,
+                'deleted' => $value->deleted,
+                'remark' => $value->remark,
+                'opAdminId' => $value->opAdminId,
+                'createdTime' => $value->createdTime,
+                'deadline_type' => $value->deadline_type,
+                'hand' => $hand,
+            );
+        }
+
+        $data = array(
+                    "totalpages" => $pages->pageCount,
+                    "currpage" => $pages->currentPage+1,
+                    "totalrecords" =>$count,
+                    "griddata" => $row,
+                );
+        return $data;
+    }
+
 	/**
 	 * @return array customized attribute labels (name=>label)
 	 */

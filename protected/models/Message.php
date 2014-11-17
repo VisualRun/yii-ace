@@ -132,6 +132,8 @@ class Message extends CActiveRecord
             if($value->typeId == 2)
             {
                 $tmp['linkstr'] = '<a onclick=\'checkmessage("'.$value->id.'","2","'.Yii::app()->createUrl('task/view',array('id'=>$value->linkId)).'")\' href="javascript:;">关联任务</a>';
+            }elseif($value->typeId == 3){
+                $tmp['linkstr'] = '<a onclick=\'checkmessage("'.$value->id.'","2","'.Yii::app()->createUrl('gift/exchangecheck',array('id'=>$value->linkId)).'")\' href="javascript:;">关联兑换</a>';
             }else{
                 $tmp['linkstr'] = '暂无';
             }

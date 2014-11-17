@@ -13,6 +13,7 @@ class JqGridlist extends CPortlet
 	public $pagerSettings = [];
 	public $enableFilterToolbar = true;
     public $resultType = 'result';
+    public $gridType = '';
 
 	protected function renderContent()
 	{
@@ -43,6 +44,7 @@ EOD;
 
 		$this->render('jqgridlist',
 			array(
+                'gridType'=>$this->gridType,
 				'pageSize'=>$this->pageSize,
 				'viewData'=>$this->viewData,
 				'gridSettings'=>$jsonGridSettings,
@@ -71,7 +73,7 @@ EOD;
         $gridSettings['loadonce'] = false;
 
         if ($this->enablePager) {
-            $gridSettings['pager'] = "#grid-pager";
+            $gridSettings['pager'] = "#grid-pager".$this->gridType;
         }
         if ($this->enableCellEdit) {
             $gridSettings['cellEdit'] = true;
