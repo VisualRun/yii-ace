@@ -114,7 +114,7 @@ class GiftExchange extends CActiveRecord
         	$criteria->compare('gift.name',$this->giftId);
         }
 
-        if($_GET['id']){
+        if(isset($_GET['id']) && !empty($_GET['id'])){
             $criteria->compare('t.id',$_GET['id']);
         }
 
