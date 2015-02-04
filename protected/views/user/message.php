@@ -98,4 +98,45 @@
             }
         });
     }
+
+    function setallread(){
+        $( "#dialog-check .alert" ).find('span').html("确认全部设为已读？");
+
+        $( "#dialog-check" ).removeClass('hide').dialog({
+            resizable: true,
+            modal: true,
+            width: 500,
+            title: "<div class='widget-header'><h4 class='smaller'><i class='ace-icon fa fa-exclamation-triangle red'></i> 提醒</h4></div>",
+            title_html: true,
+            buttons: [
+                {
+                    html: "<i class='ace-icon fa fa-check bigger-110'></i>&nbsp; 确认",
+                    "class" : "btn btn-danger btn-xs",
+                    click: function() {
+                        $.ajax({
+                            type: "POST",
+                            url: "<?php echo Yii::app()->createUrl('/message/setallread') ?>",
+                            dataType : 'json',
+                            success: function(msg){
+                                if(msg.type == 'success')
+                                {
+                                    window.location.reload();
+                                }else{
+                                    $( "#dialog-check .error_info" ).removeClass('hide').html(msg.info);
+                                    return false;
+                                }
+                            }
+                        });
+                    }
+                },
+                {
+                    html: "<i class='ace-icon fa fa-times bigger-110'></i>&nbsp; 取消",
+                    "class" : "btn btn-xs",
+                    click: function() {
+                        $( this ).dialog( "close" );
+                    }
+                }
+            ]
+        });
+    }
 </script>

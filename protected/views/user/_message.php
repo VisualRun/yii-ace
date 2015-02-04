@@ -58,6 +58,10 @@
                 <i class="ace-icon glyphicon glyphicon-repeat red2"></i>
                 重置
             </a>
+            <a href="javascript:void(0)" onclick="setallread();" class="btn btn-white btn-danger btn-round">
+                <i class="ace-icon fa fa-inbox orgian2"></i>
+                全部设为已读
+            </a>
         </div>
     </div>
     <?php $this->endWidget(); ?>

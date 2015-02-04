@@ -23,4 +23,17 @@ class MessageController extends Controller
         	Yii::app()->end();
         }
 	}
+
+    public function actionSetallread(){
+        if (Yii::app()->request->isAjaxRequest)
+        {
+            $user_id = Yii::app()->user->id;
+            $res = Message::model()->updateAll(array('checkout'=>1),'checkout=:checkout and touserId=:touserId',array(':checkout'=>'0',':touserId'=>$user_id));
+            if($res){
+                echo json_encode(array('type'=>'success'));
+            }else{
+                echo json_encode(array('type'=>'error','info'=>'系统繁忙，稍后再试！'));
+            }
+        }
+    }
 }
