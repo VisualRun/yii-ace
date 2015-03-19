@@ -3,6 +3,16 @@
     <?php $this->renderPartial('_message',array('model'=>$model,)); ?>
 </div>
 <div class="space-10"></div>
+<div class="row">
+    <div class="control-group col-xs-12 no-padding-left" style="margin-bottom:10px;">
+        <div class="col-sm-9" >
+            <a href="javascript:void(0)" onclick="setallread();" class="btn btn-white btn-danger btn-round">
+                <i class="ace-icon fa fa-inbox orgian2"></i>
+                批量设为已读
+            </a>
+        </div>
+    </div>
+</div>
 <?php
     $this->widget('JqGridlist',
       [
@@ -100,43 +110,62 @@
     }
 
     function setallread(){
-        $( "#dialog-check .alert" ).find('span').html("确认全部设为已读？");
 
-        $( "#dialog-check" ).removeClass('hide').dialog({
-            resizable: true,
-            modal: true,
-            width: 500,
-            title: "<div class='widget-header'><h4 class='smaller'><i class='ace-icon fa fa-exclamation-triangle red'></i> 提醒</h4></div>",
-            title_html: true,
-            buttons: [
-                {
-                    html: "<i class='ace-icon fa fa-check bigger-110'></i>&nbsp; 确认",
-                    "class" : "btn btn-danger btn-xs",
-                    click: function() {
-                        $.ajax({
-                            type: "POST",
-                            url: "<?php echo Yii::app()->createUrl('/message/setallread') ?>",
-                            dataType : 'json',
-                            success: function(msg){
-                                if(msg.type == 'success')
-                                {
-                                    window.location.reload();
-                                }else{
-                                    $( "#dialog-check .error_info" ).removeClass('hide').html(msg.info);
-                                    return false;
-                                }
-                            }
-                        });
-                    }
-                },
-                {
-                    html: "<i class='ace-icon fa fa-times bigger-110'></i>&nbsp; 取消",
-                    "class" : "btn btn-xs",
-                    click: function() {
-                        $( this ).dialog( "close" );
-                    }
+        var rowData = $("#grid-table").jqGrid('getGridParam','selarrrow');
+
+        if(rowData.length)
+        {
+            var tmp = true;
+            for(var i=0;i<rowData.length;i++)
+            {
+                var checkout= $("#grid-table").jqGrid('getCell',rowData[i],'checkout');
+                if(checkout == '已看'){
+                    alert("请选择未查看的消息！");
+                    tmp = false;
+                    break;
                 }
-            ]
-        });
+            }
+        }
+        if(tmp){
+            $( "#dialog-check .alert" ).find('span').html("确认批量设为已读？");
+            $( "#dialog-check" ).removeClass('hide').dialog({
+                resizable: true,
+                modal: true,
+                width: 500,
+                title: "<div class='widget-header'><h4 class='smaller'><i class='ace-icon fa fa-exclamation-triangle red'></i> 提醒</h4></div>",
+                title_html: true,
+                buttons: [
+                    {
+                        html: "<i class='ace-icon fa fa-check bigger-110'></i>&nbsp; 确认",
+                        "class" : "btn btn-danger btn-xs",
+                        click: function() {
+                            $.ajax({
+                                type: "POST",
+                                url: "<?php echo Yii::app()->createUrl('/message/setallread') ?>",
+                                dataType : 'json',
+                                data : {id:rowData} ,
+                                success: function(msg){
+                                    if(msg.type == 'success')
+                                    {
+                                        window.location.reload();
+                                    }else{
+                                        $( "#dialog-check .error_info" ).removeClass('hide').html(msg.info);
+                                        return false;
+                                    }
+                                }
+                            });
+                        }
+                    },
+                    {
+                        html: "<i class='ace-icon fa fa-times bigger-110'></i>&nbsp; 取消",
+                        "class" : "btn btn-xs",
+                        click: function() {
+                            $( this ).dialog( "close" );
+                        }
+                    }
+                ]
+            });
+
+        }
     }
 </script>

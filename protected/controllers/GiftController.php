@@ -211,4 +211,128 @@ class GiftController extends Controller
 			}
 		}
 	}
+
+	// 批量审核通过兑换
+	public function actionCheckallok(){
+		if (Yii::app()->request->isAjaxRequest)
+		{
+			$pk = Yii::app()->request->getParam('id');
+			if(!empty($pk)){
+
+				foreach($pk as $k => $v){
+					$exchange = GiftExchange::model()->with(array('gift'))->findByPk($v);
+					$gift = Gift::model()->findByPk($exchange->giftId);
+					$user = User::model()->findByPk($exchange->applyId);
+					if($exchange->status != 0)
+					{
+						echo json_encode(array('type'=>'error','info'=>'兑换申请单'.$exchange->code.'的状态有误！'));
+		    			Yii::app()->end();
+					}
+
+					if($user->point < $exchange->score){
+						echo json_encode(array('type'=>'error','info'=>$user->account.'的积分不够，'.$exchange->code.'不能审核通过！'));
+		    			Yii::app()->end();
+					}
+
+					if($gift->status != 1 || $gift->num <= 0){
+						echo json_encode(array('type'=>'error','info'=>'兑换申请单'.$exchange->code.'所兑换的物品状态有问题！'));
+		    			Yii::app()->end();
+					}
+				}
+
+				$transaction= Yii::app()->db->beginTransaction();
+				try{
+					foreach($pk as $k => $v){
+						$exchange = GiftExchange::model()->with(array('gift'))->findByPk($v);
+						$gift = Gift::model()->findByPk($exchange->giftId);
+						$user = User::model()->findByPk($exchange->applyId);
+
+						$gift->num = $gift->num - $exchange->num;
+						$gift->save();
+
+						$exchange->status = 1;
+						$exchange->checkId = Yii::app()->user->id;
+						$exchange->checkDate = date('Y-m-d H:i:s');
+						$exchange->save();
+
+			    		$user->point = $user->point-$exchange->score;
+			    		$user->save();
+
+			    		$log = new PointLog();
+			    		$log->userId = $user->id;
+			    		$log->log_type = 2;
+			    		$log->log_point = "-".$exchange->score;
+			    		$log->log_desc = "兑换物品减去积分";
+			    		$log->linkId = $exchange->id;
+			    		$log->save();
+
+						Helpers::syslog(7,Yii::app()->user->getState('account')." 通过了 [".$exchange->code."] 中 [".$exchange->gift->name."] 的兑换申请",Yii::app()->user->id,$exchange->id);
+
+			       		//通知申请人
+			       		$content = "你的兑换申请 [".$exchange->code."] 中的 [".$exchange->gift->name."] 审核通过！";
+			       		Helpers::sendmessage($exchange->applyId,$content,3,0,$exchange->id);
+
+					}
+
+					$transaction->commit();
+
+			       	echo json_encode(array('type'=>'success'));
+			       	Yii::app()->end();
+	       		}
+	       		catch (Exception $e) {
+	    			$transaction->rollback();
+	    			echo json_encode(array('type'=>'error','info'=>'系统繁忙，请稍后再试！','errorinfo'=>$e));
+	   				Yii::app()->end();
+	    		}
+
+			}
+		}
+	}
+
+	// 批量审核不通过兑换
+	public function actionCheckallnot()
+	{
+		if (Yii::app()->request->isAjaxRequest)
+		{
+			$pk = Yii::app()->request->getParam('id');
+			if(!empty($pk)){
+				foreach($pk as $k => $v){
+					$exchange = GiftExchange::model()->with(array('gift'))->findByPk($v);
+					if($exchange->status != 0)
+					{
+						echo json_encode(array('type'=>'error','info'=>'兑换申请单'.$exchange->code.'的状态有误！'));
+		    			Yii::app()->end();
+					}
+				}
+
+				$transaction= Yii::app()->db->beginTransaction();
+				try{
+					foreach($pk as $k => $v){
+						$exchange = GiftExchange::model()->with(array('gift'))->findByPk($v);
+
+						$exchange->status = -1;
+						$exchange->checkId = Yii::app()->user->id;
+						$exchange->checkDate = date('Y-m-d H:i:s');
+						$exchange->save();
+
+						Helpers::syslog(7,Yii::app()->user->getState('account')." 不通过 [".$exchange->code."] 中 [".$exchange->gift->name."] 的兑换申请",Yii::app()->user->id,$exchange->id);
+
+				       	//通知申请人
+				       	$content = "你的兑换申请 [".$exchange->code."] 中的 [".$exchange->gift->name."] 没有被通过！";
+				       	Helpers::sendmessage($exchange->applyId,$content,3,0,$exchange->id);
+					}
+
+					$transaction->commit();
+
+			       	echo json_encode(array('type'=>'success'));
+			       	Yii::app()->end();
+	       		}
+	       		catch (Exception $e) {
+	    			$transaction->rollback();
+	    			echo json_encode(array('type'=>'error','info'=>'系统繁忙，请稍后再试！','errorinfo'=>$e));
+	   				Yii::app()->end();
+	    		}
+			}
+		}
+	}
 }

@@ -124,6 +124,7 @@ class Message extends CActiveRecord
                 'linkId2' => $value->linkId2,
                 'content' => Helpers::substrUtf8($value->content,20),
                 'checkout' => Yii::app()->params['checkout'][$value->checkout],
+                'checkoutid' => $value->checkout,
                 'deleted' => Yii::app()->params['is_ync'][$value->deleted],
                 'opAdminId' => $value->opAdminId,
                 'createdTime' => $value->createdTime,

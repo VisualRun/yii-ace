@@ -3,6 +3,20 @@
     <?php $this->renderPartial('_exchangecheck',array('model'=>$model,)); ?>
 </div>
 <div class="space-10"></div>
+<div class="row">
+    <div class="control-group col-xs-12 no-padding-left" style="margin-bottom:10px;">
+        <div class="col-sm-9" >
+            <a href="javascript:void(0)" onclick="setallok();" class="btn btn-white btn-default btn-round">
+                <i class="ace-icon fa fa-check-square-o"></i>
+                批量审核通过
+            </a>
+            <a href="javascript:void(0)" onclick="setallnot();" class="btn btn-white btn-warning btn-round">
+                <i class="ace-icon fa fa-exclamation-triangle"></i>
+                批量审核不通过
+            </a>
+        </div>
+    </div>
+</div>
 <?php
     $this->widget('JqGridlist',
       [
@@ -165,5 +179,125 @@
                 }
             ]
         });
+    }
+
+    function setallok(){
+
+        var rowData = $("#grid-table").jqGrid('getGridParam','selarrrow');
+
+        if(rowData.length)
+        {
+            var tmp = true;
+            for(var i=0;i<rowData.length;i++)
+            {
+                var status= $("#grid-table").jqGrid('getCell',rowData[i],'status');
+                if(status == '审核不过' || status == '兑换成功'){
+                    alert("请选择新申请的兑换记录！");
+                    tmp = false;
+                    break;
+                }
+            }
+        }
+        if(tmp){
+            $( "#dialog-checkok .alert" ).find('span').html("确认批量审核通过？");
+            $( "#dialog-checkok" ).removeClass('hide').dialog({
+                resizable: true,
+                modal: true,
+                width: 500,
+                title: "<div class='widget-header'><h4 class='smaller'><i class='ace-icon fa fa-exclamation-triangle red'></i> 提醒</h4></div>",
+                title_html: true,
+                buttons: [
+                    {
+                        html: "<i class='ace-icon fa fa-check bigger-110'></i>&nbsp; 确认",
+                        "class" : "btn btn-danger btn-xs",
+                        click: function() {
+                            $.ajax({
+                                type: "POST",
+                                url: "<?php echo Yii::app()->createUrl('/gift/checkallok') ?>",
+                                dataType : 'json',
+                                data : {id:rowData} ,
+                                success: function(msg){
+                                    if(msg.type == 'success')
+                                    {
+                                        window.location.reload();
+                                    }else{
+                                        $( "#dialog-checkok .error_info" ).removeClass('hide').html(msg.info);
+                                        return false;
+                                    }
+                                }
+                            });
+                        }
+                    },
+                    {
+                        html: "<i class='ace-icon fa fa-times bigger-110'></i>&nbsp; 取消",
+                        "class" : "btn btn-xs",
+                        click: function() {
+                            $( this ).dialog( "close" );
+                        }
+                    }
+                ]
+            });
+
+        }
+    }
+
+    function setallnot(){
+
+        var rowData = $("#grid-table").jqGrid('getGridParam','selarrrow');
+
+        if(rowData.length)
+        {
+            var tmp = true;
+            for(var i=0;i<rowData.length;i++)
+            {
+                var status= $("#grid-table").jqGrid('getCell',rowData[i],'status');
+                if(status == '审核不过' || status == '兑换成功'){
+                    alert("请选择新申请的兑换记录！");
+                    tmp = false;
+                    break;
+                }
+            }
+        }
+        if(tmp){
+            $( "#dialog-checknot .alert" ).find('span').html("确认批量审核不通过？");
+            $( "#dialog-checknot" ).removeClass('hide').dialog({
+                resizable: true,
+                modal: true,
+                width: 500,
+                title: "<div class='widget-header'><h4 class='smaller'><i class='ace-icon fa fa-exclamation-triangle red'></i> 提醒</h4></div>",
+                title_html: true,
+                buttons: [
+                    {
+                        html: "<i class='ace-icon fa fa-check bigger-110'></i>&nbsp; 确认",
+                        "class" : "btn btn-danger btn-xs",
+                        click: function() {
+                            $.ajax({
+                                type: "POST",
+                                url: "<?php echo Yii::app()->createUrl('/gift/checkallnot') ?>",
+                                dataType : 'json',
+                                data : {id:rowData} ,
+                                success: function(msg){
+                                    if(msg.type == 'success')
+                                    {
+                                        window.location.reload();
+                                    }else{
+                                        $( "#dialog-checknot .error_info" ).removeClass('hide').html(msg.info);
+                                        return false;
+                                    }
+                                }
+                            });
+                        }
+                    },
+                    {
+                        html: "<i class='ace-icon fa fa-times bigger-110'></i>&nbsp; 取消",
+                        "class" : "btn btn-xs",
+                        click: function() {
+                            $( this ).dialog( "close" );
+                        }
+                    }
+                ]
+            });
+
+        }
     }
 </script>

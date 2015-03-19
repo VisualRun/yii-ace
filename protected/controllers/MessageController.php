@@ -27,13 +27,23 @@ class MessageController extends Controller
     public function actionSetallread(){
         if (Yii::app()->request->isAjaxRequest)
         {
-            $user_id = Yii::app()->user->id;
-            $res = Message::model()->updateAll(array('checkout'=>1),'checkout=:checkout and touserId=:touserId',array(':checkout'=>'0',':touserId'=>$user_id));
-            if($res){
+            $id = Yii::app()->request->getParam('id');
+
+            if(!empty($id)){
+                foreach($id as $k => $v){
+                    //$user_id = Yii::app()->user->id;
+                    $res = Message::model()->updateAll(array('checkout'=>1),'checkout=:checkout and id=:id',array(':checkout'=>'0',':id'=>$v));
+                    // if($res){
+                    //     echo json_encode(array('type'=>'success'));
+                    // }else{
+                    //     echo json_encode(array('type'=>'error','info'=>'系统繁忙，稍后再试！'));
+                    // }
+                }
                 echo json_encode(array('type'=>'success'));
             }else{
                 echo json_encode(array('type'=>'error','info'=>'系统繁忙，稍后再试！'));
             }
+            exit;
         }
     }
 }
