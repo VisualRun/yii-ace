@@ -3,6 +3,16 @@
     <?php $this->renderPartial('_searchmypublish',array('model'=>$model,)); ?>
 </div>
 <div class="space-10"></div>
+<div class="row">
+    <div class="control-group col-xs-12 no-padding-left" style="margin-bottom:10px;">
+        <div class="col-sm-9" >
+            <a href="javascript:void(0)" onclick="allcheck();" class="btn btn-white btn-default btn-round">
+                <i class="ace-icon fa fa-check-square-o"></i>
+                批量查看任务
+            </a>
+        </div>
+    </div>
+</div>
 <?php
     $this->widget('JqGridlist',
       [
@@ -44,3 +54,25 @@
     );
 ?>
 </div>
+<script type="text/javascript">
+    function allcheck(){
+        var rowData = $("#grid-table").jqGrid('getGridParam','selarrrow');
+        if(rowData.length)
+        {
+            var tmp = '';
+            for(var i=0;i<rowData.length;i++)
+            {
+                tmp += rowData[i]+',';
+            }
+
+            tmp=tmp.substring(0,tmp.length-1);
+        }else{
+            alert("请选择任务！");
+            return false;
+        }
+        if(tmp){
+             window.location.href = '<?php echo Yii::app()->createUrl("/task/allcheck") ?>/ids/'+tmp;
+        }
+    }
+
+</script>

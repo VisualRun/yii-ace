@@ -125,6 +125,9 @@
                     break;
                 }
             }
+        }else{
+            alert("请选择消息！");
+            return false;
         }
         if(tmp){
             $( "#dialog-check .alert" ).find('span').html("确认批量设为已读？");

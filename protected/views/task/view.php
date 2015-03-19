@@ -31,7 +31,7 @@
             <div class="widget-header">
                 <h4 class="widget-title lighter smaller">
                     <i class="ace-icon fa fa-tasks blue"></i>&nbsp;&nbsp;
-                    <strong><?php echO $model->name ?></strong>
+                    <strong><?php echo $model->name ?></strong>
                 </h4>
                 <div class="widget-toolbar no-border">
                     <ul id="recent-tab" class="nav nav-tabs">

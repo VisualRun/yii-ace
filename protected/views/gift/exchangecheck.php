@@ -197,6 +197,9 @@
                     break;
                 }
             }
+        }else{
+            alert("请选择兑换记录！");
+            return false;
         }
         if(tmp){
             $( "#dialog-checkok .alert" ).find('span').html("确认批量审核通过？");
@@ -257,6 +260,9 @@
                     break;
                 }
             }
+        }else{
+            alert("请选择兑换记录！");
+            return false;
         }
         if(tmp){
             $( "#dialog-checknot .alert" ).find('span').html("确认批量审核不通过？");
