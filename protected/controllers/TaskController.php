@@ -7,6 +7,7 @@ class TaskController extends Controller
 		$this->modelClass = 'Task';
 	}
 
+    //之后的要改成一个页面循环添加
     public function actionAdd(){
         $this->page_css = array(
             'jquery-ui.custom.min.css',
