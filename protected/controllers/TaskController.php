@@ -97,7 +97,7 @@ EOD;
 				//如果文件上传
 				$uploaded = CUploadedFile::getInstanceByName('attach' . $v1);
 				if (is_object($uploaded) && get_class($uploaded) === 'CUploadedFile') {
-					if ($uploaded->size > 1 * 1024 * 1024) {
+					if ($uploaded->size > 10 * 1024 * 1024) {
 						$model->addError('opAdminId', '文件太大！');
 					}
 
