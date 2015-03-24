@@ -217,6 +217,8 @@
 		$("#task_list").append(html);
 		$("div[data-myid='"+myid+"']").find('.form_task_close').removeClass('hide');
 
+		$("div[data-myid='"+myid+"']").find('textarea').html("");
+
 		$('textarea[class*=autosize]').autosize({append: "\n"});
 		$('textarea.limited').inputlimiter({
 			remText: '%n 字符剩余...',
