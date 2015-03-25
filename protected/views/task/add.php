@@ -224,6 +224,12 @@
 			remText: '%n 字符剩余...',
 			limitText: '最多允许 : %n.'
 		});
+
+		$('.Task_deadline1').datepicker({
+        autoclose: true,
+        todayHighlight: true,
+        language: 'zh-CN'
+    })
 	}
 
 	function close_form(obj){
