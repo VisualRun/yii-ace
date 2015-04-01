@@ -1,8 +1,8 @@
 <div class="col-xs-12">
     <!-- <div class="row"> -->
-        <?php $realdeadline = Helpers::realdeadline($model);  ?>
-        <?php if($model->assignedId == Yii::app()->user->id): ?>
-        <?php if($model->status < 2 && time()+86400 > strtotime($realdeadline) && time() < strtotime($realdeadline)): ?>
+        <?php $realdeadline = Helpers::realdeadline($model);?>
+        <?php if ($model->assignedId == Yii::app()->user->id): ?>
+        <?php if ($model->status < 2 && time() + 86400 > strtotime($realdeadline) && time() < strtotime($realdeadline)): ?>
         <div class="alert alert-info bigger-110">
             <button data-dismiss="alert" class="close" type="button">
                 <i class="ace-icon fa fa-times"></i>
@@ -10,7 +10,7 @@
             <i class="ace-icon fa fa-exclamation-triangle red"></i>
             最后期限将近，请尽快处理
         </div>
-        <?php elseif($model->status < 2 && time() > strtotime($realdeadline)): ?>
+        <?php elseif ($model->status < 2 && time() > strtotime($realdeadline)): ?>
         <div class="alert alert-info bigger-110">
             <button data-dismiss="alert" class="close" type="button">
                 <i class="ace-icon fa fa-times"></i>
@@ -18,8 +18,8 @@
             <i class="ace-icon fa fa-exclamation-triangle red"></i>
             最后期限已过，请尽快处理
         </div>
-        <?php endif; ?>
-        <?php endif; ?>
+        <?php endif;?>
+        <?php endif;?>
         <div class="alert alert-info bigger-110">
             <button data-dismiss="alert" class="close" type="button">
                 <i class="ace-icon fa fa-times"></i>
@@ -31,7 +31,7 @@
             <div class="widget-header">
                 <h4 class="widget-title lighter smaller">
                     <i class="ace-icon fa fa-tasks blue"></i>&nbsp;&nbsp;
-                    <strong><?php echo $model->name ?></strong>
+                    <strong><?php echo $model->name?></strong>
                 </h4>
                 <div class="widget-toolbar no-border">
                     <ul id="recent-tab" class="nav nav-tabs">
@@ -59,53 +59,53 @@
                                     <div class="profile-info-name"> 任务编码 </div>
 
                                     <div class="profile-info-value">
-                                        <?php echo $model->code ?>
+                                        <?php echo $model->code?>
                                     </div>
                                     <div class="profile-info-name"> 状态 </div>
 
                                     <div class="profile-info-value">
-                                        <?php echo Yii::app()->params['task_status'][$model->status] ?>
+                                        <?php echo Yii::app()->params['task_status'][$model->status]?>
                                     </div>
                                 </div>
                                 <div class="profile-info-row">
                                     <div class="profile-info-name"> 任务类别 </div>
 
                                     <div class="profile-info-value">
-                                        <?php echo Yii::app()->params['task_type'][$model->typeId] ?>
+                                        <?php echo Yii::app()->params['task_type'][$model->typeId]?>
                                     </div>
                                     <div class="profile-info-name"> 重要类别 </div>
 
                                     <div class="profile-info-value">
-                                        <?php echo Yii::app()->params['task_important_type'][$model->imtypeId] ?>
+                                        <?php echo Yii::app()->params['task_important_type'][$model->imtypeId]?>
                                     </div>
                                 </div>
                                 <div class="profile-info-row">
                                     <div class="profile-info-name"> 创建人 </div>
 
                                     <div class="profile-info-value">
-                                        <?php echo $model->opened->account ?>
+                                        <?php echo $model->opened->account?>
                                     </div>
                                     <div class="profile-info-name"> 创建时间 </div>
 
                                     <div class="profile-info-value">
-                                        <?php echo $model->openedDate ?>
+                                        <?php echo $model->openedDate?>
                                     </div>
                                 </div>
                                 <div class="profile-info-row">
                                     <div class="profile-info-name"> 奖励积分 </div>
 
                                     <div class="profile-info-value">
-                                        <?php echo $model->point ?>
+                                        <?php echo $model->point?>
 
                                     </div>
                                     <div class="profile-info-name"> 最后期限 </div>
 
                                     <div class="profile-info-value">
-                                        <?php if($model->deadline_type == 1): ?>
-                                        <?php echo $model->deadline; ?>&nbsp;(按天)
-                                        <?php elseif($model->deadline_type == 2): ?>
-                                        <?php echo $realdeadline; ?>&nbsp;(按小时)
-                                        <?php endif; ?>
+                                        <?php if ($model->deadline_type == 1): ?>
+                                        <?php echo $model->deadline;?>&nbsp;(按天)
+                                        <?php elseif ($model->deadline_type == 2): ?>
+                                        <?php echo $realdeadline;?>&nbsp;(按小时)
+                                        <?php endif;?>
                                     </div>
                                 </div>
                             </div>
@@ -115,129 +115,129 @@
                                     <div class="profile-info-name"> 任务说明 </div>
 
                                     <div class="profile-info-value">
-                                        <?php echo $model->desc ?>
+                                        <?php echo $model->desc?>
                                     </div>
                                 </div>
                             </div>
-			    <?php if(!empty($file)): ?>
+			    <?php if (!empty($file)): ?>
 			    <div class="space-4"></div>
                             <div class="profile-user-info profile-user-info-striped">
                                 <div class="profile-info-row">
                                     <div class="profile-info-name"> 任务附件 </div>
 
                                     <div class="profile-info-value">
-                                        <?php foreach($file as $k => $v): ?>
-					<a target="_blank" href="<?php echo $v->pathname; ?>" ><?php echo $v->title; ?></a>&nbsp;&nbsp;
+                                        <?php foreach ($file as $k => $v): ?>
+					<a target="_blank" href="<?php echo $v->pathname;?>" ><?php echo $v->title;?></a>&nbsp;&nbsp;
                                         <?php endforeach;?>
                                     </div>
                                 </div>
                             </div>
-			    <?php endif; ?>
+			    <?php endif;?>
                             <div class="space-4"></div>
-                            <?php if($model->assignedId != 0 && $model->status != 4): ?>
+                            <?php if ($model->assignedId != 0 && $model->status != 4): ?>
                             <div class="profile-user-info profile-user-info-striped">
                                 <div class="profile-info-row">
                                     <div class="profile-info-name"> 指派给 </div>
 
                                     <div class="profile-info-value">
-                                        <?php echo $model->assigned->account ?>
+                                        <?php echo $model->assigned->account?>
                                     </div>
                                     <div class="profile-info-name"> 指派时间 </div>
 
                                     <div class="profile-info-value">
-                                        <?php echo $model->assignedDate ?>
+                                        <?php echo $model->assignedDate?>
                                     </div>
                                 </div>
                                 <div class="profile-info-row">
                                     <div class="profile-info-name"> 完成时间 </div>
 
                                     <div class="profile-info-value">
-                                        <?php echo $model->finishedDate ?>
+                                        <?php echo $model->finishedDate?>
                                     </div>
                                     <div class="profile-info-name"> 确认完成时间 </div>
 
                                     <div class="profile-info-value">
-                                        <?php echo $model->closedDate ?>
+                                        <?php echo $model->closedDate?>
                                     </div>
                                 </div>
-                                <?php if($model->status == 5): ?>
+                                <?php if ($model->status == 5): ?>
                                 <div class="profile-info-row">
                                     <div class="profile-info-name"> 最后得到积分 </div>
 
                                     <div class="profile-info-value">
-                                        <?php echo $model->finishedpoint ?>
+                                        <?php echo $model->finishedpoint?>
                                     </div>
                                     <div class="profile-info-name"></div>
 
                                     <div class="profile-info-value">
                                     </div>
                                 </div>
-                                <?php endif; ?>
+                                <?php endif;?>
                             </div>
-                            <?php endif; ?>
+                            <?php endif;?>
                         </div>
                         <div id="remark-tab" class="tab-pane">
                             <div class="profile-user-info profile-user-info-striped">
-                                <?php if(!empty($remark)): ?>
-                                <?php foreach($remark as $k => $v): ?>
+                                <?php if (!empty($remark)): ?>
+                                <?php foreach ($remark as $k => $v): ?>
                                 <div class="profile-info-row">
                                     <div class="profile-info-name"> 备注人 </div>
 
                                     <div class="profile-info-value">
-                                        <?php if(!empty($v->user)): ?>
-                                        <?php echo $v->user->account ?>
-                                        <?php endif; ?>
+                                        <?php if (!empty($v->user)): ?>
+                                        <?php echo $v->user->account?>
+                                        <?php endif;?>
                                     </div>
                                     <div class="profile-info-name">备注内容</div>
 
                                     <div class="profile-info-value">
-                                        <?php echo $v->remark ?>
+                                        <?php echo $v->remark?>
                                     </div>
                                     <div class="profile-info-name">时间</div>
 
                                     <div class="profile-info-value">
-                                        <?php echo $v->createdTime ?>
+                                        <?php echo $v->createdTime?>
                                     </div>
                                 </div>
-                                <?php endforeach; ?>
+                                <?php endforeach;?>
                                 <?php else: ?>
                                 <div class="profile-info-row">
                                     <div class="profile-info-name">&nbsp;&nbsp;</div>
                                     <div class="profile-info-value">没有备注内容</div>
                                 </div>
-                                <?php endif; ?>
+                                <?php endif;?>
                             </div>
                         </div>
                         <div id="log-tab" class="tab-pane">
                             <div class="profile-user-info profile-user-info-striped">
-                                <?php if(!empty($log)): ?>
-                                <?php foreach($log as $k => $v): ?>
+                                <?php if (!empty($log)): ?>
+                                <?php foreach ($log as $k => $v): ?>
                                 <div class="profile-info-row">
                                     <div class="profile-info-name"> 操作人 </div>
 
                                     <div class="profile-info-value">
-                                        <?php if(!empty($v->user)): ?>
-                                        <?php echo $v->user->account ?>
-                                        <?php endif; ?>
+                                        <?php if (!empty($v->user)): ?>
+                                        <?php echo $v->user->account?>
+                                        <?php endif;?>
                                     </div>
                                     <div class="profile-info-name">操作内容</div>
 
                                     <div class="profile-info-value">
-                                        <?php echo $v->content ?>
+                                        <?php echo $v->content?>
                                     </div>
                                     <div class="profile-info-name">时间</div>
 
                                     <div class="profile-info-value">
-                                        <?php echo $v->createdTime ?>
+                                        <?php echo $v->createdTime?>
                                     </div>
                                 </div>
-                                <?php endforeach; ?>
+                                <?php endforeach;?>
                                 <?php else: ?>
                                 <div class="profile-info-row">
                                     <div class="profile-info-name">&nbsp;&nbsp;</div>
                                     <div class="profile-info-value">没有操作日志</div>
                                 </div>
-                                <?php endif; ?>
+                                <?php endif;?>
                             </div>
                         </div>
                     </div>
@@ -247,12 +247,12 @@
 
     <div class="space-4"></div>
     <div class="clearfix form-actions">
-    <?php if(Yii::app()->user->id == $model->openedId): ?>
+    <?php if (Yii::app()->user->id == $model->openedId): ?>
     <p>
-        <?php if($model->status == 0): ?>
+        <?php if ($model->status == 0): ?>
         <button id="dialog-assigned-btn" class="btn btn-white btn-info btn-round">
             <i class="ace-icon fa fa-hand-o-right blue "></i>
-            <?php if($model->assignedId): ?>修改指派<?php else:?>指派任务<?php endif; ?>
+            <?php if ($model->assignedId): ?>修改指派<?php else: ?>指派任务<?php endif;?>
         </button>
         <button id="dialog-remark-btn" class="btn btn-white btn-info btn-round">
             <i class="ace-icon  fa fa-pencil-square-o orange"></i>
@@ -262,7 +262,7 @@
             <i class="ace-icon fa fa-times red2"></i>
             取消任务
         </button>
-        <?php elseif($model->status == 2): ?>
+        <?php elseif ($model->status == 2): ?>
         <button id="dialog-closed-btn" class="btn btn-white btn-info btn-round">
             <i class="ace-icon glyphicon glyphicon-off blue "></i>
             确认完成任务
@@ -271,16 +271,16 @@
             <i class="ace-icon fa fa-reply red"></i>
             退回处理人
         </button>
-        <?php endif; ?>
+        <?php endif;?>
     </p>
-    <?php elseif(Yii::app()->user->id == $model->assignedId): ?>
+    <?php elseif (Yii::app()->user->id == $model->assignedId): ?>
     <p>
-        <?php if($model->status == 0): ?>
+        <?php if ($model->status == 0): ?>
         <button id="dialog-start-btn" class="btn btn-white btn-info btn-round">
             <i class="ace-icon glyphicon glyphicon-check green "></i>
             开始任务
         </button>
-        <?php elseif($model->status == 1): ?>
+        <?php elseif ($model->status == 1): ?>
         <button id="dialog-remark-btn" class="btn btn-white btn-info btn-round">
             <i class="ace-icon  fa fa-pencil-square-o orange"></i>
             添加备注
@@ -289,22 +289,22 @@
             <i class="ace-icon glyphicon glyphicon-ok blue "></i>
             完成任务
         </button>
-        <?php endif; ?>
+        <?php endif;?>
     </p>
-    <?php endif; ?>
-    <?php if(empty($model->assignedId) && $model->status == 0 && Yii::app()->user->id != $model->openedId): ?>
+    <?php endif;?>
+    <?php if (empty($model->assignedId) && $model->status == 0 && Yii::app()->user->id != $model->openedId): ?>
     <p>
         <button id="dialog-undertake-btn" class="btn btn-white btn-info btn-round">
             <i class="ace-icon fa fa-lock green"></i>
             承接任务
         </button>
     </p>
-    <?php endif; ?>
+    <?php endif;?>
     </div>
 
     <div id="dialog-assigned" class="hide">
         <p class="bigger-110 bolder center grey">
-            将任务指派给 <?php echo CHtml::dropDownList('select_assigned','',$assigned_arr)?>
+            将任务指派给 <?php echo CHtml::dropDownList('select_assigned', '', $assigned_arr)?>
         </p>
         <div class="space-4"></div>
         <div class="error_info ui-state-error hide"></div>
@@ -342,7 +342,7 @@
             备注内容
         </p>
         <p class="bigger-110 bolder center grey">
-            <?php echo CHtml::textField('task_remark','',array('class'=>'col-xs-12','maxlength'=>'60'))?>
+            <?php echo CHtml::textField('task_remark', '', array('class' => 'col-xs-12', 'maxlength' => '60'))?>
         </p>
         <div class="space-4"></div>
         <div class="error_info ui-state-error hide"></div>
@@ -372,7 +372,7 @@
             确定将任务退回处理人吗？
         </div>
         <div class="radio">
-            <?php echo CHtml::textField('task_reason','',array('placeholder'=>'退回原因','class'=>'col-xs-12','maxlength'=>'60'))?>
+            <?php echo CHtml::textField('task_reason', '', array('placeholder' => '退回原因', 'class' => 'col-xs-12', 'maxlength' => '60'))?>
         </div>
         <div class="hr hr-double hr-dotted"></div>
         <div class="radio">
@@ -391,7 +391,7 @@
             </label>
         </div>
         <div class="radio hide" id="delay_div" >
-            <?php echo CHtml::textField('delay_value',1,array('class'=>'spinner')) ?>
+            <?php echo CHtml::textField('delay_value', 1, array('class' => 'spinner'))?>
             <span class="delay_text"></span>
         </div>
         <div class="space-4"></div>
@@ -461,8 +461,8 @@
                             }
                             $.ajax({
                                 type: "POST",
-                                url: "<?php echo Yii::app()->createUrl('/task/assigned') ?>",
-                                data: "id=<?php echo $model->id ?>&assignedid="+assignedid,
+                                url: "<?php echo Yii::app()->createUrl('/task/assigned')?>",
+                                data: "id=<?php echo $model->id?>&assignedid="+assignedid,
                                 dataType : 'json',
                                 success: function(msg){
                                     if(msg.type == 'success')
@@ -504,8 +504,8 @@
                         click: function() {
                             $.ajax({
                                 type: "POST",
-                                url: "<?php echo Yii::app()->createUrl('/task/cacel') ?>",
-                                data: "id=<?php echo $model->id ?>",
+                                url: "<?php echo Yii::app()->createUrl('/task/cacel')?>",
+                                data: "id=<?php echo $model->id?>",
                                 dataType : 'json',
                                 success: function(msg){
                                     if(msg.type == 'success')
@@ -547,8 +547,8 @@
                         click: function() {
                             $.ajax({
                                 type: "POST",
-                                url: "<?php echo Yii::app()->createUrl('/task/start') ?>",
-                                data: "id=<?php echo $model->id ?>",
+                                url: "<?php echo Yii::app()->createUrl('/task/start')?>",
+                                data: "id=<?php echo $model->id?>",
                                 dataType : 'json',
                                 success: function(msg){
                                     if(msg.type == 'success')
@@ -596,8 +596,8 @@
                             }
                             $.ajax({
                                 type: "POST",
-                                url: "<?php echo Yii::app()->createUrl('/task/remark') ?>",
-                                data: "id=<?php echo $model->id ?>&remark="+task_remark,
+                                url: "<?php echo Yii::app()->createUrl('/task/remark')?>",
+                                data: "id=<?php echo $model->id?>&remark="+task_remark,
                                 dataType : 'json',
                                 success: function(msg){
                                     if(msg.type == 'success')
@@ -639,8 +639,8 @@
                         click: function() {
                             $.ajax({
                                 type: "POST",
-                                url: "<?php echo Yii::app()->createUrl('/task/finished') ?>",
-                                data: "id=<?php echo $model->id ?>",
+                                url: "<?php echo Yii::app()->createUrl('/task/finished')?>",
+                                data: "id=<?php echo $model->id?>",
                                 dataType : 'json',
                                 success: function(msg){
                                     if(msg.type == 'success')
@@ -682,8 +682,8 @@
                         click: function() {
                             $.ajax({
                                 type: "POST",
-                                url: "<?php echo Yii::app()->createUrl('/task/closed') ?>",
-                                data: "id=<?php echo $model->id ?>",
+                                url: "<?php echo Yii::app()->createUrl('/task/closed')?>",
+                                data: "id=<?php echo $model->id?>",
                                 dataType : 'json',
                                 success: function(msg){
                                     if(msg.type == 'success')
@@ -725,8 +725,8 @@
                         click: function() {
                             $.ajax({
                                 type: "POST",
-                                url: "<?php echo Yii::app()->createUrl('/task/undertake') ?>",
-                                data: "id=<?php echo $model->id ?>",
+                                url: "<?php echo Yii::app()->createUrl('/task/undertake')?>",
+                                data: "id=<?php echo $model->id?>",
                                 dataType : 'json',
                                 success: function(msg){
                                     if(msg.type == 'success')
@@ -781,8 +781,8 @@
 
                             $.ajax({
                                 type: "POST",
-                                url: "<?php echo Yii::app()->createUrl('/task/return') ?>",
-                                data: "id=<?php echo $model->id ?>&reason="+reason+"&delay="+delay+"&delay_value="+delay_value,
+                                url: "<?php echo Yii::app()->createUrl('/task/return')?>",
+                                data: "id=<?php echo $model->id?>&reason="+reason+"&delay="+delay+"&delay_value="+delay_value,
                                 dataType : 'json',
                                 success: function(msg){
                                     if(msg.type == 'success')

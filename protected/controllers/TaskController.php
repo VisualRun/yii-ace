@@ -706,38 +706,5 @@ EOD;
 
 			$this->render('allcheck', array('model' => $model));
 		}
-
-		// $model = Task::model()->findByPk($pk);
-
-		// $this->pageTitle = '任务详情页';
-
-		// $assigned = User::model()->findAll('status = 1 && typeId > 1 && id != '.Yii::app()->user->id);
-		// $assigned_arr = array();
-		// foreach($assigned as $key => $value)
-		// {
-		//     $assigned_arr[$value->id] = $value->account;
-		// }
-
-		// $file = File::model()->findAll("taskId = $pk");
-
-		// $criteria=new CDbCriteria;
-		// $criteria->select = '*';
-		// $criteria->addCondition("t.taskId = :taskId");
-		// $criteria->params[':taskId']=$pk;
-		// $criteria->addCondition("t.valid = :valid");
-		// $criteria->params[':valid'] = 1;
-		// $criteria->order = "t.id ASC";
-		// $remark = TaskRemark::model()->with(array('user'))->findAll($criteria);
-
-		// $criteria=new CDbCriteria;
-		// $criteria->select = '*';
-		// $criteria->addCondition("t.linkId = :linkId");
-		// $criteria->params[':linkId']=$pk;
-		// $criteria->addCondition("t.valid = :valid");
-		// $criteria->params[':valid'] = 1;
-		// $criteria->order = "t.id ASC";
-		// $log = SysLog::model()->with(array('user'))->findAll($criteria);
-
-		// $this->render('view',array('model'=>$model,'assigned_arr'=>$assigned_arr,'remark'=>$remark,'log'=>$log,'file'=>$file));
 	}
 }
