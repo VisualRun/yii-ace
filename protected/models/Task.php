@@ -85,6 +85,7 @@ class Task extends CActiveRecord {
 			$this->finishedDate = '0000-00-00';
 			$this->canceledDate = '0000-00-00';
 			$this->closedDate = '0000-00-00';
+			$this->assignedDate = '0000-00-00 00:00:00';
 			$this->deleted = 0;
 		}
 		$this->lastEditedId = Yii::app()->user->id;

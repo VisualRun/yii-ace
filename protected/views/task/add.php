@@ -225,11 +225,13 @@
 			limitText: '最多允许 : %n.'
 		});
 
-		$('.Task_deadline1').datepicker({
-        autoclose: true,
-        todayHighlight: true,
-        language: 'zh-CN'
-    })
+		$("div[data-myid='"+myid+"']").find('.Task_deadline1').addClass("tdl"+myid);
+
+		$(".tdl"+myid).datepicker({
+			autoclose: true,
+			todayHighlight: true,
+			dateFormat: 'yy-mm-dd',
+    	});
 	}
 
 	function close_form(obj){
