@@ -70,12 +70,14 @@ EOD;
 			$task_list = $_POST['Task'];
 			$tmp_list = $_POST['Task']['tmpid'];
 
+
 			foreach ($tmp_list as $k1 => $v1) {
 				if (empty($pk)) {
 					$model = new Task;
 					$model->scenario = 'new';
 					$model->unsetAttributes();
 				}
+				//print_r($model);exit;
 
 				$model->typeId = $task_list['typeId'][$k1];
 				$model->imtypeId = $task_list['imtypeId'][$k1];
@@ -139,28 +141,35 @@ EOD;
 
 				if (isset($task_list['assignedId' . $v1]) && is_array($task_list['assignedId' . $v1])) {
 					foreach ($task_list['assignedId' . $v1] as $key => $value) {
-						$model->assignedId = $value;
-						$new_model = new Task();
-						$new_model->attributes = $model->attributes;
-						$new_model->assignedDate = date('Y-m-d H:i:s');
-						if ($new_model->save()) {
-							$id = $new_model->primarykey;
-							if (isset($file)) {
-								$new_file = new File();
-								$new_file->attributes = $file->attributes;
-								$new_file->taskID = $id;
-								$new_file->save();
-							}
+						if($key == 0){
+							$model->assignedId = $value;
+							$model->save();
+						}
 
-							Helpers::syslog(2, Yii::app()->user->getState('account') . " 发布了任务 [" . $new_model->name . "]", Yii::app()->user->id, $id);
-							if ($new_model->assignedId != 0) {
-								$content = Yii::app()->user->getState('account') . " 创建并指派了任务 [" . $new_model->name . "] 给你，请在规定的时限内完成！";
-								Helpers::sendmessage($new_model->assignedId, $content, 2, 0, $id);
-							}
+						if($key > 0){
+							$new_model = new Task();
+							$new_model->attributes = $model->attributes;
+							$new_model->assignedId = $value;
+							$new_model->assignedDate = date('Y-m-d H:i:s');
+							if ($new_model->save()) {
+								$id = $new_model->primarykey;
+								if (isset($file)) {
+									$new_file = new File();
+									$new_file->attributes = $file->attributes;
+									$new_file->taskID = $id;
+									$new_file->save();
+								}
 
-						} else {
-							$arr[] = array('hasError' => true, 'msg' => '数据提交失败', 'error' => $new_model->getErrors(), 'model' => $new_model->attributes);
-							return false;
+								Helpers::syslog(2, Yii::app()->user->getState('account') . " 发布了任务 [" . $new_model->name . "]", Yii::app()->user->id, $id);
+								if ($new_model->assignedId != 0) {
+									$content = Yii::app()->user->getState('account') . " 创建并指派了任务 [" . $new_model->name . "] 给你，请在规定的时限内完成！";
+									Helpers::sendmessage($new_model->assignedId, $content, 2, 0, $id);
+								}
+
+							} else {
+								$arr[] = array('hasError' => true, 'msg' => '数据提交失败', 'error' => $new_model->getErrors(), 'model' => $new_model->attributes);
+								return false;
+							}
 						}
 					}
 
@@ -198,128 +207,6 @@ EOD;
 				print_r($arr);
 				Yii::app()->end();
 			}
-
-			// $model->attributes = $_POST['Task'];
-
-			// if ($model->deadline_type == 1) {
-			// 	$model->deadline = Yii::app()->request->getParam('deadline_1');
-			// } elseif ($model->deadline_type == 2) {
-			// 	$model->deadline = Yii::app()->request->getParam('deadline_2');
-			// }
-
-			// //如果文件上传
-			// $uploaded = CUploadedFile::getInstanceByName('attach');
-			// //print_r($uploaded);exit;
-			// if (is_object($uploaded) && get_class($uploaded) === 'CUploadedFile') {
-			// 	if ($uploaded->size > 1 * 1024 * 1024) {
-			// 		$model->addError('opAdminId', '文件太大！');
-			// 	}
-
-			// 	$uploaddir = Yii::getPathOfAlias('webroot') . '/data/file/';
-
-			// 	$ymd = date("Ymd");
-			// 	$uploaddir .= $ymd . "/";
-			// 	if (!file_exists($uploaddir)) {
-			// 		mkdir($uploaddir);
-			// 	}
-			// 	@chmod($uploaddir, 0755);
-
-			// 	$filename = md5(uniqid());
-			// 	$ext = $uploaded->extensionName;
-			// 	$old_name = $uploaded->name;
-			// 	$uploadfile = $uploaddir . $filename . '.' . $ext;
-
-			// 	if ($uploaded->saveAs($uploadfile)) {
-			// 		$file = new File();
-			// 		$file->pathname = Yii::app()->request->baseUrl . '/data/file/' . $ymd . "/" . $filename . '.' . $ext;
-			// 		$file->title = $old_name;
-			// 		$file->extension = $ext;
-			// 		$file->size = $uploaded->size;
-			// 		$file->save();
-			// 	} else {
-			// 		$model->addError('opAdminId', '文件上传失败！');
-			// 	}
-
-			// }
-			// if ($model->hasErrors()) {
-			// 	print_r($model->getErrors());
-			// 	Yii::app()->end();
-			// }
-
-			// if ($model->assignedId != 0) {
-			// 	$model->assignedDate = date('Y-m-d H:i:s');
-			// }
-
-			// if ($model->scenario == 'new') {
-			// 	$model->status = 0;
-			// }
-
-			// //$model->deadline = date('Y-m-d',strtotime($model->deadline));
-
-			// if (isset($_POST['Task']['assignedId']) && is_array($_POST['Task']['assignedId'])) {
-			// 	foreach ($_POST['Task']['assignedId'] as $key => $value) {
-			// 		$model->assignedId = $value;
-			// 		$new_model = new Task();
-			// 		$new_model->attributes = $model->attributes;
-			// 		print_r($new_model);exit;
-			// 		if ($new_model->save()) {
-			// 			$id = $new_model->primarykey;
-			// 			if (isset($file)) {
-			// 				$new_file = new File();
-			// 				$new_file->attributes = $file->attributes;
-			// 				$new_file->taskID = $id;
-			// 				$new_file->save();
-			// 			}
-			// 			//if($model->scenario == 'new')
-			// 			//{
-			// 			Helpers::syslog(2, Yii::app()->user->getState('account') . " 发布了任务 [" . $new_model->name . "]", Yii::app()->user->id, $id);
-			// 			if ($new_model->assignedId != 0) {
-			// 				$content = Yii::app()->user->getState('account') . " 创建并指派了任务 [" . $new_model->name . "] 给你，请在规定的时限内完成！";
-			// 				Helpers::sendmessage($new_model->assignedId, $content, 2, 0, $id);
-			// 			}
-			// 			// }elseif($model->scenario == 'update'){
-
-			// 			//     Helpers::syslog(2,Yii::app()->user->getState('account')." 编辑了任务 [".$model->name."]",Yii::app()->user->id,$id);
-			// 			//     if($model->assignedId != 0 && $model->assignedId != $old_assignedId ){
-			// 			//         $content = Yii::app()->user->getState('account')." 编辑并指派了任务 [".$model->name."] 给你，请在规定的时限内完成！";
-			// 			//         Helpers::sendmessage($model->assignedId,$content,2,0,$id);
-			// 			//     }
-			// 			// }
-			// 		} else {
-			// 			$arr = array('hasError' => true, 'msg' => '数据提交失败', 'error' => $new_model->getErrors(), 'model' => $new_model->attributes);
-			// 			return false;
-			// 		}
-			// 	}
-			// 	//$file->delete();
-			// 	$this->redirect(array('list'));
-			// } else {
-			// 	if ($model->save()) {
-			// 		$id = $model->primarykey;
-			// 		if (isset($file)) {
-			// 			$file->taskID = $id;
-			// 			$file->save();
-			// 		}
-			// 		if ($model->scenario == 'new') {
-			// 			Helpers::syslog(2, Yii::app()->user->getState('account') . " 发布了任务 [" . $model->name . "]", Yii::app()->user->id, $id);
-			// 			if ($model->assignedId != 0) {
-			// 				$content = Yii::app()->user->getState('account') . " 创建并指派了任务 [" . $model->name . "] 给你，请在规定的时限内完成！";
-			// 				Helpers::sendmessage($model->assignedId, $content, 2, 0, $id);
-			// 			}
-			// 		} elseif ($model->scenario == 'update') {
-
-			// 			Helpers::syslog(2, Yii::app()->user->getState('account') . " 编辑了任务 [" . $model->name . "]", Yii::app()->user->id, $id);
-			// 			if ($model->assignedId != 0 && $model->assignedId != $old_assignedId) {
-			// 				$content = Yii::app()->user->getState('account') . " 编辑并指派了任务 [" . $model->name . "] 给你，请在规定的时限内完成！";
-			// 				Helpers::sendmessage($model->assignedId, $content, 2, 0, $id);
-			// 			}
-			// 		}
-
-			// 		$this->redirect(array('view', 'id' => $id));
-			// 	} else {
-			// 		$arr = array('hasError' => true, 'msg' => '数据提交失败', 'error' => $model->getErrors(), 'model' => $model->attributes);
-			// 		return false;
-			// 	}
-			// }
 
 		} else {
 			$this->render('add', array('model' => $model));
