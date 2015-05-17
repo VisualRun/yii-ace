@@ -89,6 +89,7 @@ class GiftController extends Controller
 		      		if($gift->num > 0){
 		        		$exchange = new GiftExchange();
 		       			$exchange->giftId = $giftId;
+		       			$exchange->applyId = Yii::app()->user->id;
 		        		$exchange->num = 1;
 		        		$exchange->score = $gift->score;
 		        		$exchange->save();

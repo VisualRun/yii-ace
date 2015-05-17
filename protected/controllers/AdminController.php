@@ -361,4 +361,119 @@ EOD;
 
         Yii::app()->end();
     }
+
+    //人事绩效减分
+    public function actionSubtractpoint(){
+        $this->page_css = array(
+            'jquery-ui.custom.min.css',
+            'chosen.css',
+            'datepicker.css',
+            'bootstrap-timepicker.css',
+            'bootstrap-datetimepicker.css',
+            'dropzone.css',
+        );
+
+        $this->page_js = array(
+            'jquery-ui.custom.min.js',
+            'jquery.ui.touch-punch.min.js',
+            'chosen.jquery.min.js',
+            'fuelux/fuelux.spinner.min.js',
+            'date-time/bootstrap-datepicker.min.js',
+            'date-time/bootstrap-timepicker.min.js',
+            'date-time/moment.min.js',
+            'date-time/bootstrap-datetimepicker.min.js',
+            'date-time/locales/bootstrap-datepicker.zh-CN.js',
+            'jquery.knob.min.js',
+            'jquery.autosize.min.js',
+            'jquery.inputlimiter.1.3.1.min.js',
+            'jquery.maskedinput.min.js',
+            'bootstrap-tag.min.js',
+            'markdown/markdown.min.js',
+            'markdown/bootstrap-markdown.min.js',
+            'jquery.hotkeys.min.js',
+            'bootstrap-wysiwyg.min.js',
+            'dropzone.min.js',
+        );
+        $this->page_script = <<<EOD
+<script type="text/javascript">
+    $('.date-picker').datepicker({
+        autoclose: true,
+        todayHighlight: true,
+        language: 'zh-CN'
+    })
+</script>
+EOD;
+
+        $this->pageTitle = '人事绩效减分';
+        $model = new GiftExchange;
+        $model->scenario = 'new';
+        $model->unsetAttributes();
+
+        if (isset($_POST['GiftExchange'])) {
+            $data = $_POST['GiftExchange'];
+
+            $gift = Gift::model()->findByPk($data['giftId']);
+            $user = User::model()->findByPk($data['applyId']);
+
+            $model->giftId = $data['giftId'];
+            $model->applyId = $data['applyId'];
+            $model->applyDate = date('Y-m-d H:i:s');
+            $model->checkId = Yii::app()->user->id;
+            $model->checkDate = date('Y-m-d H:i:s');
+            $model->num = 1;
+            $model->status = 1;
+            $model->score = $gift->score;
+            $model->remark = $data['remark'];
+            //print_r($model);exit;
+            if($model->save()){
+                $gift->num = $gift->num - 1;
+                $gift->save();
+
+                $user->point = $user->point-$model->score;
+                $user->save();
+
+                $log = new PointLog();
+                $log->userId = $user->id;
+                $log->log_type = 2;
+                $log->log_point = "-".$model->score;
+                $log->log_desc = "兑换物品减去积分";
+                $log->linkId = $model->id;
+                $log->save();
+
+                Helpers::syslog(7,Yii::app()->user->getState('account')." 帮 ".$user->account." 兑换了 [".$gift->name."]！",Yii::app()->user->id,$model->id);
+
+                //通知申请人
+                $content = Yii::app()->user->getState('account')." 帮你兑换了 [".$gift->name."]！";
+                Helpers::sendmessage($model->applyId,$content,3,0,$model->id);
+
+                $this->redirect(array('/gift/exchangecheck'));
+            }
+        }else{
+            $this->render('subtractpoint', array('model' => $model));
+        }
+    }
+
+    public function actionChecksubtractpoint(){
+        if (Yii::app()->request->isAjaxRequest) {
+            $applyId = Yii::app()->request->getParam('applyId');
+            $giftId = Yii::app()->request->getParam('giftId');
+
+            $user = User::model()->findByPk($applyId);
+            $gift = Gift::model()->findByPk($giftId);
+
+            if(!empty($user) && !empty($gift)){
+                if($gift->num > 0){
+                    if($user->point >= $gift->score){
+                        echo json_encode(array('type'=>"success"));
+                    }else{
+                        echo json_encode(array('type'=>"error",'info'=>$user->account.'的积分不够兑换'.$gift->name.'所需的'.$gift->score.'分！'));
+                    }
+                }else{
+                    echo json_encode(array('type'=>"error",'info'=>$gift->name.'的数量不够兑换，请刷新页面！'));
+                }
+            }else{
+                echo json_encode(array('type'=>"error",'info'=>'数据错误！'));
+            }
+        }
+    }
 }

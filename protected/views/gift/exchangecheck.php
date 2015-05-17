@@ -27,13 +27,14 @@
         'model' => 'giftexchange',
         'gridSettings' => [
             'caption' => '个人兑换记录',
-            'colNames' => ['记录编码','兑换人','物品名称','兑换积分','状态','申请时间','操作'],
+            'colNames' => ['记录编码','兑换人','物品名称','兑换积分','状态','备注','申请时间','操作'],
             'colModel' => [
                 ['name' => 'code', 'index' => 'code', 'editable' => false],
                 ['name' => 'applyId', 'index' => 'applyId', 'editable' => true],
                 ['name' => 'giftId', 'index' => 'giftId', 'editable' => true],
                 ['name' => 'score', 'index' => 'score', 'editable' => true],
                 ['name' => 'status', 'index' => 'status', 'editable' => true],
+                ['name' => 'remark', 'index' => 'remark', 'editable' => false],
                 ['name' => 'applyDate', 'index' => 'applyDate', 'editable' => false, 'formatter'=> "date", 'formatoptions' => ['srcformat'=>'Y-m-d H:i:s','newformat'=>'y/m/d H:i']],
                 ['name' => 'handle', 'index' => 'id', 'width' => '180', 'editable' => true],
             ],

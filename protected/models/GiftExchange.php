@@ -68,7 +68,7 @@ class GiftExchange extends CActiveRecord
 		$this->opAdminId = Yii::app()->user->id;
 		if ($this->isNewRecord) {
 			$this->applyDate = date('Y-m-d H:i:s');
-			$this->applyId = Yii::app()->user->id;
+			//$this->applyId = Yii::app()->user->id;
 		}
 		return true;
 	}
