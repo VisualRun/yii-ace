@@ -253,7 +253,7 @@ class Helpers
         $log->userId = $ob->finishedId;
         $log->log_type = 1;
         $log->log_point = $point;
-        $log->log_desc = "完成任务获取积分";
+        $log->log_desc = "完成任务 [".$ob->name."] 获取积分，任务号：".$ob->code;
         $log->linkId = $ob->id;
         $log->save();
 

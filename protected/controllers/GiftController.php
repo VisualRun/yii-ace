@@ -178,7 +178,7 @@ class GiftController extends Controller
 				    		$log->userId = $user->id;
 				    		$log->log_type = 2;
 				    		$log->log_point = "-".$exchange->score;
-				    		$log->log_desc = "兑换物品减去积分";
+				    		$log->log_desc = "兑换物品 [".$gift->name."] 减去积分，兑换号：".$exchange->code;
 				    		$log->linkId = $exchange->id;
 				    		$log->save();
 
@@ -263,7 +263,7 @@ class GiftController extends Controller
 			    		$log->userId = $user->id;
 			    		$log->log_type = 2;
 			    		$log->log_point = "-".$exchange->score;
-			    		$log->log_desc = "兑换物品减去积分";
+			    		$log->log_desc = "兑换物品 [".$gift->name."] 减去积分，兑换号：".$exchange->code;
 			    		$log->linkId = $exchange->id;
 			    		$log->save();
 
