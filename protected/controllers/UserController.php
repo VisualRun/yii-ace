@@ -26,15 +26,24 @@ class UserController extends Controller
 
   public function actionPoint()
   {
-    $this->pageTitle = '个人积分';
+    $pk = Yii::app()->request->getParam('id');
+    if(!empty($pk)){
+        $user = User::model()->findByPk($pk);
+        if(!empty($user))
+            $this->pageTitle = $user->account.'的积分';
+        else
+            $this->pageTitle = '个人积分';
+    }else{
+        $user = User::model()->findByPk(Yii::app()->user->id);
+        $this->pageTitle = '个人积分';
+    }
+
     $model = new PointLog();
     $model->unsetAttributes();
     if(isset($_GET)&&!empty($_GET))
         $model->attributes=$_GET;
 
-    $user = User::model()->findByPk(Yii::app()->user->id);
-
-    $this->render('point',array('model'=>$model,'user'=>$user));
+    $this->render('point',array('model'=>$model,'user'=>$user,'pk'=>$pk));
   }
 
 	public function actionProfile()

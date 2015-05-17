@@ -1,9 +1,17 @@
+    <?php
+        $str1 = "";
+        if(!empty($pk)){
+            $str1 = Yii::app()->createUrl('user/point',array('id'=>$pk));
+        }else{
+            $str1 = Yii::app()->createUrl('user/point');
+        }
+    ?>
     <?php $data_search = $model->searchmyField();?>
     <?php if(!empty($data_search)):?>
     <?php $form=$this->beginWidget('CActiveForm', array(
         'id'=>'search-form',
         'method'=>'get',
-        'action'=>Yii::app()->createUrl($this->route),
+        'action'=>$str1,
         'enableClientValidation'=>false,
         'clientOptions'=>array(
             'validateOnSubmit'=>true,
@@ -47,6 +55,7 @@
     </div>
     <?php endif;?>
     <?php endforeach;?>
+    <?php  ?>
     <div class="control-group col-xs-4 no-padding-left" style="margin-bottom:10px;">
         <label class="col-sm-3 control-label no-padding-right"></label>
         <div class="col-sm-9" >
@@ -54,7 +63,8 @@
                 <i class="ace-icon glyphicon glyphicon-search"></i>
                 搜索
             </button>
-            <a href="javascript:void(0)" onclick="location.href='<?php echo Yii::app()->createUrl($this->route); ?>'" class="btn btn-white btn-default btn-round">
+
+            <a href="javascript:void(0)" onclick="location.href='<?php echo $str1; ?>'" class="btn btn-white btn-default btn-round">
                 <i class="ace-icon glyphicon glyphicon-repeat red2"></i>
                 重置
             </a>

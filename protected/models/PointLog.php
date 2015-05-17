@@ -93,7 +93,11 @@ class PointLog extends CActiveRecord
 
         $criteria->compare('t.log_type',$this->log_type);
         $criteria->compare('t.log_desc',$this->log_desc);
-       	$criteria->compare('t.userId',Yii::app()->user->id);
+        if(isset($_GET['id']) && !empty($_GET['id'])){
+            $criteria->compare('t.userId',$_GET['id']);
+        }else{
+            $criteria->compare('t.userId',Yii::app()->user->id);
+        }
 
         if(isset($_GET['start'])&&!empty($_GET['start']))
             $criteria->compare('UNIX_TIMESTAMP(t.createdTime) >',strtotime($_GET['start']));

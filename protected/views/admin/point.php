@@ -56,7 +56,7 @@
                             <div class="profile-info-name"> 账号 </div>
 
                             <div class="profile-info-value">
-                                 <?php echo $v['account'] ?>
+                                <a href="<?php echo Yii::app()->createUrl('/user/point',array('id'=>$v['userId'])) ?>"><?php echo $v['account'] ?></a>
                             </div>
                             <div class="profile-info-name"> 积分 </div>
 

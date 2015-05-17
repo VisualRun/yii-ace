@@ -107,6 +107,7 @@ EOD;
                 $tmp_account = $value1->user->account;
             }
             $point_arr[$key]['account'] = $tmp_account;
+            $point_arr[$key]['userId'] = $value[0]->userId;
             $point_arr[$key]['point'] = $tmp_value;
         }
 
