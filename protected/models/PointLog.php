@@ -100,10 +100,10 @@ class PointLog extends CActiveRecord
         if(isset($_GET['end'])&&!empty($_GET['end']))
             $criteria->compare('UNIX_TIMESTAMP(t.createdTime) <',strtotime($_GET['end'])+86400);
 
-        if(isset($_GET['start'])&&!empty($_GET['start']))
-        	$criteria->compare('createdTime >',$_GET['start']);
-        if(isset($_GET['end'])&&!empty($_GET['end']))
-        	$criteria->compare('createdTime <=',$_GET['end']);
+        // if(isset($_GET['start'])&&!empty($_GET['start']))
+        // 	$criteria->compare('createdTime >',$_GET['start']);
+        // if(isset($_GET['end'])&&!empty($_GET['end']))
+        // 	$criteria->compare('createdTime <=',$_GET['end']);
 
         $count = $this->count($criteria);
         $pages = new CPagination($count);
