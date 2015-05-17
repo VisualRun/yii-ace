@@ -143,33 +143,32 @@ EOD;
 					foreach ($task_list['assignedId' . $v1] as $key => $value) {
 						if($key == 0){
 							$model->assignedId = $value;
-							$model->save();
-						}
-
-						if($key > 0){
+						}else{
 							$new_model = new Task();
 							$new_model->attributes = $model->attributes;
 							$new_model->assignedId = $value;
 							$new_model->assignedDate = date('Y-m-d H:i:s');
-							if ($new_model->save()) {
-								$id = $new_model->primarykey;
-								if (isset($file)) {
-									$new_file = new File();
-									$new_file->attributes = $file->attributes;
-									$new_file->taskID = $id;
-									$new_file->save();
-								}
+							$model=$new_model;
+						}
 
-								Helpers::syslog(2, Yii::app()->user->getState('account') . " 发布了任务 [" . $new_model->name . "]", Yii::app()->user->id, $id);
-								if ($new_model->assignedId != 0) {
-									$content = Yii::app()->user->getState('account') . " 创建并指派了任务 [" . $new_model->name . "] 给你，请在规定的时限内完成！";
-									Helpers::sendmessage($new_model->assignedId, $content, 2, 0, $id);
-								}
-
-							} else {
-								$arr[] = array('hasError' => true, 'msg' => '数据提交失败', 'error' => $new_model->getErrors(), 'model' => $new_model->attributes);
-								return false;
+						if ($model->save()) {
+							$id = $model->primarykey;
+							if (isset($file)) {
+								$new_file = new File();
+								$new_file->attributes = $file->attributes;
+								$new_file->taskID = $id;
+								$new_file->save();
 							}
+
+							Helpers::syslog(2, Yii::app()->user->getState('account') . " 发布了任务 [" . $model->name . "]", Yii::app()->user->id, $id);
+							if ($model->assignedId != 0) {
+								$content = Yii::app()->user->getState('account') . " 创建并指派了任务 [" . $model->name . "] 给你，请在规定的时限内完成！";
+								Helpers::sendmessage($model->assignedId, $content, 2, 0, $id);
+							}
+
+						} else {
+							$arr[] = array('hasError' => true, 'msg' => '数据提交失败', 'error' => $model->getErrors(), 'model' => $model->attributes);
+							return false;
 						}
 					}
 

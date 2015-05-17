@@ -65,6 +65,8 @@ class Helpers
                             array('text'=>'员工管理','href'=>Yii::app()->createUrl('/admin/user'),'action'=>array('user')),
                             array('text'=>'积分统计','href'=>Yii::app()->createUrl('/admin/point'),'action'=>array('point')),
                             array('text'=>'最新动态','href'=>Yii::app()->createUrl('/admin/syslog'),'action'=>array('syslog')),
+                            array('text'=>'人事绩效加分','href'=>Yii::app()->createUrl('/admin/addpoint'),'action'=>array('addpoint')),
+                            array('text'=>'人事绩效减分','href'=>Yii::app()->createUrl('/admin/subtractpoint'),'action'=>array('subtractpoint')),
                 		),
                 	),
                     'purviewadmin'=>array(
