@@ -87,9 +87,8 @@ EOD;
             $criteria->compare('UNIX_TIMESTAMP(t.createdTime) >',strtotime($_GET['start']));
             $criteria->compare('UNIX_TIMESTAMP(t.createdTime) <',strtotime($_GET['end'])+86400);
         }
-        
-        $model = PointLog::model()->with(array('user'))->findAll($criteria);
 
+        $model = PointLog::model()->with(array('user'))->findAll($criteria);
 
         $point_tmp = array();
         foreach($model as $key => $value)
@@ -148,5 +147,5 @@ EOD;
         $this->render('syslog',array('model'=>$model));
     }
 
-    
+
 }

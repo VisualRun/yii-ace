@@ -35,16 +35,18 @@
         </div>
     </div>
     <hr>
-    <?php if(!empty($start) && !empty($end)): ?>
     <div class="row">
         <div class="widget-box">
             <div class="widget-header">
                 <h4 class="smaller">
+                    <?php if(!empty($start) && !empty($end)): ?>
                     <?php echo $start ?>至<?php echo $end ?> 期间积分统计情况
                     <small>列出选择的时间段中不同用户所得积分</small>
+                    <?php else: ?>
+                    所有用户的积分
+                    <?php endif; ?>
                 </h4>
             </div>
-
             <div class="widget-body">
                 <div class="widget-main">
                     <div class="profile-user-info profile-user-info-striped">
@@ -68,7 +70,11 @@
                             <div class="profile-info-name"> &nbsp;&nbsp;&nbsp;&nbsp; </div>
 
                             <div class="profile-info-value">
+                                <?php if(!empty($start) && !empty($end)): ?>
                                 <?php echo $start ?>至<?php echo $end ?> 期间没有用户有积分增减记录
+                                <?php else: ?>
+                                暂时没有用户积分增减记录
+                                <?php endif; ?>
                             </div>
                         </div>
                         <?php endif; ?>
@@ -84,5 +90,4 @@
             </div>
         </div>
     </div>
-    <?php endif; ?>
 </div>
