@@ -77,8 +77,8 @@ EOD;
 
         $criteria=new CDbCriteria;
         $criteria->select = '*';
-        $criteria->addCondition("t.log_type = :log_type");
-        $criteria->params[':log_type'] = 1;
+        // $criteria->addCondition("t.log_type = :log_type");
+        // $criteria->params[':log_type'] = 1;
         $criteria->addCondition("t.valid = :valid");
         $criteria->params[':valid'] = 1;
         //$criteria->addCondition("FROM_UNIXTIME(UNIX_TIMESTAMP(t.createdTime),'%Y-%m') = :date");
@@ -109,6 +109,8 @@ EOD;
             $point_arr[$key]['account'] = $tmp_account;
             $point_arr[$key]['userId'] = $value[0]->userId;
             $point_arr[$key]['point'] = $tmp_value;
+
+
         }
 
         if($type == 'excel')
@@ -125,6 +127,7 @@ EOD;
             {
                 $objectPHPExcel->getActiveSheet()->setCellValue('A'.$i,$value['account']);
                 $objectPHPExcel->getActiveSheet()->setCellValue('B'.$i,$value['point']);
+                $i++;
             }
             ob_end_clean();
             ob_start();
